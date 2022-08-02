@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import { 
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+import App from "./App";
+import PaceCalculator from "./routes/pace-calculator.tsx";
+import StravaThing from "./routes/strava-thing";
+import SpotifyThing from "./routes/spotify-thing";
+import './index.css'
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Navigate to="/pace-calculator" />} />
+      <Route path="/" element={<App />}>
+        <Route 
+          path="pace-calculator" 
+          element={<PaceCalculator />}
+        />
+        {/* <Route 
+          path="strava-thing" 
+          element={<StravaThing />} 
+        />
+        <Route 
+          path="spotify-thing" 
+          element={<SpotifyThing />}
+        /> */}
+      </Route>
+    </Routes>
+  </BrowserRouter>
+);

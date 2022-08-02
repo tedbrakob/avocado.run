@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import AppHeader from "./components/AppHeader";
+import { Outlet } from "react-router-dom";
 import './App.css';
+import styled from "styled-components";
+import colors from "./static/colors";
 
-function App() {
+const SiteBody = styled.div`
+  padding-top: 20px;
+  background-size: cover;
+`;
+
+const Site = styled.div`
+  height: 100%;
+  background-color: ${colors.light};
+`;
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Site align="center">
+      <AppHeader />
+      <SiteBody>
+        <Outlet />
+      </SiteBody>
+    </Site>
   );
 }
-
-export default App;
