@@ -42,8 +42,8 @@ export const eventDistanceOptions = [
 ];
 
 export const paceDistanceOptions = [
-  {label: mile, distance: {quantity: 1, unit: mile}},
-  {label: kilometer, distance: {quantity: 1, unit: kilometer}},
+  {label: 'Mile', distance: {quantity: 1, unit: mile}},
+  {label: 'Kilometer', distance: {quantity: 1, unit: kilometer}},
   {label: 'Half Mile', distance: {quantity: 0.5, unit: mile}},
   {label: 'Quarter Mile', distance: {quantity: 0.25, unit: mile}},
   {label: 'Eigth Mile', distance: {quantity: 0.125, unit: mile}},
@@ -51,6 +51,6 @@ export const paceDistanceOptions = [
   {label: '800M', distance: {quantity: 800, unit: meter}},
   {label: '400M', distance: {quantity: 400, unit: meter}},
   {label: '200M', distance: {quantity: 200, unit: meter}},
-  {label: meter, distance: {quantity: 1, unit: meter}},
-  {label: yard, distance: {quantity: 1, unit: yard}},
+  {label: 'Meter', distance: {quantity: 1, unit: meter}},
+  {label: 'Yard', distance: {quantity: 1, unit: yard}},
 ];

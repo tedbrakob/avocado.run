@@ -3,7 +3,7 @@ import styled from "styled-components";
 import colors from "../static/colors";
 
 export default styled(NavLink)`
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   color: ${colors.light};
   padding: .7rem;
   margin: .3rem;

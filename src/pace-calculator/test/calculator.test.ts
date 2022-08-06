@@ -33,7 +33,7 @@ test('calculates distance', () => {
   let time = new Time(0, 30, 0);
   let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));
 
-  let distance = calculateDistance(time, pace);
+  let distance = calculateDistance(time, pace, mile);
 
   expect(distance.unit).toStrictEqual(mile);
   expect(distance.quantity).toStrictEqual(5);
@@ -43,14 +43,14 @@ test('calculateDistance identifies invalid time', () => {
   let time = new Time(0, 0, 0);
   let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));
 
-  expect(() => {calculateDistance(time, pace)}).toThrow("Invalid time");
+  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid time");
 });
 
 test('calculateDistance identifies invalid pace', () => {
   let time = new Time(0, 30, 0);
   let pace = new Pace(new Time(0, 0, 0), new Distance(1, mile));
 
-  expect(() => {calculateDistance(time, pace)}).toThrow("Invalid pace");
+  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid pace");
 });
 
 test('calculates pace in same unit', () => {
@@ -81,6 +81,21 @@ test('calculates pace in different unit', () => {
   expect(pace.time.hours).toStrictEqual(0);
   expect(pace.time.minutes).toStrictEqual(3);
   expect(pace.time.seconds).toBeCloseTo(43.694);
+});
+
+test('calculates pace correctly', () => {
+  let time = new Time(0, 5, 10);
+  let distance = new Distance(5, kilometer);
+  let per = new Distance(1, mile);
+
+  let pace = calculatePace(time, distance, per);
+
+  expect(pace.distance.unit).toStrictEqual(mile);
+  expect(pace.distance.quantity).toStrictEqual(1);
+
+  expect(pace.time.hours).toStrictEqual(0);
+  expect(pace.time.minutes).toStrictEqual(1);
+  expect(pace.time.seconds).toBeCloseTo(39.779);
 });
 
 test('calculatePace identifies invalid time', () => {

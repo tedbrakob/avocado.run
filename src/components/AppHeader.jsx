@@ -3,7 +3,7 @@ import styled from "styled-components";
 import colors from "../static/colors";
 
 const Header = styled.h1`
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   color: ${colors.light};
   font-weight: 700;
   margin: 0;

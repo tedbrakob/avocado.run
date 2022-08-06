@@ -1,6 +1,7 @@
 import Distance from "./types/distance";
 import Pace from "./types/pace";
 import Time from "./types/time";
+import Unit from "./types/unit";
 
 function assertTimeValid(time: Time, errorMessage?: string):void {
   if (!time.valid()) {
@@ -44,7 +45,7 @@ export const calculateTime = (pace: Pace, distance: Distance):Time => {
   return Time.createFromTotalSeconds(timeInSeconds);
 };
 
-export const calculateDistance = (time: Time, pace: Pace):Distance => {
+export const calculateDistance = (time: Time, pace: Pace, asUnit: Unit):Distance => {
   assertTimeValid(time);
   assertPaceValid(pace);
 
@@ -52,8 +53,11 @@ export const calculateDistance = (time: Time, pace: Pace):Distance => {
   const timeInSeconds = time.getTotalSeconds();
   
   const distanceQuantity = timeInSeconds / paceTimeInSeconds;
+  
+  let distance = new Distance(distanceQuantity, pace.distance.unit);
+  distance = distance.convertTo(asUnit);
 
-  return new Distance(distanceQuantity, pace.distance.unit);
+  return distance;
 };
 
 export const calculatePace = (time: Time, distance: Distance, per: Distance):Pace => {
