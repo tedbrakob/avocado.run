@@ -40,7 +40,7 @@ export default function AppHeader() {
   return (
     <Div>
       <Header>RUNASS · SMOKEFAST · EATGRASS</Header>
-      <SmallHeader>🏃‍♂️💨 · 🚬🌳 · 👅🍑</SmallHeader>
+      <SmallHeader>🏃‍♂️💨🚬🌱👅🍑</SmallHeader>
       {/* <Nav> */}
         {/* <SNavLink to="/pace-calculator">Cool Running</SNavLink> */}
         {/* <SNavLink to="/strava-thing">Strava Thing</SNavLink> */}
