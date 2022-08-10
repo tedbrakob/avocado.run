@@ -9,4 +9,5 @@ export default styled.select`
   border: none;
   border-bottom: 2px solid ${colors.primary};
   border-radius: 2px;
+  font-size: 16px;
 `;

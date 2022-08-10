@@ -9,4 +9,5 @@ export default styled.input`
   margin: 2px;
   padding: 5px;
   outline: none;
+  font-size: 16px;
 `;

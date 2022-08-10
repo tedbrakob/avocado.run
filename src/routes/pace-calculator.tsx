@@ -13,26 +13,70 @@ import TimeForm from "../components/TimeForm";
 import DistanceForm from "../components/DistanceForm";
 import PaceForm from "../components/PaceForm";
 
-const DivLight = styled.div`
+const maxGridWidth = '480px';
+
+const PaceCalculatorRoot = styled.div`
+  width: 100%;
+
   background-color: ${colors.light};
   color: ${colors.dark};
   font-family: Nunito Sans;
 `;
 
-const TRPrimary = styled.tr`
-  background-color: ${colors.primary};
+const Grid = styled.div`
+  display: grid;
+  grid-gap: 1px;
+  grid-template-rows: min-content min-content 1fr 1fr;
+  grid-template-columns: min-content 2fr 2fr;
+
+  max-width: ${maxGridWidth};
+  margin: 0 auto;
+
+  background-color: ${colors.dark};
+  border: solid 1px ${colors.dark};
+
+  @media (max-width: ${maxGridWidth}) {  
+    grid-template-rows: repeat(7, min-content);
+    grid-template-columns: 1fr 2fr;
+  }
 `;
 
-const TDPrimary = styled.td`
-  background-color: ${colors.primary};
-  vertical-align: top;
-  text-align: right;
-`;
-
-const TDLight = styled.td`
+const GridElement = styled.div`
   background-color: ${colors.light};
-  vertical-align: top;
+  text-align: right;
+
   text-align: center;
+  padding: 4px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const RowLabel = styled(GridElement)`
+  font-weight: bold;
+  background-color: ${colors.primary};
+
+  grid-column: 1 / 2 ;
+  @media (max-width: ${maxGridWidth}) {  
+    grid-column: 1 / 3;
+  }
+`;
+
+const Header = styled.div`
+  grid-column: 1 / -1;
+  background-color: ${colors.primary};
+  text-align: center;
+  padding: 4px;
+  font-size: large;
+  font-weight: 700;
+`;
+
+const HelpText = styled.span`
+  @media (max-width: ${maxGridWidth}) {  
+    display: none;
+  }
 `;
 
 type Props = {};
@@ -132,13 +176,13 @@ class PaceCalculator extends Component <Props, State> {
     });
   };
 
-  updateStateField = (field:string, newValue:string) => {
+  updateStateField = (field:string, newValue:string):void => {
     const updatedState = {};
     updatedState[field] = newValue;
     this.setState(updatedState);
   };
 
-  handleDistanceEventChange = (selectedIndex:string) => {
+  handleDistanceEventChange = (selectedIndex:string):void => {
     let selectedDistanceEvent = eventDistanceOptions[selectedIndex].distance;
 
     this.setState({
@@ -148,109 +192,70 @@ class PaceCalculator extends Component <Props, State> {
     });
   };
 
-  setNumberField = (field:string, value:string) => {
-    let newState = {};
-    let oldStateValue = this.state[field];
-
-    if (value === '') {
-      newState[field] = '';
-      this.setState(newState);
-      return;
-    }
-    
-    let intValue = Number(value);
-
-    if (isNaN(intValue) || intValue === oldStateValue) {
-      newState[field] = value;
-      this.setState(newState);
-      return;
-    }
-
-    newState[field] = intValue;
-    this.setState(newState);
-  };
-
   render() {
     return (
-      <div>
-        <DivLight>
-          <table cellSpacing="1" cellPadding="4" border={0} align="center" width="420" bgcolor={colors.darkAccent}>
-            <tbody>
-              {/* P A C E  C A L C U L A T O R */}
-              <TRPrimary>
-                <td colSpan={3} align="center">
-                  {/* <font color={colors.light}> */}
-                    <b color={colors.light}>
-                      P&nbsp;A&nbsp;C&nbsp;E &nbsp; C&nbsp;A&nbsp;L&nbsp;C&nbsp;U&nbsp;L&nbsp;A&nbsp;T&nbsp;O&nbsp;R
-                    </b>
-                  {/* </font> */}
-                </td>
-              </TRPrimary>
+      <PaceCalculatorRoot>
+        <Grid>
+          <Header>
+            <b color={colors.light}>
+              P A C E &nbsp; C A L C U L A T O R
+            </b>
+          </Header>
 
-              {/* TIME */}
-              <tr>
-                <TDPrimary><b color={colors.light}>Time</b></TDPrimary>
-                <TDLight>
-                  <TimeForm 
-                    hours={this.state.timeHours}
-                    minutes={this.state.timeMinutes}
-                    seconds={this.state.timeSeconds}
-                    handleFieldChange={this.updateStateField}
-                  ></TimeForm>
-                </TDLight>
-                <TDLight>
-                  To calculate your time, fill in your distance and pace then click here:<br/>
-                  <Button onClick={this.calculateTime}> Calculate Time </Button>
-                </TDLight>
-              </tr>
+          <RowLabel>Time</RowLabel>
+          <GridElement>
+            <TimeForm 
+              hours={this.state.timeHours}
+              minutes={this.state.timeMinutes}
+              seconds={this.state.timeSeconds}
+              handleFieldChange={this.updateStateField}
+            ></TimeForm>
+          </GridElement>
+          <GridElement>
+            <HelpText>To calculate your time, fill in your distance and pace then click here:<br/></HelpText>
+            <Button onClick={this.calculateTime}> Calculate Time </Button>
+          </GridElement>
 
-              {/* DISTANCE */}
-              <tr>
-                <TDPrimary><b color={colors.light}>Distance</b></TDPrimary>
-                <TDLight>
-                  <DistanceForm 
-                    quantity={this.state.distanceQuantity}
-                    selectedUnit={this.state.selectedDistanceUnit}
-                    selectedEventIndex={this.state.selectedDistanceEventIndex}
-                    handleFieldChange={this.updateStateField}
-                    handleEventChange={this.handleDistanceEventChange}
-                  ></DistanceForm>
-                </TDLight>
-                <TDLight>
-                  To calculate your distance, fill in your time and pace then click here:<br/>
-                  <Button onClick={this.calculateDistance}>Calculate Distance</Button>
-                </TDLight>
-              </tr>
+          <RowLabel>Distance</RowLabel>
+          <GridElement>
+            <DistanceForm 
+              quantity={this.state.distanceQuantity}
+              selectedUnit={this.state.selectedDistanceUnit}
+              selectedEventIndex={this.state.selectedDistanceEventIndex}
+              handleFieldChange={this.updateStateField}
+              handleEventChange={this.handleDistanceEventChange}
+            ></DistanceForm>
+          </GridElement>
+          <GridElement>
+            <HelpText>To calculate your distance, fill in your time and pace then click here:<br/></HelpText>
+            <Button onClick={this.calculateDistance}>Calculate Distance</Button>
+          </GridElement>
 
-              {/* PACE */}
-              <tr>
-                <TDPrimary><b color={colors.light}>Pace</b></TDPrimary>
-                <TDLight>
-                  <PaceForm
-                    timeHours={this.state.paceTimeHours}
-                    timeMinutes={this.state.paceTimeMinutes}
-                    timeSeconds={this.state.paceTimeSeconds}
-                    selectedDistanceIndex={this.state.selectedPaceDistanceIndex}
-                    handleFieldChange={this.updateStateField}
-                  ></PaceForm>
-                </TDLight>
-                <TDLight>To calculate your pace, fill in your time and distance then click here:
-                  <br/>
-                  <Button onClick={this.calculatePace}>Calculate Pace</Button>
-                </TDLight>
-              </tr>
+          <RowLabel>Pace</RowLabel>
+          <GridElement>
+            <PaceForm
+              timeHours={this.state.paceTimeHours}
+              timeMinutes={this.state.paceTimeMinutes}
+              timeSeconds={this.state.paceTimeSeconds}
+              selectedDistanceIndex={this.state.selectedPaceDistanceIndex}
+              handleFieldChange={this.updateStateField}
+            ></PaceForm>
+          </GridElement>
+          <GridElement>
+            <HelpText>To calculate your pace, fill in your time and distance then click here:<br/></HelpText>
+            <Button onClick={this.calculatePace}>Calculate Pace</Button>
+          </GridElement>
+        </Grid>
 
-              {/* BOTTOM */}
-              {/* <tr>
-                <td colSpan="3" align="center">
-                  <input type="button" className="pulldown" onClick="var myform = document.forms[0]; CalcSplits(myform)" value="Calculate Splits"/> 
-                  <input type="button"   className="pulldown" value="Reset" onClick="document.forms[0].reset()"/>
-                </td>
-              </tr> */}
-            </tbody>
-          </table>
-        </DivLight>
-      </div>
+        {/* <table cellSpacing="1" cellPadding="4" border={0} align="center" width='420'  bgcolor={colors.darkAccent}>
+          <tr>
+            <td colSpan="3" align="center">
+              <input type="button" className="pulldown" onClick="var myform = document.forms[0]; CalcSplits(myform)" value="Calculate Splits"/> 
+              <input type="button"   className="pulldown" value="Reset" onClick="document.forms[0].reset()"/>
+            </td>
+          </tr>
+        </table> */}
+      </PaceCalculatorRoot>
     );
   }
 }

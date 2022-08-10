@@ -5,7 +5,10 @@ import Select from "./Select";
 import TextInput from "./TextInput";
 
 const PaceFormRoot = styled.div`
-
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 type Props = {

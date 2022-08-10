@@ -2,7 +2,12 @@ import { Component } from "react";
 import styled from "styled-components";
 import TextInput from "./TextInput";
 
-const TimeFormRoot = styled.div``;
+const TimeFormRoot = styled.div`
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+`;
 
 type Props = {
   hours: string;

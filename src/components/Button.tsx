@@ -7,6 +7,7 @@ export default styled.button`
   border: solid 1.5px ${colors.primary};
   padding: 5px;
   border-radius: 2px;
+  font-size: 16px;
 
 	&:hover {
     background-color: ${colors.darkAccent};
