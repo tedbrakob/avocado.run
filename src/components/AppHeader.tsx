@@ -1,4 +1,4 @@
-import SNavLink from "./NavLink";
+// import SNavLink from "./NavLink";
 import styled from "styled-components";
 import colors from "../static/colors";
 
@@ -7,7 +7,6 @@ const Header = styled.h1`
   color: ${colors.light};
   font-weight: 700;
   margin: 0;
-  padding-bottom: 1rem;
 
   @media (max-width: 584px) {
     display: none;
@@ -33,20 +32,20 @@ const Div = styled.div`
   text-align: center;
 `
 
-const Nav = styled.nav`
+// const Nav = styled.nav`
 
-`;
+// `;
 
 export default function AppHeader() {
   return (
     <Div>
       <Header>RUNASS · SMOKEFAST · EATGRASS</Header>
       <SmallHeader>🏃‍♂️💨 · 🚬🌳 · 👅🍑</SmallHeader>
-      <Nav>
-        <SNavLink to="/pace-calculator">Cool Running</SNavLink>
-        {/* <SNavLink to="/strava-thing">Strava Thing</SNavLink>
-        <SNavLink to="/spotify-thing">Spotify Thing</SNavLink> */}
-      </Nav>
+      {/* <Nav> */}
+        {/* <SNavLink to="/pace-calculator">Cool Running</SNavLink> */}
+        {/* <SNavLink to="/strava-thing">Strava Thing</SNavLink> */}
+        {/* <SNavLink to="/spotify-thing">Spotify Thing</SNavLink> */}
+      {/* </Nav> */}
     </Div>
   );
 }
