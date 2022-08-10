@@ -8,8 +8,9 @@ export default styled.button`
   padding: 5px;
   border-radius: 2px;
   font-size: 16px;
+  margin: 2px;
 
-	&:hover {
+	&:active {
     background-color: ${colors.darkAccent};
     color: ${colors.light};
     border: solid 1.5px ${colors.darkAccent};
