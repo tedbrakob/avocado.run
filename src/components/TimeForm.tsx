@@ -31,19 +31,25 @@ export default class TimeForm extends Component <Props> {
           <tbody>
             <tr>
               <td align="center">
-                <TextInput type="text" size={2} maxLength={2}
+                <TextInput size={2} maxLength={2}
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.hours ?? ''}
                   onChange={ (event) => {this.props.handleFieldChange('timeHours', event.target.value)} }
                 />
               </td>
               <td align="center">
-                <TextInput type="text" size={2} maxLength={2} 
+                <TextInput size={2} maxLength={2} 
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.minutes ?? ''}
                   onChange={ (event) => {this.props.handleFieldChange('timeMinutes', event.target.value)} }
               />
               </td>
               <td align="center">
-                <TextInput type="text" name="tsec" size={5} maxLength={6}
+                <TextInput name="tsec" size={5} maxLength={6}
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.seconds ?? ''}
                   onChange={ (event) => {this.props.handleFieldChange('timeSeconds', event.target.value)} }
                 />

@@ -22,7 +22,9 @@ export default class DistanceForm extends Component <Props> {
   render () {
     return (
       <DistanceFormRoot>
-        <TextInput type="text" name="dist" size={7} maxLength={8}
+        <TextInput name="dist" size={7} maxLength={8}
+          inputMode="decimal"
+          type="number" pattern="\d*"
           value={this.props.quantity?.toString() ?? ''}
           onChange={ (event) => {this.props.handleFieldChange('distanceQuantity', event.target.value)} }
         /> 

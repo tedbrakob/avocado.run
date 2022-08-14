@@ -28,27 +28,33 @@ export default class PaceForm extends Component <Props> {
         <table>
           <thead>
             <tr>
-              <td align="center" className="smallText">hr</td>
-              <td align="center" className="smallText">min</td>
-              <td align="center" className="smallText">sec</td>
+              <td className="smallText" align="center">hours</td>
+              <td className="smallText" align="center">mins</td>
+              <td className="smallText" align="center">secs</td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td align="center">
-                <TextInput type="text" name="phr" size={2} maxLength={2}
+                <TextInput name="phr" size={2} maxLength={2}
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.timeHours ?? ''}
                   onChange={(event) => {this.props.handleFieldChange('paceTimeHours', event.target.value)}}
                 />
               </td>
               <td align="center">
-                <TextInput type="text" name="pmin" size={2} maxLength={2}
+                <TextInput name="pmin" size={2} maxLength={2}
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.timeMinutes ?? ''}
                   onChange={(event) => {this.props.handleFieldChange('paceTimeMinutes', event.target.value)}}
                 />
               </td>
               <td align="center">
-                <TextInput type="text" name="psec" size={5} maxLength={6}
+                <TextInput name="psec" size={5} maxLength={6}
+                  inputMode="decimal"
+                  type="number" pattern="\d*"
                   value={this.props.timeSeconds ?? ''}
                   onChange={(event) => {this.props.handleFieldChange('paceTimeSeconds', event.target.value)}}
                 />

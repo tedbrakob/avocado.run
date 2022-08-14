@@ -69,8 +69,8 @@ export default class SplitsGrid extends Component <Props> {
         {
           this.props.splits.splits.map((el, i) => {
             return [
-              <GridElement key={i}>{el.distance.quantity.toString() + " " + el.distance.unit}</GridElement>,
-              <GridElement key={i}>{el.time.toString()}</GridElement>
+              <GridElement key={i.toString() + "-distance"}>{el.distance.quantity.toString() + " " + el.distance.unit}</GridElement>,
+              <GridElement key={i.toString() + "-time"}>{el.time.toString()}</GridElement>
             ]
           })
         }

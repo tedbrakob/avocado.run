@@ -10,4 +10,11 @@ export default styled.input`
   padding: 5px;
   outline: none;
   font-size: 16px;
+  width:40px;
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
