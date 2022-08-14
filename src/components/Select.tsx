@@ -2,7 +2,6 @@ import styled from "styled-components";
 import colors from "../static/colors";
 
 export default styled.select`
-  outline: none;
   padding: 5px;
   margin: 5px;
   color: ${colors.dark};

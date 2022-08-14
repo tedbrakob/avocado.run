@@ -1,11 +1,13 @@
 import { distanceUnits, metersPerUnit } from "../../static/distances";
+import Validatable from "./validatable";
 import Unit from "./unit";
-
-export default class Distance {
+export default class Distance extends Validatable {
   unit: Unit;
   quantity: number;
 
   constructor (quantity:number, unit:Unit) {
+    super();
+    
     this.quantity = quantity;
     this.unit = unit;
   }
@@ -32,4 +34,4 @@ export default class Distance {
 
     return destinationUnitInMeters / originalUnitInMeters;
   };
-}
+};

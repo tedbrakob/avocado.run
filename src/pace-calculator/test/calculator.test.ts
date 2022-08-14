@@ -1,5 +1,5 @@
 import { kilometer, mile } from "../../static/distances";
-import { calculateDistance, calculatePace, calculateTime } from "../calculator";
+import { calculateDistance, calculatePace, calculateSplits, calculateTime } from "../calculator";
 import Distance from "../types/distance";
 import Pace from "../types/pace";
 import Time from "../types/time";
@@ -19,14 +19,14 @@ test('calculateTime identifies invalid distance', () => {
   let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));
   let distance = new Distance(0, mile);
 
-  expect(() => {calculateTime(pace, distance)}).toThrow("Invalid distance");
+  expect(() => {calculateTime(pace, distance)}).toThrow("Invalid Distance");
 });
 
 test('calculateTime identifies invalid pace', () => {
   let pace = new Pace(new Time(0, 0, 0), new Distance(1, mile));
   let distance = new Distance(5, mile);
 
-  expect(() => {calculateTime(pace, distance)}).toThrow("Invalid pace");
+  expect(() => {calculateTime(pace, distance)}).toThrow("Invalid Pace");
 });
 
 test('calculates distance', () => {
@@ -43,14 +43,14 @@ test('calculateDistance identifies invalid time', () => {
   let time = new Time(0, 0, 0);
   let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));
 
-  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid time");
+  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid Time");
 });
 
 test('calculateDistance identifies invalid pace', () => {
   let time = new Time(0, 30, 0);
   let pace = new Pace(new Time(0, 0, 0), new Distance(1, mile));
 
-  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid pace");
+  expect(() => {calculateDistance(time, pace, mile)}).toThrow("Invalid Pace");
 });
 
 test('calculates pace in same unit', () => {
@@ -103,7 +103,7 @@ test('calculatePace identifies invalid time', () => {
   let distance = new Distance(5, mile);
   let per = new Distance(1, kilometer);
 
-  expect(() => {calculatePace(time, distance, per)}).toThrow("Invalid time");
+  expect(() => {calculatePace(time, distance, per)}).toThrow("Invalid Time");
 });
 
 test('calculatePace identifies invalid distance', () => {
@@ -111,7 +111,7 @@ test('calculatePace identifies invalid distance', () => {
   let distance = new Distance(0, mile);
   let per = new Distance(1, kilometer);
 
-  expect(() => {calculatePace(time, distance, per)}).toThrow("Invalid distance");
+  expect(() => {calculatePace(time, distance, per)}).toThrow("Invalid Distance");
 });
 
 test('calculatePace identifies invalid pace distance unit', () => {
@@ -120,4 +120,12 @@ test('calculatePace identifies invalid pace distance unit', () => {
   let per = new Distance(0, kilometer);
 
   expect(() => {calculatePace(time, distance, per)}).toThrow("Invalid pace unit");
+});
+
+test('calculateSplits throws error with two invalid params', () => {
+  let time = new Time(0, 0, 0);
+  let distance = new Distance(0, mile);
+  let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));
+
+  expect(() => {calculateSplits(time, distance, pace)}).toThrow("To calculate Splits, enter at least two of Time, Distance and Pace");
 });

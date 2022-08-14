@@ -1,27 +1,27 @@
-export default class Time {
+import Validatable from "./validatable";
+
+export default class Time extends Validatable {
   hours: number;
   minutes: number;
   seconds: number;
 
   constructor (hours: number, minutes: number, seconds: number) {
+    super();
+
     this.hours = hours;
     this.minutes = minutes;
     this.seconds = seconds;
   }
 
-  static createFromTotalSeconds = (seconds: number):Time => {
-    const hours = Math.floor(seconds / (60 * 60));
-    seconds -= hours * (60 * 60);
-
-    const minutes = Math.floor(seconds / 60);
-    seconds -= minutes * 60;
-    
-    return new Time(hours, minutes, seconds);
-  }
-
   valid = ():boolean => {
     return this.getTotalSeconds() > 0;
-  }
+  };
+
+  static createFromTotalSeconds = (seconds: number):Time => {
+    const time = new Time(0, 0, seconds);
+    time.normalize();
+    return time;
+  };
 
   getTotalSeconds = ():number => {
     let seconds = 0;
@@ -38,4 +38,35 @@ export default class Time {
 
     return seconds;
   };
-}
+
+  normalize = ():void => {
+    let seconds = this.getTotalSeconds();
+
+    this.hours = Math.floor(seconds / (60 * 60));
+    seconds -= this.hours * (60 * 60);
+
+    this.minutes = Math.floor(seconds / 60);
+    seconds -= this.minutes * 60;
+
+    this.seconds = seconds;
+  }
+
+  toString = ():string => {
+    this.normalize();
+
+    (this.seconds).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+    let result = '';
+
+    if (this.hours > 0) {
+      result += this.hours.toString() + ':';
+      result += String(this.minutes).padStart(2, '0') + ':';
+    } else if (this.minutes > 0) {
+      result += this.minutes.toString() + ':';
+    }
+
+    result += (this.seconds).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,').padStart(4, '0');
+
+    return result;
+  }
+};

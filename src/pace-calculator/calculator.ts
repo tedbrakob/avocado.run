@@ -1,41 +1,12 @@
 import Distance from "./types/distance";
 import Pace from "./types/pace";
+import Splits from "./types/splits";
 import Time from "./types/time";
 import Unit from "./types/unit";
 
-function assertTimeValid(time: Time, errorMessage?: string):void {
-  if (!time.valid()) {
-    if (typeof(errorMessage) === "undefined") {
-      errorMessage = "Invalid time";
-    }
-
-    throw new Error(errorMessage);
-  }
-}
-
-function assertDistanceValid(distance: Distance, errorMessage?: string):void {
-  if (!distance.valid()) {
-    if (typeof(errorMessage) === "undefined") {
-      errorMessage = "Invalid distance";
-    }
-
-    throw new Error(errorMessage);
-  }
-}
-
-function assertPaceValid(pace: Pace, errorMessage?: string):void {
-  if (!pace.valid()) {
-    if (typeof(errorMessage) === "undefined") {
-      errorMessage = "Invalid pace";
-    }
-
-    throw new Error(errorMessage);
-  }
-}
-
 export const calculateTime = (pace: Pace, distance: Distance):Time => {
-  assertDistanceValid(distance);
-  assertPaceValid(pace);
+  distance.assertValid();
+  pace.assertValid();
 
   const paceTimeInSeconds = pace.time.getTotalSeconds();
   const distanceInPaceUnits = distance.convertTo(pace.distance.unit);
@@ -46,8 +17,8 @@ export const calculateTime = (pace: Pace, distance: Distance):Time => {
 };
 
 export const calculateDistance = (time: Time, pace: Pace, asUnit: Unit):Distance => {
-  assertTimeValid(time);
-  assertPaceValid(pace);
+  time.assertValid();
+  pace.assertValid();
 
   const paceTimeInSeconds = pace.time.getTotalSeconds();
   const timeInSeconds = time.getTotalSeconds();
@@ -61,9 +32,73 @@ export const calculateDistance = (time: Time, pace: Pace, asUnit: Unit):Distance
 };
 
 export const calculatePace = (time: Time, distance: Distance, per: Distance):Pace => {
-  assertTimeValid(time);
-  assertDistanceValid(distance);
-  assertDistanceValid(per, 'Invalid pace unit');
+  time.assertValid();
+  distance.assertValid()
+  per.assertValid('Invalid pace unit');
   
   return new Pace(time, distance).convertDistance(per);
 };
+
+const calculateMissing = (time:Time, distance:Distance, pace:Pace):{time:Time, distance:Distance, pace:Pace} => {
+  let missingParams:string[] = [];
+
+  for (const [key, param] of Object.entries({time, distance, pace})) {
+    if (!param.valid()) {
+      missingParams.push(key);
+    }
+
+    if (missingParams.length > 1) {
+      throw new Error("To calculate Splits, enter at least two of Time, Distance and Pace");
+    }
+  }
+
+  if (missingParams.length === 0) {
+    return {time, distance, pace};
+  }
+
+  switch (missingParams[0]) {
+    case 'time':
+      time = calculateTime(pace, distance);
+      break;
+    case 'distance':
+      distance = calculateDistance(time, pace, distance.unit);
+      break;
+    case 'pace':
+      pace = calculatePace(time, distance, pace.distance);
+      break;
+  }
+
+  return {time, distance, pace};
+};
+
+const formatSplitDistanceQuantity = (distanceQuantity:number) => {
+  return +distanceQuantity.toFixed(2);
+}
+
+
+export const calculateSplits = (time:Time, distance:Distance, pace:Pace):Splits => {
+  ({time, distance, pace} = calculateMissing(time, distance, pace));
+
+  const splits:Pace[] = [];
+  
+  const secondsPerSplit = pace.time.getTotalSeconds();
+  const totalSeconds = time.getTotalSeconds();
+
+  const numberOfSplits = totalSeconds / secondsPerSplit;
+
+  for (let i = 1; i < numberOfSplits; i++) {
+    const splitDistance = new Distance(i * pace.distance.quantity, pace.distance.unit);
+    const splitTime = Time.createFromTotalSeconds(i * secondsPerSplit);
+
+    splits.push(new Pace(splitTime, splitDistance));
+  }
+
+  if (numberOfSplits > splits.length) {
+    let splitDistance = distance.convertTo(pace.distance.unit);
+    splitDistance.quantity = formatSplitDistanceQuantity(splitDistance.quantity);
+
+    splits.push(new Pace(time, splitDistance));
+  }
+
+  return new Splits(splits);
+}

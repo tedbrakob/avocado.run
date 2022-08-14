@@ -1,11 +1,14 @@
+import Validatable from "./validatable";
 import Distance from "./distance";
 import Time from "./time";
 
-export default class Pace {
+export default class Pace extends Validatable{
   time:Time;
   distance:Distance;
 
   constructor(time: Time, distance: Distance) {
+    super();
+
     this.time = time;
     this.distance = distance;
   }
@@ -23,5 +26,5 @@ export default class Pace {
     const convertedTime = Time.createFromTotalSeconds(convertedSeconds);
     
     return new Pace(convertedTime, distance);
-  }
-}
+  };
+};

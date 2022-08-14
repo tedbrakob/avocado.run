@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import colors from "../static/colors";
 import styled from "styled-components";
 
@@ -7,11 +7,13 @@ import Distance from "../pace-calculator/types/distance";
 import Time from "../pace-calculator/types/time";
 import Pace from "../pace-calculator/types/pace";
 import Unit from "../pace-calculator/types/unit";
-import { calculateDistance, calculatePace, calculateTime } from "../pace-calculator/calculator";
+import { calculateDistance, calculatePace, calculateTime, calculateSplits } from "../pace-calculator/calculator";
 import Button from "../components/Button";
 import TimeForm from "../components/TimeForm";
 import DistanceForm from "../components/DistanceForm";
 import PaceForm from "../components/PaceForm";
+import SplitsGrid from "../components/SplitsGrid";
+import Splits from "../pace-calculator/types/splits";
 
 const maxGridWidth = '480px';
 
@@ -101,6 +103,8 @@ type State = {
   paceTimeMinutes: string;
   paceTimeSeconds: string;
   selectedPaceDistanceIndex: string;
+
+  splits: Splits | null;
 };
 
 const defaultState:State = {
@@ -116,18 +120,23 @@ const defaultState:State = {
       paceTimeMinutes: '',
       paceTimeSeconds: '',
       selectedPaceDistanceIndex: '0',
+
+      splits: null,
   };
 
 class PaceCalculator extends Component <Props, State> {
+  splitsGridRef: React.RefObject<HTMLInputElement>;
+
   constructor (props:Props) {
     super(props);
-    
+
+    this.splitsGridRef = React.createRef();
     this.state = defaultState;
   }
 
   reset = ():void => {
     this.setState(defaultState);
-  }
+  };
 
   getTime = ():Time => {
     return new Time(
@@ -135,14 +144,14 @@ class PaceCalculator extends Component <Props, State> {
       Number(this.state.timeMinutes),
       Number(this.state.timeSeconds),
     );
-  }
+  };
 
   getDistance = ():Distance => {
     return new Distance(
       Number(this.state.distanceQuantity),
       this.state.selectedDistanceUnit,
     );
-  }
+  };
 
   getPace = ():Pace => {
     const time = new Time(
@@ -169,7 +178,7 @@ class PaceCalculator extends Component <Props, State> {
       timeMinutes: time.minutes.toString(),
       timeSeconds: time.seconds.toString(),
     });
-  }
+  };
 
   calculateDistance = ():void => {
     const distance = calculateDistance(this.getTime(), this.getPace(), this.getDistance().unit);
@@ -177,7 +186,7 @@ class PaceCalculator extends Component <Props, State> {
     this.setState({
       distanceQuantity: distance.quantity.toString(),
     });
-  }
+  };
 
   calculatePace = ():void => {
     const pace = calculatePace(this.getTime(), this.getDistance(), this.getPace().distance);
@@ -205,79 +214,14 @@ class PaceCalculator extends Component <Props, State> {
     });
   };
 
-  calcSplits = () => {
-    // // Main routine for Splits
-    // // Validate required data, do computation, and display results
-    // // Splits = Time at each interval (Dist / Pace)
-    // let gottime = this.checkPace(form);
-    // let gotpace = this.checkTime(form);
-    // if (!(gottime || gotpace)){
-    //   alert("To calculate Splits, enter the Pace and Distance or Time and Distance");
-    //   return;
-    // }
+  calculateSplits = ():void => {
+    const splits = calculateSplits(this.getTime(), this.getDistance(), this.getPace());
+    this.setState({splits}, this.scrollToSplitsGrid);
+  };
 
-    // // get dist, pace, and punit
-    // // time in total seconds, pace in total seconds
-    // if (!(gotpace) && (gottime)){
-    //   this.setState({
-    //     punit: form.punit.options[form.punit.selectedIndex].value,
-    //     dunit: form.dunit.options[form.dunit.selectedIndex].value,
-    //   });
-      
-    //   let factor = this.convUnit(this.state.dunit, this.state.punit);
-    //   this.setState({
-    //     pace: (this.state.time / this.state.dist) / factor,
-    //   });
-    // }
-
-    // let dcalc = form.dunit.options[form.dunit.selectedIndex].value;
-    // let pcalc = form.punit.options[form.punit.selectedIndex].value;
-    // let factor = this.convUnit(dcalc, pcalc);
-    // let pdisp = form.punit.options[form.punit.selectedIndex].text;
-
-    // this.setState({
-    //   dist: this.state.dist * factor,
-    // });
-
-    // let remain = this.state.dist % 1;
-
-    // this.setState({
-    //   nsplits: this.state.dist - remain,
-    // });
-
-    // // compute hgt based on number of splits
-    // let hgt = this.state.nsplits * 34;
-    // hgt = hgt.toString(10);
-
-    // let features = "resizable,scrollbars,height=" + hgt + ",width=250,";
-    // let swin = window.open("","",features);
-    // swin.document.writeln("<HTML><HEAD><TITLE>Splits</TITLE><HEAD><BODY>\n");
-    // swin.document.writeln("<table cellSpacing=2><tr bgcolor=#C6E2FF><td colSpan=2 align=left>Splits</td><td>Times</td></tr>\n");
-
-    // let stime = 0;
-
-    // for (let split = 1; split <= this.state.nsplits; split++) {
-    //   stime = stime + this.state.pace;
-    //   let shours = this.HrsFromTSecs(stime);
-    //   let smins = this.MinsFromTSecs(stime);
-    //   let ssecs = this.SecsFromTSecs(stime);
-    //   let hmstime = shours + ":" + smins + ":" + ssecs.substring(0,5);
-    //   swin.document.writeln("<tr><td>" + split + "</td><td>" + pdisp + "</td><td>" +hmstime + "</td></tr>\n");
-    // }
-
-    // // the last split is for the total dist
-    // if (this.state.nsplits !== this.state.dist) {
-    //   let extrasecs = remain * this.state.pace;
-    //   stime = stime + extrasecs;
-    //   let shours = this.HrsFromTSecs(stime);
-    //   let smins = this.MinsFromTSecs(stime);
-    //   let ssecs = this.SecsFromTSecs(stime);
-    //   let hmstime = shours + ":" + smins + ":" + ssecs.substring(0,5);
-    //   swin.document.writeln("<tr><td>" + this.state.dist + "</td><td>" + pdisp + "</td><td>" +hmstime + "</td></tr>\n");
-    // }
-
-    // swin.document.writeln("</table></BODY></HTML>\n");
-  }
+  scrollToSplitsGrid = () => {
+    this.splitsGridRef.current?.scrollIntoView()
+  };
 
   render() {
     return (
@@ -335,10 +279,20 @@ class PaceCalculator extends Component <Props, State> {
 
           <RowLabel></RowLabel>
           <GridFooter>
-            {/* <Button onClick={this.calcSplits}>Calculate Splits</Button> */}
+            <Button
+              onClick={this.calculateSplits}
+            >
+              Calculate Splits
+            </Button>
             <Button onClick={this.reset}>Reset</Button>
           </GridFooter>
         </Grid>
+
+        <SplitsGrid 
+          splits={this.state.splits} 
+          maxWidth={maxGridWidth}
+          headerRef={this.splitsGridRef}
+        />
       </PaceCalculatorRoot>
     );
   }
