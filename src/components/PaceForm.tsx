@@ -12,6 +12,7 @@ const PaceFormRoot = styled.div`
 `;
 
 type Props = {
+  error: boolean;
   timeHours: string;
   timeMinutes: string;
   timeSeconds: string;
@@ -37,7 +38,8 @@ export default class PaceForm extends Component <Props> {
             <tr>
               <td align="center">
                 <TextInput name="phr" size={2} maxLength={2}
-                  inputMode="decimal"
+                  error={this.props.error}
+                  inputMode="numeric"
                   type="number" pattern="\d*"
                   value={this.props.timeHours ?? ''}
                   onChange={(event) => {this.props.handleFieldChange('paceTimeHours', event.target.value)}}
@@ -45,7 +47,8 @@ export default class PaceForm extends Component <Props> {
               </td>
               <td align="center">
                 <TextInput name="pmin" size={2} maxLength={2}
-                  inputMode="decimal"
+                  error={this.props.error}
+                  inputMode="numeric"
                   type="number" pattern="\d*"
                   value={this.props.timeMinutes ?? ''}
                   onChange={(event) => {this.props.handleFieldChange('paceTimeMinutes', event.target.value)}}
@@ -53,6 +56,7 @@ export default class PaceForm extends Component <Props> {
               </td>
               <td align="center">
                 <TextInput name="psec" size={5} maxLength={6}
+                  error={this.props.error}
                   inputMode="decimal"
                   type="number" pattern="\d*"
                   value={this.props.timeSeconds ?? ''}

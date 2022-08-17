@@ -10,6 +10,7 @@ const DistanceFormRoot = styled.div`
 `;
 
 type Props = {
+  error: boolean;
   quantity: string;
   selectedUnit: Unit;
   selectedEventIndex: string;
@@ -23,6 +24,7 @@ export default class DistanceForm extends Component <Props> {
     return (
       <DistanceFormRoot>
         <TextInput name="dist" size={7} maxLength={8}
+          error={this.props.error}
           inputMode="decimal"
           type="number" pattern="\d*"
           value={this.props.quantity?.toString() ?? ''}

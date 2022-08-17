@@ -89,6 +89,10 @@ const GridFooter = styled(GridElement)`
 type Props = {};
 
 type State = {
+  timeError: boolean;
+  distanceError: boolean;
+  paceError: boolean;
+
   timeHours: string;
   timeMinutes: string;
   timeSeconds: string;
@@ -106,6 +110,10 @@ type State = {
 };
 
 const defaultState:State = {
+      timeError: false,
+      distanceError: false,
+      paceError: false,
+
       timeHours: '',
       timeMinutes: '',
       timeSeconds: '',
@@ -169,6 +177,17 @@ class PaceCalculator extends Component <Props, State> {
   };
 
   calculateTime = ():void => {
+    const distanceError = this.getDistance().valid() === false;
+    const paceError = this.getPace().valid() === false;
+
+    if (distanceError || paceError) {
+      this.setErrors({
+        distanceError,
+        paceError,
+      });
+      return;
+    }
+
     const time = calculateTime(this.getPace(), this.getDistance());
 
     this.setState({
@@ -179,6 +198,17 @@ class PaceCalculator extends Component <Props, State> {
   };
 
   calculateDistance = ():void => {
+    const timeError = this.getTime().valid() === false;
+    const paceError = this.getPace().valid() === false;
+
+    if (timeError || paceError) {
+      this.setErrors({
+        timeError,
+        paceError,
+      });
+      return;
+    }
+
     const distance = calculateDistance(this.getTime(), this.getPace(), this.getDistance().unit);
 
     this.setState({
@@ -187,6 +217,16 @@ class PaceCalculator extends Component <Props, State> {
   };
 
   calculatePace = ():void => {
+    const distanceError = this.getDistance().valid() === false;
+    const timeError = this.getTime().valid() === false;
+
+    if (distanceError || timeError) {
+      this.setErrors({
+        distanceError,
+        timeError,
+      });
+      return;
+    }
     const pace = calculatePace(this.getTime(), this.getDistance(), this.getPace().distance);
 
     this.setState({
@@ -196,10 +236,37 @@ class PaceCalculator extends Component <Props, State> {
     });
   };
 
+  setErrors = (errors:{timeError ?: boolean, distanceError ?: boolean, paceError ?: boolean}):void => {
+    this.setState({
+      timeError: false,
+      distanceError: false,
+      paceError: false,
+      ...errors,
+    });
+  }
+
+  checkErrors = ():void => {
+    if (this.state.timeError && this.getTime().valid()) {
+      this.setState({
+        timeError: false,
+      });
+    }
+    if (this.state.distanceError && this.getDistance().valid()) {
+      this.setState({
+        distanceError: false,
+      });
+    }
+    if (this.state.paceError && this.getPace().valid()) {
+      this.setState({
+        paceError: false,
+      });
+    }
+  }
+
   updateStateField = (field:string, newValue:string):void => {
     const updatedState = {};
     updatedState[field] = newValue;
-    this.setState(updatedState);
+    this.setState(updatedState, () => {this.checkErrors();});
   };
 
   handleDistanceEventChange = (selectedIndex:string):void => {
@@ -209,7 +276,7 @@ class PaceCalculator extends Component <Props, State> {
       distanceQuantity: selectedDistanceEvent.quantity,
       selectedDistanceUnit: selectedDistanceEvent.unit,
       selectedDistanceEventIndex: selectedIndex,
-    });
+    }, () => {this.checkErrors();});
   };
 
   calculateSplits = ():void => {
@@ -234,6 +301,7 @@ class PaceCalculator extends Component <Props, State> {
           <RowLabel>Time</RowLabel>
           <GridElement>
             <TimeForm 
+              error={this.state.timeError}
               hours={this.state.timeHours}
               minutes={this.state.timeMinutes}
               seconds={this.state.timeSeconds}
@@ -248,6 +316,7 @@ class PaceCalculator extends Component <Props, State> {
           <RowLabel>Distance</RowLabel>
           <GridElement>
             <DistanceForm 
+              error={this.state.distanceError}
               quantity={this.state.distanceQuantity}
               selectedUnit={this.state.selectedDistanceUnit}
               selectedEventIndex={this.state.selectedDistanceEventIndex}
@@ -263,6 +332,7 @@ class PaceCalculator extends Component <Props, State> {
           <RowLabel>Pace</RowLabel>
           <GridElement>
             <PaceForm
+              error={this.state.paceError}
               timeHours={this.state.paceTimeHours}
               timeMinutes={this.state.paceTimeMinutes}
               timeSeconds={this.state.paceTimeSeconds}

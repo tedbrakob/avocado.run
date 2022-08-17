@@ -10,6 +10,7 @@ const TimeFormRoot = styled.div`
 `;
 
 type Props = {
+  error: boolean;
   hours: string;
   minutes: string;
   seconds: string;
@@ -32,7 +33,8 @@ export default class TimeForm extends Component <Props> {
             <tr>
               <td align="center">
                 <TextInput size={2} maxLength={2}
-                  inputMode="decimal"
+                  error={this.props.error}
+                  inputMode="numeric"
                   type="number" pattern="\d*"
                   value={this.props.hours ?? ''}
                   onChange={ (event) => {this.props.handleFieldChange('timeHours', event.target.value)} }
@@ -40,7 +42,8 @@ export default class TimeForm extends Component <Props> {
               </td>
               <td align="center">
                 <TextInput size={2} maxLength={2} 
-                  inputMode="decimal"
+                  error={this.props.error}
+                  inputMode="numeric"
                   type="number" pattern="\d*"
                   value={this.props.minutes ?? ''}
                   onChange={ (event) => {this.props.handleFieldChange('timeMinutes', event.target.value)} }
@@ -48,6 +51,7 @@ export default class TimeForm extends Component <Props> {
               </td>
               <td align="center">
                 <TextInput name="tsec" size={5} maxLength={6}
+                  error={this.props.error}
                   inputMode="decimal"
                   type="number" pattern="\d*"
                   value={this.props.seconds ?? ''}

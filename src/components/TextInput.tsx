@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import colors from "../static/colors";
 
-export default styled.input`
+type Props = {
+  error: boolean;
+};
+
+export default styled.input<Props>`
   color: ${colors.dark};
   border: none;
   border-bottom: 2px solid ${colors.primary};
@@ -9,6 +13,7 @@ export default styled.input`
   margin: 2px;
   padding: 5px;
   outline: none;
+  background-color: ${colors.error}${props => props.error ? 50 : 0};;
   font-size: 16px;
   width:40px;
 
