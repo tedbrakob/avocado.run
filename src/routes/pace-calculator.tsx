@@ -22,7 +22,6 @@ const PaceCalculatorRoot = styled.div`
 
   background-color: ${colors.light};
   color: ${colors.dark};
-  font-family: Nunito Sans;
 `;
 
 const Grid = styled.div`
@@ -72,7 +71,6 @@ const Header = styled.div`
   text-align: center;
   padding: 4px;
   font-size: large;
-  font-weight: 700;
 `;
 
 const HelpText = styled.span`

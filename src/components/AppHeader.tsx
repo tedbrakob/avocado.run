@@ -3,10 +3,9 @@ import styled from "styled-components";
 import colors from "../static/colors";
 
 const Header = styled.h1`
-  font-family: 'Nunito Sans', sans-serif;
   color: ${colors.light};
-  font-weight: 700;
   margin: 0;
+  font-weight: 700;
 
   @media (max-width: 584px) {
     display: none;
@@ -14,9 +13,7 @@ const Header = styled.h1`
 `
 
 const SmallHeader = styled.h1`
-  font-family: 'Nunito Sans', sans-serif;
   color: ${colors.light};
-  font-weight: 700;
   margin: 0;
   padding-bottom: 1rem;
   display: none;

@@ -10,6 +10,7 @@ const SiteBody = styled.div`
 `;
 
 const Site = styled.div`
+  font-family: 'Nunito Sans', sans-serif;
   height: 100%;
   background-color: ${colors.light};
 `;

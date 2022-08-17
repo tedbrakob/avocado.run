@@ -3,14 +3,24 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
+
+import './index.css';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import reportWebVitals from './reportWebVitals';
 
 import App from "./App";
 import PaceCalculator from "./routes/pace-calculator.tsx";
-import StravaThing from "./routes/strava-thing";
-import SpotifyThing from "./routes/spotify-thing";
+// import StravaThing from "./routes/strava-thing";
+// import SpotifyThing from "./routes/spotify-thing";
 import './index.css'
+
+serviceWorkerRegistration.register();
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root")
