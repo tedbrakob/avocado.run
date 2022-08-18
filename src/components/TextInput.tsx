@@ -16,7 +16,7 @@ type Props = {
   type: string;
   pattern: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = (props:Props) => {
