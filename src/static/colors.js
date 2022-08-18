@@ -5,6 +5,6 @@ const colors = {
     darkAccent: "#924B53",
     error: "#A53643",
     dark: "#382F33",
-}
+};
 
 export default colors;

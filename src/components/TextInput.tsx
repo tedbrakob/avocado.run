@@ -1,25 +1,41 @@
 import styled from "styled-components";
-import colors from "../static/colors";
 
-type Props = {
-  error: boolean;
-};
-
-export default styled.input<Props>`
-  color: ${colors.dark};
-  border: none;
-  border-bottom: 2px solid ${colors.primary};
-  border-radius: 2px;
-  margin: 2px;
-  padding: 5px;
-  outline: none;
-  background-color: ${colors.error}${props => props.error ? 50 : 0};;
-  font-size: 16px;
-  width:40px;
-
+const Input = styled.input`
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 `;
+
+type Props = {
+  size: number;
+  maxLength: number;
+  error: boolean;
+  inputMode?: "text" | "search" | "email" | "tel" | "url" | "none" | "numeric" | "decimal";
+  type: string;
+  pattern: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+};
+
+const TextInput = (props:Props) => {
+  return (
+    <Input
+      className={`
+        border-b-2 border-b-solid border-b-primary rounded-sm m-0.5 p-1 outline-none w-[50px]
+        ${props.error ? "bg-error/40" : ""}
+      `}
+
+      size={props.size}
+      maxLength={props.maxLength}
+      inputMode={props.inputMode}
+      type={props.type}
+      pattern={props.pattern}
+      value={props.value}
+      onChange={props.onChange}
+    ></Input>
+  );
+};
+
+export default TextInput;

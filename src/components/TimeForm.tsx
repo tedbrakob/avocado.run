@@ -1,13 +1,5 @@
 import { Component } from "react";
-import styled from "styled-components";
 import TextInput from "./TextInput";
-
-const TimeFormRoot = styled.div`
-  table {
-    margin-left: auto;
-    margin-right: auto;
-  }
-`;
 
 type Props = {
   error: boolean;
@@ -20,7 +12,7 @@ type Props = {
 export default class TimeForm extends Component <Props> {
   render () {
     return (
-      <TimeFormRoot>
+      <div className="mx-auto">
         <table>
           <thead>
             <tr>
@@ -50,7 +42,7 @@ export default class TimeForm extends Component <Props> {
               />
               </td>
               <td align="center">
-                <TextInput name="tsec" size={5} maxLength={6}
+                <TextInput size={5} maxLength={6}
                   error={this.props.error}
                   inputMode="decimal"
                   type="number" pattern="\d*"
@@ -61,7 +53,7 @@ export default class TimeForm extends Component <Props> {
             </tr>
           </tbody>
         </table>
-      </TimeFormRoot>
+      </div>
     );
   }
 }

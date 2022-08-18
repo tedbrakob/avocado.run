@@ -1,13 +1,8 @@
 import { Component } from "react";
-import styled from "styled-components";
 import TextInput from "./TextInput";
 import Select from "./Select";
 import Unit from "../pace-calculator/types/unit";
 import { distanceUnitOptions, eventDistanceOptions } from "../static/distances";
-
-const DistanceFormRoot = styled.div`
- 
-`;
 
 type Props = {
   error: boolean;
@@ -22,8 +17,9 @@ type Props = {
 export default class DistanceForm extends Component <Props> {
   render () {
     return (
-      <DistanceFormRoot>
-        <TextInput name="dist" size={7} maxLength={8}
+      <div>
+        <TextInput 
+          size={7} maxLength={8}
           error={this.props.error}
           inputMode="decimal"
           type="number" pattern="\d*"
@@ -53,7 +49,7 @@ export default class DistanceForm extends Component <Props> {
               </option>
             ))}
         </Select>
-      </DistanceFormRoot>
+      </div>
     );
   }
 }

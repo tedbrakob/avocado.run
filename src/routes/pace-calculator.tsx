@@ -191,6 +191,7 @@ class PaceCalculator extends Component <Props, State> {
     const time = calculateTime(this.getPace(), this.getDistance());
 
     this.setState({
+      timeError: false,
       timeHours: time.hours.toString(),
       timeMinutes: time.minutes.toString(),
       timeSeconds: time.seconds.toString(),
@@ -212,6 +213,7 @@ class PaceCalculator extends Component <Props, State> {
     const distance = calculateDistance(this.getTime(), this.getPace(), this.getDistance().unit);
 
     this.setState({
+      distanceError: false,
       distanceQuantity: distance.quantity.toString(),
     });
   };
@@ -230,6 +232,7 @@ class PaceCalculator extends Component <Props, State> {
     const pace = calculatePace(this.getTime(), this.getDistance(), this.getPace().distance);
 
     this.setState({
+      paceError: false,
       paceTimeHours: pace.time.hours.toString(),
       paceTimeMinutes: pace.time.minutes.toString(),
       paceTimeSeconds: pace.time.seconds.toString(),
@@ -310,7 +313,7 @@ class PaceCalculator extends Component <Props, State> {
           </GridElement>
           <GridElement>
             <HelpText>To calculate your time, fill in your distance and pace then click here:<br/></HelpText>
-            <Button onClick={this.calculateTime}> Calculate Time </Button>
+            <Button onClick={this.calculateTime} value="Calculate Time"/>
           </GridElement>
 
           <RowLabel>Distance</RowLabel>
@@ -326,7 +329,7 @@ class PaceCalculator extends Component <Props, State> {
           </GridElement>
           <GridElement>
             <HelpText>To calculate your distance, fill in your time and pace then click here:<br/></HelpText>
-            <Button onClick={this.calculateDistance}>Calculate Distance</Button>
+            <Button onClick={this.calculateDistance} value="Calculate Distance"/>
           </GridElement>
 
           <RowLabel>Pace</RowLabel>
@@ -342,17 +345,13 @@ class PaceCalculator extends Component <Props, State> {
           </GridElement>
           <GridElement>
             <HelpText>To calculate your pace, fill in your time and distance then click here:<br/></HelpText>
-            <Button onClick={this.calculatePace}>Calculate Pace</Button>
+            <Button onClick={this.calculatePace} value="Calculate Pace"/>
           </GridElement>
 
           <RowLabel></RowLabel>
           <GridFooter>
-            <Button
-              onClick={this.calculateSplits}
-            >
-              Calculate Splits
-            </Button>
-            <Button onClick={this.reset}>Reset</Button>
+            <Button onClick={this.calculateSplits} value="Calculate Splits"/>
+            <Button onClick={this.reset} value="Reset"/>
           </GridFooter>
         </Grid>
 

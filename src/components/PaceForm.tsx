@@ -1,15 +1,7 @@
 import { Component } from "react";
-import styled from "styled-components";
 import { paceDistanceOptions } from "../static/distances";
 import Select from "./Select";
 import TextInput from "./TextInput";
-
-const PaceFormRoot = styled.div`
-  table {
-    margin-left: auto;
-    margin-right: auto;
-  }
-`;
 
 type Props = {
   error: boolean;
@@ -25,7 +17,7 @@ type Props = {
 export default class PaceForm extends Component <Props> {
   render () {
     return (
-      <PaceFormRoot>
+      <div className="mx-auto">
         <table>
           <thead>
             <tr>
@@ -37,7 +29,7 @@ export default class PaceForm extends Component <Props> {
           <tbody>
             <tr>
               <td align="center">
-                <TextInput name="phr" size={2} maxLength={2}
+                <TextInput size={2} maxLength={2}
                   error={this.props.error}
                   inputMode="numeric"
                   type="number" pattern="\d*"
@@ -46,7 +38,7 @@ export default class PaceForm extends Component <Props> {
                 />
               </td>
               <td align="center">
-                <TextInput name="pmin" size={2} maxLength={2}
+                <TextInput size={2} maxLength={2}
                   error={this.props.error}
                   inputMode="numeric"
                   type="number" pattern="\d*"
@@ -55,7 +47,7 @@ export default class PaceForm extends Component <Props> {
                 />
               </td>
               <td align="center">
-                <TextInput name="psec" size={5} maxLength={6}
+                <TextInput size={5} maxLength={6}
                   error={this.props.error}
                   inputMode="decimal"
                   type="number" pattern="\d*"
@@ -80,7 +72,7 @@ export default class PaceForm extends Component <Props> {
             </tr>
           </tbody>
         </table>
-      </PaceFormRoot>
+      </div>
     );
   }
 }

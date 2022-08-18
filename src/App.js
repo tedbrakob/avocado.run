@@ -1,27 +1,15 @@
-import AppHeader from "./components/AppHeader";
 import { Outlet } from "react-router-dom";
+import NavBar from "./components/NavBar";
+
 import './App.css';
-import styled from "styled-components";
-import colors from "./static/colors";
-
-const SiteBody = styled.div`
-  padding-top: 20px;
-  background-size: cover;
-`;
-
-const Site = styled.div`
-  font-family: 'Nunito Sans', sans-serif;
-  height: 100%;
-  background-color: ${colors.light};
-`;
 
 export default function App() {
   return (
-    <Site align="center">
-      <AppHeader />
-      <SiteBody>
+    <div className="bg-light h-full font-nunito text-base leading-tight">
+      <NavBar/>
+      <div className="pt-5">
         <Outlet />
-      </SiteBody>
-    </Site>
+      </div>
+    </div>
   );
 };

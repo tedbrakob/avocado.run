@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import './index.css';
@@ -11,8 +12,8 @@ import reportWebVitals from './reportWebVitals';
 
 import App from "./App";
 import PaceCalculator from "./routes/pace-calculator.tsx";
-// import StravaThing from "./routes/strava-thing";
-// import SpotifyThing from "./routes/spotify-thing";
+import StravaThing from "./routes/strava-thing";
+import SpotifyThing from "./routes/spotify-thing";
 import './index.css'
 
 serviceWorkerRegistration.register();
@@ -29,20 +30,24 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<Navigate to="/pace-calculator" />} /> */}
+      <Route path="/" element={<Navigate to="pace-calculator" />} />
       <Route path="/" element={<App />}>
         <Route 
-          path="/" 
+          path="pace-calculator" 
           element={<PaceCalculator />}
         />
-        {/* <Route 
+        <Route 
           path="strava-thing" 
           element={<StravaThing />} 
         />
         <Route 
           path="spotify-thing" 
           element={<SpotifyThing />}
-        /> */}
+        />
+        <Route 
+          path="nyrr-thing" 
+          element={<SpotifyThing />}
+        />
       </Route>
     </Routes>
   </BrowserRouter>

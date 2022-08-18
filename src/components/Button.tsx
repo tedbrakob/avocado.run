@@ -1,18 +1,20 @@
-import styled from "styled-components";
-import colors from "../static/colors";
+type Props = {
+  value: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+};
 
-export default styled.button`
-  background-color: field;
-  color: ${colors.dark};
-  border: solid 1.5px ${colors.primary};
-  padding: 5px;
-  border-radius: 2px;
-  font-size: 16px;
-  margin: 2px;
+function Button (props: Props) {
+  return (
+    <button 
+      className="
+        bg-white border-solid border-[1.5px] border-primary p-1 m-0.5 rounded-sm
+        active:bg-dark-accent active:text-light active:border-dark-accent
+      " 
+      onClick={(event) => props.onClick(event)}
+    >
+      {props.value}
+    </button>
+  );
+};
 
-	&:active {
-    background-color: ${colors.darkAccent};
-    color: ${colors.light};
-    border: solid 1.5px ${colors.darkAccent};
-  }
-`
+export default Button
