@@ -1,10 +1,10 @@
-const colors = {
-    light: "#F5F4F3",
-    lightAccent: "#9494A5",
-    primary: "#E89F60",
-    darkAccent: "#924B53",
-    error: "#A53643",
-    dark: "#382F33",
-};
+export const colors = new Map(Object.entries(require('./colors.json')));
 
-export default colors;
+export const setColorsAsCssVars = () => {
+
+    const root = document.documentElement;
+
+    for (const [name, value] of colors) {
+        root.style.setProperty(`--${name}`, value);
+    }
+};

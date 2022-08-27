@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from "react";
 import styled from "styled-components";
 import Splits from "../pace-calculator/types/splits";
-import colors from "../static/colors";
+import { colors } from "../static/colors";
 
 interface GridProps {
   maxWidth: string;
@@ -16,8 +16,8 @@ const Grid = styled.div<GridProps>`
   max-width: ${(props) => props.maxWidth};
   margin: 0 auto;
 
-  background-color: ${colors.dark};
-  border: solid 1px ${colors.dark};
+  background-color: ${colors.get('dark')};
+  border: solid 1px ${colors.get('dark')};
 
   @media (max-width: ${(props) => props.maxWidth}) {  
     grid-template-rows: repeat(8, min-content);
@@ -27,7 +27,7 @@ const Grid = styled.div<GridProps>`
 
 const Header = styled.div`
   grid-column: 1 / -1;
-  background-color: ${colors.primary};
+  background-color: ${colors.get('primary')};
   text-align: center;
   padding: 4px;
   font-size: large;
@@ -35,7 +35,7 @@ const Header = styled.div`
 `;
 
 const GridElement = styled.div`
-  background-color: ${colors.light};
+  background-color: ${colors.get('light')};
   text-align: right;
 
   text-align: center;
@@ -62,7 +62,7 @@ export default class SplitsGrid extends Component <Props> {
     return (
       <Grid maxWidth={this.props.maxWidth}>
         <Header>
-          <b color={colors.light} ref={this.props.headerRef}>
+          <b color={colors.get('light')} ref={this.props.headerRef}>
             S P L I T S
           </b>
         </Header>
