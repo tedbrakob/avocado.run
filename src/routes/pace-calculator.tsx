@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import colors from "../static/colors";
+import { colors } from "../static/colors";
 import styled from "styled-components";
 
 import {distanceUnitOptions, eventDistanceOptions, paceDistanceOptions } from "../static/distances";
@@ -19,9 +19,7 @@ const maxGridWidth = '480px';
 
 const PaceCalculatorRoot = styled.div`
   width: 100%;
-
-  background-color: ${colors.light};
-  color: ${colors.dark};
+  color: ${colors.get('dark')};
 `;
 
 const Grid = styled.div`
@@ -33,8 +31,8 @@ const Grid = styled.div`
   max-width: ${maxGridWidth};
   margin: 0 auto;
 
-  background-color: ${colors.dark};
-  border: solid 1px ${colors.dark};
+  background-color: ${colors.get('dark')};
+  border: solid 1px ${colors.get('dark')};
 
   @media (max-width: ${maxGridWidth}) {  
     grid-template-rows: repeat(8, min-content);
@@ -43,7 +41,7 @@ const Grid = styled.div`
 `;
 
 const GridElement = styled.div`
-  background-color: ${colors.light};
+  background-color: ${colors.get('light')};
   text-align: right;
 
   text-align: center;
@@ -57,7 +55,7 @@ const GridElement = styled.div`
 
 const RowLabel = styled(GridElement)`
   font-weight: bold;
-  background-color: ${colors.primary};
+  background-color: ${colors.get('primary')};
 
   grid-column: 1 / 2 ;
   @media (max-width: ${maxGridWidth}) {  
@@ -67,7 +65,7 @@ const RowLabel = styled(GridElement)`
 
 const Header = styled.div`
   grid-column: 1 / -1;
-  background-color: ${colors.primary};
+  background-color: ${colors.get('primary')};
   text-align: center;
   padding: 4px;
   font-size: large;
@@ -81,7 +79,7 @@ const HelpText = styled.span`
 
 const GridFooter = styled(GridElement)`
   grid-column: auto / span 2;
-  background-color: ${colors.light};
+  background-color: ${colors.get('light')};
   padding: 4px;
   flex-direction: row;
 `;
@@ -296,7 +294,7 @@ class PaceCalculator extends Component <Props, State> {
       <PaceCalculatorRoot>
         <Grid>
           <Header>
-            <b color={colors.light}>
+            <b color={colors.get('light')}>
               P A C E &nbsp; C A L C U L A T O R
             </b>
           </Header>
