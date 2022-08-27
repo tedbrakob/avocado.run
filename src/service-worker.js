@@ -76,6 +76,3 @@ registerRoute(
     cacheName: 'google-fonts-webfonts',
   })
 );
-
-
-
