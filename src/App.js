@@ -2,17 +2,21 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 import './App.css';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { setColorsAsCssVars } from "./static/colors";
 
+const queryClient = new QueryClient();
 setColorsAsCssVars();
 
 export default function App() {
   return (
     <div className="h-full font-nunito text-base leading-tight">
-      <NavBar/>
-      <div className="pt-5">
-        <Outlet />
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <NavBar/>
+        <div className="pt-5">
+          <Outlet />
+        </div>
+      </QueryClientProvider>
     </div>
   );
 };
