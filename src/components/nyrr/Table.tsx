@@ -5,7 +5,7 @@ type Props = {
   columns,
 }
 
-export default function ClubStandingsTable(props: Props) {
+export default function Table(props: Props) {
   const table = useReactTable({
     data: props.data,
     columns: props.columns,
