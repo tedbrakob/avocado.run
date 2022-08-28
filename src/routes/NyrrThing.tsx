@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
-import Table from "../components/nyrr/Table";
+import Table from "../components/Table";
 import { fetchClubStandings } from "../http/nyrr";
 
 export default function NyrrThing () {
