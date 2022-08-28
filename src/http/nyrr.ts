@@ -49,7 +49,8 @@ export type ClubStandings = z.infer<typeof clubStandingsSchema>;
 
 
 export const fetchToken = async () : Promise<void> => {
-  const response = await axios.get('/api/nyrr-token');
+
+  const response = await axios.get(process.env.REACT_APP_API_URL + '/nyrr-token');
   const data = response.data;
 
   z.object({
