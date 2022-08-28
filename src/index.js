@@ -15,6 +15,7 @@ import PaceCalculator from "./routes/pace-calculator.tsx";
 import StravaThing from "./routes/strava-thing";
 import SpotifyThing from "./routes/spotify-thing";
 import './index.css'
+import NyrrThing from "./routes/NyrrThing";
 
 serviceWorkerRegistration.register();
 
@@ -46,7 +47,7 @@ root.render(
         />
         <Route 
           path="nyrr-thing" 
-          element={<SpotifyThing />}
+          element={<NyrrThing />}
         />
       </Route>
     </Routes>
