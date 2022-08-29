@@ -3,6 +3,23 @@ import { z } from 'zod';
 
 let token:string;
 
+const teamResultsSchema = z.object({
+  teamCode: z.string(),
+  teamName: z.string(),
+  teamPlace: z.number(),
+  totalPoints: z.number(),
+});
+
+const divisionResultsSchema = z.object({
+  divisionCode: z.string(),
+  divisionGender: z.enum(["M", "F", "X"]),
+  divisionName: z.string(),
+  divisionOrder: z.number(),
+  teamResults: z.array(
+    teamResultsSchema,
+  ),
+});
+
 const eventDetailsSchema = z.object({
   distanceName: z.string(),
   distanceUnitCode: z.string(),
@@ -21,11 +38,7 @@ const clubStandingsSchema = z.object({
   eventDetails: z.array(
     eventDetailsSchema,
   ),
-  teamCode: z.string(),
-  teamName: z.string(),
-  teamPlace: z.number(),
-  totalPoints: z.number(),
-});
+}).merge(teamResultsSchema);
 
 const clubScorerSchema = z.object({
     runnerId: z.number(),
@@ -43,13 +56,14 @@ const clubScorerSchema = z.object({
   }
 );
 
+export type DivisionResults = z.infer<typeof divisionResultsSchema>;
+export type TeamResults = z.infer<typeof teamResultsSchema>;
 export type ClubScorer = z.infer<typeof clubScorerSchema>;
 export type EventDetails = z.infer<typeof eventDetailsSchema>;
 export type ClubStandings = z.infer<typeof clubStandingsSchema>;
 
 
 export const fetchToken = async () : Promise<void> => {
-
   const response = await axios.get(process.env.REACT_APP_API_URL + '/nyrr-token');
   const data = response.data;
 
@@ -58,6 +72,25 @@ export const fetchToken = async () : Promise<void> => {
   }).parse(data);
 
   token = data.token;
+}
+
+export const fetchDivisionsResults = async () : Promise<DivisionResults[]> => {
+  const year = 2022;
+
+  const response = await postWithNyrrToken(
+    'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
+    { 
+      year,    }
+  );
+
+  const data = response.data.response.items;
+  try{
+    z.array(divisionResultsSchema).parse(data);
+  } catch (error) {
+    debugger;
+  }
+
+  return data;
 }
 
 export const fetchClubStandings = async () : Promise<ClubStandings[]> => {

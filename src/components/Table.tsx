@@ -13,7 +13,7 @@ export default function Table(props: Props) {
   });
 
   return (
-    <table className="border-solid border-dark border">
+    <table className="border-solid border-dark border w-full">
       <thead className="bg-primary text-dark">
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
