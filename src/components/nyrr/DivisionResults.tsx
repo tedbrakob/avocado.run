@@ -1,5 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { TeamResults } from "../../http/nyrr";
+import getDivisionName from "../../nyrr/divisionNames";
 import Table from "../Table";
 
 type Props = {
@@ -40,18 +41,21 @@ export default function DivisionResults (props: Props) {
   })
 
   const truncatedResults = divisionResults.slice(0, props.maxRows);
+  const hiddenRowCount = divisionResults.length - props.maxRows;
 
   if (divisionResults.length > props.maxRows) {
     truncatedResults.push({
-      teamName: `${divisionResults.length - props.maxRows} more...`,
+      teamName: `${hiddenRowCount} more...`,
       teamPlace: '',
       totalPoints: '',
     })
   }
 
   return (
-    <div>
-      <div>{props.divisionName}</div>
+    <div className=" mx-auto">
+      <div
+        className=" w-full text-center bg-dark font-bold text-light p-1 rounded-t-xl"
+      >{ getDivisionName(props.divisionCode) }</div>
       <Table
         data={truncatedResults}
         columns={columns}
