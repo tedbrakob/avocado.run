@@ -13,8 +13,8 @@ export default function Table(props: Props) {
   });
 
   return (
-    <table className="border-solid border-dark border w-full">
-      <thead className="bg-primary text-dark">
+    <table className="border-solid border-dark border w-full bg-white">
+      <thead className="bg-dark-accent text-light border-dark border-solid border">
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map(header => (
@@ -32,9 +32,9 @@ export default function Table(props: Props) {
       </thead>
       <tbody>
         {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
+          <tr key={row.id} className="odd:bg-white even:bg-light">
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id} className="border-solid border-dark border p-2">
+              <td key={cell.id} className="p-2">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
