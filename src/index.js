@@ -46,9 +46,10 @@ root.render(
           element={<SpotifyThing />}
         />
         <Route 
-          path="nyrr-thing" 
+          path="nyrr-thing/*" 
           element={<NyrrThing />}
-        />
+        >
+        </Route>
       </Route>
     </Routes>
   </BrowserRouter>

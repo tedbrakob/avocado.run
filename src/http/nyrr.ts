@@ -2,6 +2,8 @@ import axios from 'axios';
 import { z } from 'zod';
 
 let token:string;
+const year = 2022;
+
 
 const teamResultsSchema = z.object({
   teamCode: z.string(),
@@ -75,27 +77,20 @@ export const fetchToken = async () : Promise<void> => {
 }
 
 export const fetchDivisionsResults = async () : Promise<DivisionResults[]> => {
-  const year = 2022;
-
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
     { 
-      year,    }
+      year,    
+    }
   );
 
   const data = response.data.response.items;
-  try{
-    z.array(divisionResultsSchema).parse(data);
-  } catch (error) {
-    debugger;
-  }
+  z.array(divisionResultsSchema).parse(data);
 
   return data;
 }
 
-export const fetchClubStandings = async () : Promise<ClubStandings[]> => {
-  const divisionCode = 'AM';
-  const year = 2022;
+export const fetchClubStandings = async (divisionCode:string) : Promise<ClubStandings[]> => {
 
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionResults', 

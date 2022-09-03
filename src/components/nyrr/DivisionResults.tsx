@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { Link } from "react-router-dom";
 import { TeamResults } from "../../http/nyrr";
 import getDivisionName from "../../nyrr/divisionNames";
 import Table from "../Table";
@@ -7,7 +8,9 @@ type Props = {
   divisionName: string,
   divisionCode: string,
   divisionResults: TeamResults[],
-  maxRows: number,
+  maxRows?: number,
+  showRaceResults: boolean,
+  showDetailsLink: boolean,
 };
 
 export default function DivisionResults (props: Props) {
@@ -40,10 +43,12 @@ export default function DivisionResults (props: Props) {
     };
   })
 
-  const truncatedResults = divisionResults.slice(0, props.maxRows);
-  const hiddenRowCount = divisionResults.length - props.maxRows;
+  const rowDisplayCount = props.maxRows ?? divisionResults.length
 
-  if (divisionResults.length > props.maxRows) {
+  const truncatedResults = divisionResults.slice(0, rowDisplayCount);
+  const hiddenRowCount = divisionResults.length - rowDisplayCount;
+
+  if (divisionResults.length > rowDisplayCount) {
     truncatedResults.push({
       teamName: `${hiddenRowCount} more...`,
       teamPlace: '',
@@ -53,12 +58,15 @@ export default function DivisionResults (props: Props) {
 
   return (
     <div className=" mx-auto">
-      <div
-        className=" w-full text-center bg-dark font-bold text-light p-1 rounded-t-xl"
-      >{ getDivisionName(props.divisionCode) }</div>
       <Table
         data={truncatedResults}
         columns={columns}
+        header={getDivisionName(props.divisionCode)}
+        footer={ 
+          props.showDetailsLink ? 
+          (<Link to={`division/${props.divisionCode}`}>Show Details</Link>)
+          : (<div/>)
+        }
       />
     </div>
   );
