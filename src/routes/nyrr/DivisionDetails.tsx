@@ -5,10 +5,13 @@ import { fetchClubStandings } from "../../http/nyrr";
 import getDivisionName from "../../nyrr/divisionNames";
 
 export default function DivisionDetails() {
-  const { divisionCode } = useParams()
+  const { year, divisionCode } = useParams()
   const { error, data } = useQuery(
     ['nyrr-fetchClubStandings', divisionCode], 
-    () => fetchClubStandings(divisionCode ?? '')
+    () => fetchClubStandings(
+      divisionCode ?? '',
+      year ?? new Date().getFullYear().toString()
+    )
   );
 
   if (error || !divisionCode) {
