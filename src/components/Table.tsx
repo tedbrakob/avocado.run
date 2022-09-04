@@ -5,12 +5,16 @@ type Props = {
   columns,
   header,
   footer,
+  columnOrder?,
 }
 
 export default function Table(props: Props) {
   const table = useReactTable({
     data: props.data,
     columns: props.columns,
+    state: {
+      columnOrder: props.columnOrder ?? [],
+    },
     getCoreRowModel: getCoreRowModel(),
   });
 

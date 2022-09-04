@@ -86,7 +86,6 @@ export default function DivisionsResults() {
                 divisionCode={division.divisionCode}
                 divisionResults={division.teamResults}
                 maxRows={10}
-                showRaceResults={false}
                 showDetailsLink={true}
               />
             </div>

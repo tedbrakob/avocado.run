@@ -31,7 +31,6 @@ export default function DivisionDetails() {
         divisionName={divisionName}
         divisionCode={divisionCode}
         divisionResults={data}
-        showRaceResults={true}
         showDetailsLink={false}
       ></DivisionResults>
     </main>

@@ -3,24 +3,7 @@ import { z } from 'zod';
 
 let token:string;
 
-const teamResultsSchema = z.object({
-  teamCode: z.string(),
-  teamName: z.string(),
-  teamPlace: z.number(),
-  totalPoints: z.number(),
-});
-
-const divisionResultsSchema = z.object({
-  divisionCode: z.string(),
-  divisionGender: z.enum(["M", "F", "X"]),
-  divisionName: z.string(),
-  divisionOrder: z.number(),
-  teamResults: z.array(
-    teamResultsSchema,
-  ),
-});
-
-const eventDetailsSchema = z.object({
+const teamEventDetailsSchema = z.object({
   distanceName: z.string(),
   distanceUnitCode: z.string(),
   eventCode: z.string(),
@@ -34,11 +17,25 @@ const eventDetailsSchema = z.object({
   startDateTime: z.string(),
 });
 
-const clubStandingsSchema = z.object({
+const teamResultsSchema = z.object({
+  teamCode: z.string(),
+  teamName: z.string(),
+  teamPlace: z.number(),
+  totalPoints: z.number(),
   eventDetails: z.array(
-    eventDetailsSchema,
+    teamEventDetailsSchema,
+  ).optional(),
+});
+
+const divisionResultsSchema = z.object({
+  divisionCode: z.string(),
+  divisionGender: z.enum(["M", "F", "X"]),
+  divisionName: z.string(),
+  divisionOrder: z.number(),
+  teamResults: z.array(
+    teamResultsSchema,
   ),
-}).merge(teamResultsSchema);
+});
 
 const clubScorerSchema = z.object({
     runnerId: z.number(),
@@ -59,9 +56,7 @@ const clubScorerSchema = z.object({
 export type DivisionResults = z.infer<typeof divisionResultsSchema>;
 export type TeamResults = z.infer<typeof teamResultsSchema>;
 export type ClubScorer = z.infer<typeof clubScorerSchema>;
-export type EventDetails = z.infer<typeof eventDetailsSchema>;
-export type ClubStandings = z.infer<typeof clubStandingsSchema>;
-
+export type TeamEventDetails = z.infer<typeof teamEventDetailsSchema>;
 
 export const fetchToken = async () : Promise<void> => {
   const response = await axios.get(process.env.REACT_APP_API_URL + '/nyrr-token');
@@ -88,7 +83,7 @@ export const fetchDivisionsResults = async (year:string) : Promise<DivisionResul
   return data;
 }
 
-export const fetchClubStandings = async (divisionCode:string, year:string) : Promise<ClubStandings[]> => {
+export const fetchClubStandings = async (divisionCode:string, year:string) : Promise<TeamResults[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionResults', 
     { 
@@ -98,7 +93,7 @@ export const fetchClubStandings = async (divisionCode:string, year:string) : Pro
   );
 
   const data = response.data.response.items;
-  z.array(clubStandingsSchema).parse(data);
+  z.array(teamResultsSchema).parse(data);
 
   return data;
 }
