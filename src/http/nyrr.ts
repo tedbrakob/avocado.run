@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 let token:string;
 
-const eventDetailsSchema = z.object({
+const teamEventDetailsSchema = z.object({
   distanceName: z.string(),
   distanceUnitCode: z.string(),
   eventCode: z.string(),
@@ -23,7 +23,7 @@ const teamResultsSchema = z.object({
   teamPlace: z.number(),
   totalPoints: z.number(),
   eventDetails: z.array(
-    eventDetailsSchema,
+    teamEventDetailsSchema,
   ).optional(),
 });
 
@@ -56,7 +56,7 @@ const clubScorerSchema = z.object({
 export type DivisionResults = z.infer<typeof divisionResultsSchema>;
 export type TeamResults = z.infer<typeof teamResultsSchema>;
 export type ClubScorer = z.infer<typeof clubScorerSchema>;
-export type EventDetails = z.infer<typeof eventDetailsSchema>;
+export type TeamEventDetails = z.infer<typeof teamEventDetailsSchema>;
 
 export const fetchToken = async () : Promise<void> => {
   const response = await axios.get(process.env.REACT_APP_API_URL + '/nyrr-token');
