@@ -13,9 +13,7 @@ export default function App() {
     <div className="h-full font-nunito text-base leading-tight">
       <QueryClientProvider client={queryClient}>
         <NavBar/>
-        <div className="pt-5">
-          <Outlet />
-        </div>
+        <Outlet />
       </QueryClientProvider>
     </div>
   );
