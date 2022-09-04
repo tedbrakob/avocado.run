@@ -43,7 +43,7 @@ export default function YearSwitcher() {
   return (
     <Disclosure as="nav" className="bg-primary">
       <div className="sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
+        <div className="relative flex items-center justify-between h-11">
           <div className="flex-1 flex items-center justify-center h-full">
             <div className="flex flex-nowrap whitespace-nowrap overflow-x-auto w-[100vw] max-w-fit h-full">
               {years.map((item) => (
