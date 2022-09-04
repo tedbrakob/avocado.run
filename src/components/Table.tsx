@@ -6,6 +6,11 @@ type Props = {
   header,
   footer,
   columnOrder?,
+  noWrap?: boolean,
+}
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Table(props: Props) {
@@ -25,7 +30,13 @@ export default function Table(props: Props) {
       >
         {props.header}
       </div>
-      <div className="w-full overflow-scroll overflow-x-auto whitespace-nowrap">
+      <div 
+        className={
+          classNames(
+            props.noWrap ? "whitespace-nowrap" : "",
+            'w-full overflow-scroll overflow-x-auto'
+          )}
+        >
         <table className="border-solid border-dark border bg-white w-full">
           <thead className="bg-dark-accent text-light border-dark border-solid border">
             {table.getHeaderGroups().map(headerGroup => (

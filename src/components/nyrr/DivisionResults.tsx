@@ -18,6 +18,7 @@ type Props = {
   divisionResults: TeamResults[],
   maxRows?: number,
   showDetailsLink: boolean,
+  noWrap?: boolean,
 };
 
 export default function DivisionResults (props: Props) {
@@ -105,6 +106,7 @@ export default function DivisionResults (props: Props) {
           (<Link to={`division/${props.divisionCode}`}>Show Details</Link>)
           : (<div/>)
         }
+        noWrap={props.noWrap}
       />
     </div>
   );
