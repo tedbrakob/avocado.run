@@ -95,7 +95,7 @@ export default function DivisionResults (props: Props) {
   }
 
   return (
-    <div className=" mx-auto">
+    <div className="mx-auto">
       <Table
         data={truncatedResults}
         columns={columns}
