@@ -18,8 +18,7 @@ export default function NyrrThing () {
         </Routes>
 
         <Outlet></Outlet>
-      </div>
-      
+      </div>    
     </div>
   );
 };
