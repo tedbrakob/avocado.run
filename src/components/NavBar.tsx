@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { NavLink } from "react-router-dom";
@@ -7,7 +6,7 @@ const navigation = [
   { name: 'Cool Running', to: '/pace-calculator' },
   // { name: 'Strava Thing', to: '/strava-thing' },
   // { name: 'Spotify Thing', to: '/spotify-thing' },
-  // { name: 'NYRR Thing', to: '/nyrr-thing' },
+  { name: 'NYRR Thing', to: '/nyrr-thing' },
 ];
 
 function classNames(...classes) {
