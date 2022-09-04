@@ -32,6 +32,7 @@ export default function DivisionDetails() {
         divisionCode={divisionCode}
         divisionResults={data}
         showDetailsLink={false}
+        noWrap
       ></DivisionResults>
     </main>
   );
