@@ -291,7 +291,7 @@ class PaceCalculator extends Component <Props, State> {
 
   render() {
     return (
-      <PaceCalculatorRoot>
+      <PaceCalculatorRoot className="pt-5">
         <Grid>
           <Header>
             <b color={colors.get('light')}>

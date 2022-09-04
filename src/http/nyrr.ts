@@ -2,8 +2,6 @@ import axios from 'axios';
 import { z } from 'zod';
 
 let token:string;
-const year = 2022;
-
 
 const teamResultsSchema = z.object({
   teamCode: z.string(),
@@ -76,7 +74,7 @@ export const fetchToken = async () : Promise<void> => {
   token = data.token;
 }
 
-export const fetchDivisionsResults = async () : Promise<DivisionResults[]> => {
+export const fetchDivisionsResults = async (year:string) : Promise<DivisionResults[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
     { 
@@ -90,8 +88,7 @@ export const fetchDivisionsResults = async () : Promise<DivisionResults[]> => {
   return data;
 }
 
-export const fetchClubStandings = async (divisionCode:string) : Promise<ClubStandings[]> => {
-
+export const fetchClubStandings = async (divisionCode:string, year:string) : Promise<ClubStandings[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionResults', 
     { 
@@ -106,17 +103,26 @@ export const fetchClubStandings = async (divisionCode:string) : Promise<ClubStan
   return data;
 }
 
-export const fetchClubScorers = async (eventCode:string) : Promise<ClubScorer[]> => {
-  const response = await postWithNyrrToken(
-    'https://results.nyrr.org/api/awards/teamAwardRunners',
-    {
-      eventCode: eventCode,
-      teamCode: "PPTC",
-    }
-  );
+// export const fetchClubScorers = async (eventCode:string) : Promise<ClubScorer[]> => {
+//   const response = await postWithNyrrToken(
+//     'https://results.nyrr.org/api/awards/teamAwardRunners',
+//     {
+//       eventCode: eventCode,
+//       teamCode: "PPTC",
+//     }
+//   );
+
+//   const data = response.data.response.items;
+//   z.array(clubScorerSchema).parse(data);
+
+//   return data;
+// }
+
+export const fetchYears = async () : Promise<number[]> => {
+  const response = await postWithNyrrToken('https://results.nyrr.org/api/ClubStandings/getYears', {});
 
   const data = response.data.response.items;
-  z.array(clubScorerSchema).parse(data);
+  z.array(z.number()).parse(data);
 
   return data;
 }
