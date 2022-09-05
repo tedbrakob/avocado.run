@@ -58,7 +58,9 @@ export default function TeamDetails(props: Props) {
       <h1 className="text-xl">{teamCode} - {teamName}</h1>
       {
         teamDivisionResults.map((divisionResult) => (
-          <div>{getDivisionName(divisionResult.divisionCode)}</div>
+          <div
+            key={divisionResult.divisionCode}
+          >{getDivisionName(divisionResult.divisionCode)}</div>
         ))
       }
     </div>

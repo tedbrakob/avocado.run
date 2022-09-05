@@ -60,18 +60,22 @@ export default function DivisionResults (props: Props) {
       cell: info => { 
         const className = "pr-2";
         const value = info.getValue().teamName;
+        
+        const isFooterRow = info.getValue().teamCode.length === 0;
 
-        return info.getValue().teamCode.length > 0 ? (
+        return isFooterRow ? (
+          <div 
+            className={className}
+          >
+            {value}
+          </div>
+        ) : (
           <LinkWithQuery 
             to={`/nyrr-thing/team/${info.getValue().teamCode}`} 
             className={className}
           >
               { value } 
           </LinkWithQuery>
-        ) : (
-          <div className={className}>
-              { value }
-          </div>
         )
       },
     }), 
