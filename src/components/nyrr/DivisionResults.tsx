@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import { TeamEventDetails, TeamResults } from "../../http/nyrr";
 import getDivisionName from "../../nyrr/divisionNames";
+import { LinkWithQuery } from "../LinkWithQuery";
 import Table from "../Table";
 
 type EventDetails = {
@@ -103,7 +104,7 @@ export default function DivisionResults (props: Props) {
         header={getDivisionName(props.divisionCode)}
         footer={ 
           props.showDetailsLink ? 
-          (<Link to={`division/${props.divisionCode}`}>Show Details</Link>)
+            (<LinkWithQuery to={`division/${props.divisionCode}`}>Show Details</LinkWithQuery>)
           : (<div/>)
         }
         noWrap={props.noWrap}

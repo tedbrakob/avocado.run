@@ -69,7 +69,7 @@ export const fetchToken = async () : Promise<void> => {
   token = data.token;
 }
 
-export const fetchDivisionsResults = async (year:string) : Promise<DivisionResults[]> => {
+export const fetchDivisionsResults = async (year:number) : Promise<DivisionResults[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
     { 
@@ -83,7 +83,7 @@ export const fetchDivisionsResults = async (year:string) : Promise<DivisionResul
   return data;
 }
 
-export const fetchClubStandings = async (divisionCode:string, year:string) : Promise<TeamResults[]> => {
+export const fetchClubStandings = async (divisionCode:string, year:number) : Promise<TeamResults[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionResults', 
     { 
