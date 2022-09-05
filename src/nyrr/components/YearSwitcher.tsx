@@ -45,7 +45,7 @@ export default function YearSwitcher (props: Props) {
   }
 
   return (
-      <div className="bg-primary px-6 relative flex items-center justify-between h-11">
+      <div className="bg-primary relative flex items-center justify-between h-11">
         <div className="flex-1 flex items-center justify-center h-full">
           <div className="flex flex-nowrap whitespace-nowrap overflow-x-auto w-[100vw] max-w-fit h-full">
             {years.map((year) => {
