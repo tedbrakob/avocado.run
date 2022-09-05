@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import DivisionResults from "./DivisionResults";
-import { fetchClubStandings } from "../../http/nyrr";
+import DivisionResults from "../components/DivisionResults";
+import { fetchClubStandings } from "../http/nyrr";
 import getDivisionName from "../divisionNames";
 
 type Props = {

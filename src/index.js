@@ -15,7 +15,7 @@ import PaceCalculator from "./pace-calculator/components/pace-calculator.tsx";
 import StravaThing from "./routes/strava-thing";
 import SpotifyThing from "./routes/spotify-thing";
 import './index.css'
-import NyrrThing from "./nyrr/components/NyrrThing";
+import NyrrThing from "./nyrr/routes/NyrrThing";
 
 serviceWorkerRegistration.register();
 

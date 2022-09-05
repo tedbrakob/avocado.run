@@ -1,7 +1,8 @@
 import { Outlet, Route, Routes, useSearchParams } from "react-router-dom";
-import DivisionsResults from "../../nyrr/components/DivisionsResults";
-import YearSwitcher from "../../nyrr/components/YearSwitcher";
+import DivisionsResults from "./DivisionsResults";
+import YearSwitcher from "../components/YearSwitcher";
 import DivisionDetails from "./DivisionDetails";
+import TeamDetails from "./TeamDetails";
 
 export default function RoutesWithYearSwitcher() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -9,7 +10,6 @@ export default function RoutesWithYearSwitcher() {
   function handleYearChange(year: string) {
     setSearchParams({ year });
   }
-
   const year = parseInt(searchParams.get('year') ?? (new Date()).getFullYear().toString());
 
   return (
@@ -30,6 +30,13 @@ export default function RoutesWithYearSwitcher() {
             <DivisionDetails
               year={year}
             />
+          } />
+          <Route path="team/:teamCode" element={
+            <div className="p-2 max-w-fit m-auto">
+              <TeamDetails
+                year={year}
+              />
+            </div>
           } />
         </Routes>
 

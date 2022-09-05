@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useQuery } from '@tanstack/react-query';
 import { URLSearchParamsInit } from 'react-router-dom';
-import { fetchYears } from '../../http/nyrr';
+import { fetchYears } from '../http/nyrr';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
