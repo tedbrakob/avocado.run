@@ -3,6 +3,7 @@ import { TeamEventDetails, TeamResults } from "../../http/nyrr";
 import getDivisionName from "../divisionNames";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
+import { Link } from "react-router-dom";
 
 type EventDetails = {
   distanceName: string,
@@ -50,7 +51,7 @@ export default function DivisionResults (props: Props) {
     }),
     columnHelper.accessor('teamName', {
       header: 'Team',
-      cell: info => <div className="pr-2"> {info.getValue()} </div>,
+      cell: info => <Link to={`/nyrr-thing/team/${info.getValue()}`} className="pr-2"> {info.getValue()} </Link>,
     }), 
     columnHelper.accessor('totalPoints', {
       header: 'Points',
