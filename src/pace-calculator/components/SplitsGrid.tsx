@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from "react";
 import styled from "styled-components";
-import Splits from "../pace-calculator/types/splits";
-import { colors } from "../static/colors";
+import Splits from "../types/splits";
+import { colors } from "../../static/colors";
 
 interface GridProps {
   maxWidth: string;

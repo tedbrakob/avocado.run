@@ -11,11 +11,11 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 import App from "./App";
-import PaceCalculator from "./routes/pace-calculator.tsx";
+import PaceCalculator from "./pace-calculator/components/pace-calculator.tsx";
 import StravaThing from "./routes/strava-thing";
 import SpotifyThing from "./routes/spotify-thing";
 import './index.css'
-import NyrrThing from "./routes/NyrrThing";
+import NyrrThing from "./nyrr/components/NyrrThing";
 
 serviceWorkerRegistration.register();
 

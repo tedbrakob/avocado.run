@@ -1,9 +1,8 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
 import { TeamEventDetails, TeamResults } from "../../http/nyrr";
-import getDivisionName from "../../nyrr/divisionNames";
-import { LinkWithQuery } from "../LinkWithQuery";
-import Table from "../Table";
+import getDivisionName from "../divisionNames";
+import { LinkWithQuery } from "../../components/LinkWithQuery";
+import Table from "../../components/Table";
 
 type EventDetails = {
   distanceName: string,

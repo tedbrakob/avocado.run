@@ -1,7 +1,7 @@
 import { Component } from "react";
-import { paceDistanceOptions } from "../static/distances";
-import Select from "./Select";
-import TextInput from "./TextInput";
+import { paceDistanceOptions } from "../../static/distances";
+import Select from "../../components/Select";
+import TextInput from "../../components/TextInput";
 
 type Props = {
   error: boolean;
