@@ -4,14 +4,18 @@ import DivisionResults from "../../components/nyrr/DivisionResults";
 import { fetchClubStandings } from "../../http/nyrr";
 import getDivisionName from "../../nyrr/divisionNames";
 
-export default function DivisionDetails() {
-  const { year, divisionCode } = useParams()
+type Props = {
+  year: number,
+};
+
+export default function DivisionDetails(props: Props) {
+  const { divisionCode } = useParams()
   const { error, data } = useQuery(
-    ['nyrr-fetchClubStandings', divisionCode], 
+    ['nyrr-fetchClubStandings', divisionCode, props.year], 
     () => fetchClubStandings(
       divisionCode ?? '',
-      year ?? new Date().getFullYear().toString()
-    )
+      props.year
+    ),
   );
 
   if (error || !divisionCode) {
@@ -26,7 +30,7 @@ export default function DivisionDetails() {
   const divisionName = getDivisionName(divisionCode);
 
   return (
-    <main style={{ padding: "1rem 0" }}>
+    <div style={{ padding: "1rem 0" }}>
       <DivisionResults
         divisionName={divisionName}
         divisionCode={divisionCode}
@@ -34,6 +38,6 @@ export default function DivisionDetails() {
         showDetailsLink={false}
         noWrap
       ></DivisionResults>
-    </main>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { NavLink } from "react-router-dom";
+import { NavLinkWithQuery } from './NavLinkWithQuery';
 
 const navigation = [
   { name: 'Cool Running', to: '/pace-calculator' },
@@ -34,7 +35,7 @@ export default function NavBar() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <NavLink
+                      <NavLinkWithQuery
                         key={item.name}
                         to={item.to}
 
@@ -45,7 +46,7 @@ export default function NavBar() {
                           )}
                       >
                         {item.name}
-                      </NavLink>
+                      </NavLinkWithQuery>
                     ))}
                   </div>
                 </div>
@@ -56,7 +57,7 @@ export default function NavBar() {
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
-                <NavLink
+                <NavLinkWithQuery
                   key={item.name}
                   to={item.to}
 
@@ -67,7 +68,7 @@ export default function NavBar() {
                     )}
                 >
                   {item.name}
-                </NavLink>
+                </NavLinkWithQuery>
               ))}
             </div>
           </Disclosure.Panel>

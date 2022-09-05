@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { ReactElement } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { DivisionResults, fetchDivisionsResults } from "../../http/nyrr";
 import DivisionResultsComponent from "./DivisionResults";
@@ -21,11 +20,14 @@ const GridPaddingElement = styled.div<{span: number}>`
   }
 `;
 
-export default function DivisionsResults() {
-  const { year } = useParams();
+type Props = {
+  year: number,
+}
+
+export default function DivisionsResults(props: Props) {
   const { isLoading, error, data } = useQuery(
-    ['nyrr-fetchDivisionsResults', year],
-    () => fetchDivisionsResults(year ?? new Date().getFullYear().toString())
+    ['nyrr-fetchDivisionsResults', props.year],
+    () => fetchDivisionsResults(props.year)
   );
 
   if (error) {
