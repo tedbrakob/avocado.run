@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes, useSearchParams } from "react-router-dom";
-import DivisionsResults from "../components/nyrr/DivisionsResults";
-import YearSwitcher from "../nyrr/components/YearSwitcher";
-import DivisionDetails from "./nyrr/DivisionDetails";
+import DivisionsResults from "../../nyrr/components/DivisionsResults";
+import YearSwitcher from "../../nyrr/components/YearSwitcher";
+import DivisionDetails from "./DivisionDetails";
 
 export default function NyrrThing () {
   const [searchParams, setSearchParams] = useSearchParams();

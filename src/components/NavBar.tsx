@@ -1,6 +1,5 @@
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import { NavLink } from "react-router-dom";
 import { NavLinkWithQuery } from './NavLinkWithQuery';
 
 const navigation = [

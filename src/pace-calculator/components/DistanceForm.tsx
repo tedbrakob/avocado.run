@@ -1,8 +1,8 @@
 import { Component } from "react";
-import TextInput from "./TextInput";
-import Select from "./Select";
-import Unit from "../pace-calculator/types/unit";
-import { distanceUnitOptions, eventDistanceOptions } from "../static/distances";
+import TextInput from "../../components/TextInput";
+import Select from "../../components/Select";
+import Unit from "../types/unit";
+import { distanceUnitOptions, eventDistanceOptions } from "../../static/distances";
 
 type Props = {
   error: boolean;

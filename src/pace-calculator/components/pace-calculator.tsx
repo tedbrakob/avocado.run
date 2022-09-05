@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { colors } from "../static/colors";
+import { colors } from "../../static/colors";
 import styled from "styled-components";
 
-import {distanceUnitOptions, eventDistanceOptions, paceDistanceOptions } from "../static/distances";
-import Distance from "../pace-calculator/types/distance";
-import Time from "../pace-calculator/types/time";
-import Pace from "../pace-calculator/types/pace";
-import Unit from "../pace-calculator/types/unit";
-import { calculateDistance, calculatePace, calculateTime, calculateSplits } from "../pace-calculator/calculator";
-import Button from "../components/Button";
-import TimeForm from "../components/TimeForm";
-import DistanceForm from "../components/DistanceForm";
-import PaceForm from "../components/PaceForm";
-import SplitsGrid from "../components/SplitsGrid";
-import Splits from "../pace-calculator/types/splits";
+import {distanceUnitOptions, eventDistanceOptions, paceDistanceOptions } from "../../static/distances";
+import Distance from "../types/distance";
+import Time from "../types/time";
+import Pace from "../types/pace";
+import Unit from "../types/unit";
+import { calculateDistance, calculatePace, calculateTime, calculateSplits } from "../calculator";
+import Button from "../../components/Button";
+import TimeForm from "./TimeForm";
+import DistanceForm from "./DistanceForm";
+import PaceForm from "./PaceForm";
+import SplitsGrid from "./SplitsGrid";
+import Splits from "../types/splits";
 
 const maxGridWidth = '480px';
 
