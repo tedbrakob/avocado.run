@@ -22,10 +22,11 @@ export default function TeamDetails(props: Props) {
     }
   );
 
-  if (!!error) {
+  if (error) {
+    console.log(error);
     return (
       <div className="w-full whitespace-nowrap">
-        <h2 className="w-40 mx-auto">{error.toString()}</h2>
+        <h2 className="w-40 mx-auto">Error</h2>
       </div>
     );
   }
