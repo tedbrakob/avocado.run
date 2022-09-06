@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { z } from 'zod';
-import DivisionResults from '../components/DivisionResults';
 
 let token:string;
 
@@ -70,7 +69,7 @@ export const fetchToken = async () : Promise<void> => {
   token = data.token;
 }
 
-export const fetchDivisionsResults = async (year:number, teamCode?:string) : Promise<DivisionResults[]> => {
+export const fetchDivisionsResults = async (year:number) : Promise<DivisionResults[]> => {
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
     { 
@@ -98,51 +97,6 @@ export const fetchClubStandings = async (divisionCode:string, year:number) : Pro
 
   return data;
 }
-
-export const fetchTeamDivisionsResults = async (year:number, teamName:string) : Promise<DivisionResults[]> => {
-  const response = await postWithNyrrToken(
-    'https://results.nyrr.org/api/ClubStandings/getDivisionsResults',
-    {
-      year,
-      searchTeamName: teamName,
-    }
-  );
-
-
-  const data = response.data.response.items;
-  z.array(divisionResultsSchema).parse(data);
-
-  const teamDivisions = data.filter(
-    (division:DivisionResults) => division.teamResults.length === 1
-  );
-
-  return teamDivisions;
-};
-
-export const fetchTeamName = async (year:number, teamCode:string) : Promise<string> => {
-  const response = await postWithNyrrToken(
-    'https://results.nyrr.org/api/ClubStandings/getTeams',
-    {
-      year,
-    }
-  );
-
-  const data = response.data.response.items;
-
-  const dataSchema = z.object({
-    teamCode: z.string(),
-    teamName: z.string(),
-  });
-
-  z.array(dataSchema).parse(data);
-
-  const matches = data.filter((team:z.infer<typeof dataSchema>) => team.teamCode === teamCode);
-  if (matches.length === 1) {
-      return matches[0].teamName;
-  }
-
-  throw new Error("Could not find Team");
-};
 
 export const fetchYears = async () : Promise<number[]> => {
   const response = await postWithNyrrToken('https://results.nyrr.org/api/ClubStandings/getYears', {});

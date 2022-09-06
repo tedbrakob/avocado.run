@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { createColumnHelper } from "@tanstack/react-table";
 import { useParams } from "react-router-dom";
+import Table from "../../components/Table";
 import getDivisionName from "../divisionNames";
-import { fetchTeamDivisionsResults, fetchTeamName } from "../http/nyrr";
+import { fetchDetailedResults } from "../models/TeamDetails";
 
 type Props = {
   year: number,
@@ -9,9 +11,10 @@ type Props = {
 
 export default function TeamDetails(props: Props) {
   const { teamCode } = useParams()
-  const { error: fetchTeamNameError, data:teamName } = useQuery(
-    ['nyrr-fetchTeamName', props.year, teamCode],
-    () => fetchTeamName(props.year, teamCode ?? ""), 
+
+  const { error, data, isLoading } = useQuery(
+    ['nyrr-fetchTeamDetailedResults', props.year, teamCode],
+    () => fetchDetailedResults(props.year, teamCode ?? ""),
     {
       enabled: !!teamCode,
       refetchOnWindowFocus: false,
@@ -19,33 +22,15 @@ export default function TeamDetails(props: Props) {
     }
   );
 
-  const { error: fetchTeamDivisionsResultsError, data: teamDivisionResults, isLoading } = useQuery(
-    ['nyrr-fetchTeamDivisionsResults', props.year, teamName],
-    () => fetchTeamDivisionsResults(props.year, teamName ?? ""),
-    {
-      enabled: !!teamName,
-      refetchOnWindowFocus: false,
-      retry: false,
-    }
-  );
-
-  if (!!fetchTeamNameError) {
+  if (!!error) {
     return (
       <div className="w-full whitespace-nowrap">
-        <h2 className="w-40 mx-auto">{fetchTeamNameError.toString()}</h2>
+        <h2 className="w-40 mx-auto">{error.toString()}</h2>
       </div>
     );
   }
 
-  if (!!fetchTeamDivisionsResultsError) {
-    return (
-      <div className="w-full whitespace-nowrap">
-        <h2 className="w-40 mx-auto">{fetchTeamDivisionsResultsError.toString()}</h2>
-      </div>
-    );
-  }
-
-  if (isLoading || teamName === undefined || teamDivisionResults === undefined) {
+  if (isLoading || data === undefined) {
     return (
       <div className="w-full">
         <h2 className="w-40 mx-auto">Loading...</h2>
@@ -53,16 +38,59 @@ export default function TeamDetails(props: Props) {
     );
   }
 
+  const { teamName, events, divisionsResults } = data;
+  
+
+  const columnHelper = createColumnHelper<{
+    divisionName: string,
+    divisionPlace: string,
+    totalPoints: string,
+    races: any[],
+  }>();
+
+  const columns = [
+    columnHelper.accessor('divisionName', {
+      header: "Division",
+    }),
+    columnHelper.accessor('divisionPlace', {
+      header: "Place",
+      cell: info => <div className="text-right">{info.getValue()}</div>,
+    }),
+    columnHelper.accessor('totalPoints', {
+      header: "Points",
+      cell: info => <div className="text-right">{info.getValue()}</div>,
+    }),
+    ...events.map((race:any, index:number) =>
+      columnHelper.accessor(
+        row => row.races[index] ?? '-',
+        {
+          id: race.eventCode,
+          header: `${new Date(race.startDateTime).getMonth() + 1}/${new Date(race.startDateTime).getDate()}`,
+          cell: info => <div className="text-right">{info.getValue()}</div>,
+        }
+      )
+    ),
+  ];
+
+  const tableData = divisionsResults.map(divisionResult => {
+    return {
+      divisionName: getDivisionName(divisionResult.divisionCode),
+      divisionPlace: divisionResult.place,
+      totalPoints: divisionResult.points,
+      races: divisionResult.eventsPoints, 
+    }
+  });
+
   return (
     <div className="w-full mx-auto whitespace-nowrap">
-      <h1 className="text-xl">{teamCode} - {teamName}</h1>
-      {
-        teamDivisionResults.map((divisionResult) => (
-          <div
-            key={divisionResult.divisionCode}
-          >{getDivisionName(divisionResult.divisionCode)}</div>
-        ))
-      }
+      <Table
+        data={tableData}
+        columns={columns}
+        header={`${teamCode} - ${teamName}`}
+      />
+
     </div>
   );
+
+  // return <div></div>
 }

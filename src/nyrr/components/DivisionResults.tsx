@@ -50,35 +50,36 @@ export default function DivisionResults (props: Props) {
       cell: info => <div className="text-right mx">{info.getValue()}</div>,
     }),
     columnHelper.accessor(
-    row => {return {
-      teamCode: row.teamCode,
-      teamName: row.teamName
-    }},
-    {
-      id: "teamName",
-      header: 'Team',
-      cell: info => { 
-        const className = "pr-2";
-        const value = info.getValue().teamName;
-        
-        const isFooterRow = info.getValue().teamCode.length === 0;
+      row => {return {
+        teamCode: row.teamCode,
+        teamName: row.teamName
+      }},
+      {
+        id: "teamName",
+        header: 'Team',
+        cell: info => { 
+          const className = "pr-2";
+          const value = info.getValue().teamName;
+          
+          const isFooterRow = info.getValue().teamCode.length === 0;
 
-        return isFooterRow ? (
-          <div 
-            className={className}
-          >
-            {value}
-          </div>
-        ) : (
-          <LinkWithQuery 
-            to={`/nyrr-thing/team/${info.getValue().teamCode}`} 
-            className={className}
-          >
-              { value } 
-          </LinkWithQuery>
-        )
-      },
-    }), 
+          return isFooterRow ? (
+            <div 
+              className={className}
+            >
+              {value}
+            </div>
+          ) : (
+            <LinkWithQuery 
+              to={`/nyrr-thing/team/${info.getValue().teamCode}`} 
+              className={className}
+            >
+                { value } 
+            </LinkWithQuery>
+          )
+        },
+      }
+    ), 
     columnHelper.accessor('totalPoints', {
       header: 'Points',
       cell: info => <div className="text-right">{info.getValue()}</div>,
