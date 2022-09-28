@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { z } from 'zod';
-
-let token:string;
+import NyrrApiSingleton from './nyrrApiSingleton';
 
 const teamEventDetailsSchema = z.object({
   distanceName: z.string(),
@@ -37,88 +35,34 @@ const divisionResultsSchema = z.object({
   ),
 });
 
-const clubScorerSchema = z.object({
-    runnerId: z.number(),
-    firstName: z.string(),
-    lastName: z.string(),
-    bib: z.string(),
-    gender: z.string(),
-    age: z.number(),
-    city: z.string(),
-    stateProvince: z.string(),
-    country: z.string(),
-    iaaf: z.string(),
-    finishTime: z.string(),
-    finishPlace: z.number(),
-  }
-);
+// const clubScorerSchema = z.object({
+//   runnerId: z.number(),
+//   firstName: z.string(),
+//   lastName: z.string(),
+//   bib: z.string(),
+//   gender: z.string(),
+//   age: z.number(),
+//   city: z.string(),
+//   stateProvince: z.string(),
+//   country: z.string(),
+//   iaaf: z.string(),
+//   finishTime: z.string(),
+//   finishPlace: z.number(),
+// });
 
 export type DivisionResults = z.infer<typeof divisionResultsSchema>;
 export type TeamResults = z.infer<typeof teamResultsSchema>;
-export type ClubScorer = z.infer<typeof clubScorerSchema>;
+// export type ClubScorer = z.infer<typeof clubScorerSchema>;
 export type TeamEventDetails = z.infer<typeof teamEventDetailsSchema>;
 
-export const fetchToken = async () : Promise<void> => {
-  const response = await axios.get(process.env.REACT_APP_API_URL + '/nyrr-token');
-  const data = response.data;
-
-  z.object({
-    'token': z.string(),
-  }).parse(data);
-
-  token = data.token;
-}
-
 export const fetchDivisionsResults = async (year:number) : Promise<DivisionResults[]> => {
-  const response = await postWithNyrrToken(
-    'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
-    { 
-      year,
-    }
-  );
-
-  const data = response.data.response.items;
-  z.array(divisionResultsSchema).parse(data);
-
-  return data;
+  return await (await NyrrApiSingleton.getInstance()).getDivisionsResults(year);
 }
 
 export const fetchClubStandings = async (divisionCode:string, year:number) : Promise<TeamResults[]> => {
-  const response = await postWithNyrrToken(
-    'https://results.nyrr.org/api/ClubStandings/getDivisionResults', 
-    { 
-      year,
-      divisionCode,
-    }
-  );
-
-  const data = response.data.response.items;
-  z.array(teamResultsSchema).parse(data);
-
-  return data;
+  return await (await NyrrApiSingleton.getInstance()).getDivisionResults(divisionCode, year);
 }
 
 export const fetchYears = async () : Promise<number[]> => {
-  const response = await postWithNyrrToken('https://results.nyrr.org/api/ClubStandings/getYears', {});
-
-  const data = response.data.response.items;
-  z.array(z.number()).parse(data);
-
-  return data;
+  return await (await NyrrApiSingleton.getInstance()).getYears();
 }
-
-const postWithNyrrToken = async (url:string, data:object) => {  
-  if (token === undefined) {
-    await fetchToken();
-  }
-
-  const response = await axios.post(url, data, {
-    headers: {
-      'content-type': 'application/json;charset=UTF-8',
-      token,
-    }
-  });
-
-  return response;
-}
-
