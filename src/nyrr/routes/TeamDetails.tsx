@@ -83,11 +83,11 @@ export default function TeamDetails(props: Props) {
   });
 
   return (
-    <div className="w-full mx-auto whitespace-nowrap">
+    <div className="w-full mx-auto">
       <Table
         data={tableData}
         columns={columns}
-        header={`${teamCode} - ${teamName}`}
+        header={teamName}
       />
 
     </div>
