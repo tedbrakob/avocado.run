@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useQuery } from '@tanstack/react-query';
 import { URLSearchParamsInit } from 'react-router-dom';
-import { fetchYears } from '../../http/nyrr';
+import { fetchYears } from '../http/nyrr';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -9,10 +9,7 @@ function classNames(...classes) {
 
 type Props = {
   year: number,
-  setYear: (nextInit: URLSearchParamsInit, navigateOptions?: {
-    replace?: boolean | undefined;
-    state?: any;
-  } | undefined) => void
+  setYear: (year: string) => void
 };
 
 export default function YearSwitcher (props: Props) {
@@ -52,9 +49,7 @@ export default function YearSwitcher (props: Props) {
         <div className="flex-1 flex items-center justify-center h-full">
           <div className="flex flex-nowrap whitespace-nowrap overflow-x-auto w-[100vw] max-w-fit h-full">
             {years.map((year) => {
-              const isActive = props.year === year;
-              debugger;
-              
+              const isActive = props.year === year;              
               return(
                 <button
                   key={year}

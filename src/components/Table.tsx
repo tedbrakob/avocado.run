@@ -4,7 +4,7 @@ type Props = {
   data,
   columns,
   header,
-  footer,
+  footer?,
   columnOrder?,
   noWrap?: boolean,
 }
@@ -26,7 +26,7 @@ export default function Table(props: Props) {
   return (
     <div>
       <div
-        className="w-full text-center bg-dark font-bold text-light p-1 rounded-t-xl"
+        className="w-full text-center bg-dark font-bold text-light p-1 px-4 rounded-t-xl"
       >
         {props.header}
       </div>

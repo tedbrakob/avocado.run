@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { TeamEventDetails, TeamResults } from "../../http/nyrr";
+import { TeamEventDetails, TeamResults } from "../http/nyrr";
 import getDivisionName from "../divisionNames";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
@@ -24,6 +24,7 @@ type Props = {
 export default function DivisionResults (props: Props) {
   const columnHelper = createColumnHelper<{
     teamName: string,
+    teamCode: string,
     teamPlace: string,
     totalPoints: string,
     races: TeamEventDetails[],
@@ -48,10 +49,37 @@ export default function DivisionResults (props: Props) {
       header: 'Place',
       cell: info => <div className="text-right mx">{info.getValue()}</div>,
     }),
-    columnHelper.accessor('teamName', {
-      header: 'Team',
-      cell: info => <div className="pr-2"> {info.getValue()} </div>,
-    }), 
+    columnHelper.accessor(
+      row => {return {
+        teamCode: row.teamCode,
+        teamName: row.teamName
+      }},
+      {
+        id: "teamName",
+        header: 'Team',
+        cell: info => { 
+          const className = "pr-2";
+          const value = info.getValue().teamName;
+          
+          const isFooterRow = info.getValue().teamCode.length === 0;
+
+          return isFooterRow ? (
+            <div 
+              className={className}
+            >
+              {value}
+            </div>
+          ) : (
+            <LinkWithQuery 
+              to={`/nyrr-thing/team/${info.getValue().teamCode}`} 
+              className={className}
+            >
+                { value } 
+            </LinkWithQuery>
+          )
+        },
+      }
+    ), 
     columnHelper.accessor('totalPoints', {
       header: 'Points',
       cell: info => <div className="text-right">{info.getValue()}</div>,
@@ -75,6 +103,7 @@ export default function DivisionResults (props: Props) {
   const divisionResults = props.divisionResults.map(teamResult => {
     return {
       teamName: teamResult.teamName,
+      teamCode: teamResult.teamCode,
       teamPlace: teamResult.teamPlace.toString(),
       totalPoints: teamResult.totalPoints.toString(),
       races: teamResult.eventDetails,
@@ -89,6 +118,7 @@ export default function DivisionResults (props: Props) {
   if (divisionResults.length > rowDisplayCount) {
     truncatedResults.push({
       teamName: `${hiddenRowCount} more...`,
+      teamCode: '',
       teamPlace: '',
       totalPoints: '',
       races: [],

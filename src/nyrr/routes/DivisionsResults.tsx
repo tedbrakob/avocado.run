@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import { DivisionResults, fetchDivisionsResults } from "../../http/nyrr";
-import DivisionResultsComponent from "./DivisionResults";
+import { DivisionResults, fetchDivisionsResults } from "../http/nyrr";
+import DivisionResultsComponent from "../components/DivisionResults";
 
 const maxSingleColumnViewWidth = '1120px';
 

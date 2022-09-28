@@ -73,7 +73,7 @@ export const fetchDivisionsResults = async (year:number) : Promise<DivisionResul
   const response = await postWithNyrrToken(
     'https://results.nyrr.org/api/ClubStandings/getDivisionsResults', 
     { 
-      year,    
+      year,
     }
   );
 
@@ -97,21 +97,6 @@ export const fetchClubStandings = async (divisionCode:string, year:number) : Pro
 
   return data;
 }
-
-// export const fetchClubScorers = async (eventCode:string) : Promise<ClubScorer[]> => {
-//   const response = await postWithNyrrToken(
-//     'https://results.nyrr.org/api/awards/teamAwardRunners',
-//     {
-//       eventCode: eventCode,
-//       teamCode: "PPTC",
-//     }
-//   );
-
-//   const data = response.data.response.items;
-//   z.array(clubScorerSchema).parse(data);
-
-//   return data;
-// }
 
 export const fetchYears = async () : Promise<number[]> => {
   const response = await postWithNyrrToken('https://results.nyrr.org/api/ClubStandings/getYears', {});
