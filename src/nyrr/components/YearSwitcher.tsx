@@ -1,6 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useQuery } from '@tanstack/react-query';
-import { URLSearchParamsInit } from 'react-router-dom';
 import { fetchYears } from '../http/nyrr';
 
 function classNames(...classes) {
@@ -46,8 +45,8 @@ export default function YearSwitcher (props: Props) {
 
   return (
       <div className="bg-primary relative flex items-center justify-between h-11">
-        <div className="flex-1 flex items-center justify-center h-full">
-          <div className="flex flex-nowrap whitespace-nowrap overflow-x-auto w-[100vw] max-w-fit h-full">
+      <div className="flex-1 flex items-center justify-center h-full">
+        <div className="flex flex-nowrap whitespace-nowrap overflow-x-auto w-[100vw] max-w-fit h-full hide-scrollbars">
             {years.map((year) => {
               const isActive = props.year === year;              
               return(

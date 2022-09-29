@@ -34,7 +34,7 @@ export default function Table(props: Props) {
         className={
           classNames(
             props.noWrap ? "whitespace-nowrap" : "",
-            'w-full overflow-scroll overflow-x-auto'
+            'w-full overflow-scroll overflow-x-auto hide-scrollbars'
           )}
         >
         <table className="border-solid border-dark border bg-white w-full">
