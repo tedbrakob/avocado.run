@@ -3,14 +3,8 @@ import { TeamEventDetails, TeamResults } from "../http/nyrr";
 import getDivisionName from "../divisionNames";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
-
-type EventDetails = {
-  distanceName: string,
-  distanceUnitCode: string,
-  eventCode: string,
-  eventName: string,
-  startDateTime: string,
-};
+import { EventDetails } from "../types";
+import EventDetailsTable from "./EventDetailsTable";
 
 type Props = {
   divisionName: string,
@@ -20,6 +14,20 @@ type Props = {
   showDetailsLink: boolean,
   noWrap?: boolean,
 };
+
+function getEventKeyComponents(races: EventDetails[]) {
+  if (races.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="pt-2">
+      <EventDetailsTable
+        events={races}
+      />
+    </div>
+  );
+}
 
 export default function DivisionResults (props: Props) {
   const columnHelper = createColumnHelper<{
@@ -138,6 +146,7 @@ export default function DivisionResults (props: Props) {
         }
         noWrap={props.noWrap}
       />
+      { getEventKeyComponents(races) }
     </div>
   );
 }
