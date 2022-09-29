@@ -1,4 +1,5 @@
 import { fetchClubStandings, fetchDivisionsResults } from "../http/nyrr"
+import { EventDetails } from "../types";
 
 export const fetchDetailedResults = async (year:number, teamCode:string) => {
   const teamDivisionCodes = await getTeamDivisions(year, teamCode);
@@ -38,7 +39,7 @@ const getDivisionsResults = async (divisionCodes:string[], teamCode:string, year
   }));
 
   let teamName: string | null = null;
-  let events: any[] = [];
+  let events: EventDetails[] = [];
 
   const divisionsResults = divisionsStandings.map( divisionStanding => {
     const {divisionCode, standing} = divisionStanding;

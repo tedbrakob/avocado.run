@@ -2,8 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useParams } from "react-router-dom";
 import Table from "../../components/Table";
+import EventDetailsTable from "../components/EventDetailsTable";
 import getDivisionName from "../divisionNames";
 import { fetchDetailedResults } from "../models/TeamDetails";
+import { EventDetails } from "../types";
 
 type Props = {
   year: number,
@@ -40,13 +42,12 @@ export default function TeamDetails(props: Props) {
   }
 
   const { teamName, events, divisionsResults } = data;
-  
 
   const columnHelper = createColumnHelper<{
     divisionName: string,
     divisionPlace: string,
     totalPoints: string,
-    races: any[],
+    races: number[],
   }>();
 
   const columns = [
@@ -61,7 +62,7 @@ export default function TeamDetails(props: Props) {
       header: "Points",
       cell: info => <div className="text-right">{info.getValue()}</div>,
     }),
-    ...events.map((race:any, index:number) =>
+    ...events.map((race:EventDetails, index:number) =>
       columnHelper.accessor(
         row => row.races[index] ?? '-',
         {
@@ -89,9 +90,11 @@ export default function TeamDetails(props: Props) {
         columns={columns}
         header={teamName}
       />
-
+      <div className="pt-2">
+        <EventDetailsTable
+          events={events}
+        />
+      </div>
     </div>
   );
-
-  // return <div></div>
 }
