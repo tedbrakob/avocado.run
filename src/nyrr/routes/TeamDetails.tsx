@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useParams } from "react-router-dom";
+import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
 import EventDetailsTable from "../components/EventDetailsTable";
 import getDivisionName from "../divisionNames";
@@ -44,6 +45,7 @@ export default function TeamDetails(props: Props) {
   const { teamName, events, divisionsResults } = data;
 
   const columnHelper = createColumnHelper<{
+    divisionCode: string,
     divisionName: string,
     divisionPlace: string,
     totalPoints: string,
@@ -51,8 +53,19 @@ export default function TeamDetails(props: Props) {
   }>();
 
   const columns = [
-    columnHelper.accessor('divisionName', {
+    columnHelper.accessor(
+      row => {
+        return {
+          divisionCode: row.divisionCode,
+          divisionName: row.divisionName
+        }
+      }, {
       header: "Division",
+      cell: info => <LinkWithQuery
+        to={`division/${info.getValue().divisionCode}`}
+      >
+        {info.getValue().divisionName}
+      </LinkWithQuery>,
     }),
     columnHelper.accessor('divisionPlace', {
       header: "Place",
@@ -76,6 +89,7 @@ export default function TeamDetails(props: Props) {
 
   const tableData = divisionsResults.map(divisionResult => {
     return {
+      divisionCode: divisionResult.divisionCode,
       divisionName: getDivisionName(divisionResult.divisionCode),
       divisionPlace: divisionResult.place,
       totalPoints: divisionResult.points,
