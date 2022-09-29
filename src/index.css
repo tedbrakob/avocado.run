@@ -14,3 +14,7 @@ body {
 #root {
   height: 100%;
 }
+
+.hide-scrollbars::-webkit-scrollbar {
+  display: none;
+}
