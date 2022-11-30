@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import styled from "styled-components";
 import { DivisionResults, fetchDivisionsResults } from "../http/nyrr";
 import DivisionResultsComponent from "../components/DivisionResults";
+import LoadingScreen from "../components/LoadingScreen";
 
 const maxSingleColumnViewWidth = '1120px';
 
@@ -36,9 +37,7 @@ export default function DivisionsResults(props: Props) {
 
   if (isLoading || data === undefined) {
     return (
-      <div className="w-full">
-        <h2 className="w-40 mx-auto">Loading...</h2>
-      </div>
+      <LoadingScreen/>
     );
   }
 
@@ -62,49 +61,51 @@ export default function DivisionsResults(props: Props) {
   gridRows.push(currentRow);
 
   return (
-    <Grid className="grid grid-cols-6">
-      {gridRows.map((gridRow, gridRowIndex) => {
-        const rowPadding = (6 - (2 * gridRow.length)) / 2;
-        const gridRowElements: ReactElement[] = [];
+    <div className="p-2 max-w-fit m-auto">
+      <Grid className="grid grid-cols-6">
+        {gridRows.map((gridRow, gridRowIndex) => {
+          const rowPadding = (6 - (2 * gridRow.length)) / 2;
+          const gridRowElements: ReactElement[] = [];
 
-        if (rowPadding > 0) {
-          gridRowElements.push(
-            <GridPaddingElement
-              key={`${gridRowIndex}-start-padding`}
-              span={rowPadding}
-            ></GridPaddingElement>
-          );
-        }
+          if (rowPadding > 0) {
+            gridRowElements.push(
+              <GridPaddingElement
+                key={`${gridRowIndex}-start-padding`}
+                span={rowPadding}
+              ></GridPaddingElement>
+            );
+          }
 
-        for (const division of gridRow) {
-          gridRowElements.push(
-            <div
-              className="p-2 col-span-2"
-              key={division.divisionCode}
-            >
-              <DivisionResultsComponent
+          for (const division of gridRow) {
+            gridRowElements.push(
+              <div
+                className="p-2 col-span-2"
                 key={division.divisionCode}
-                divisionName={division.divisionName}
-                divisionCode={division.divisionCode}
-                divisionResults={division.teamResults}
-                maxRows={10}
-                showDetailsLink={true}
-              />
-            </div>
-          );
-        }
+              >
+                <DivisionResultsComponent
+                  key={division.divisionCode}
+                  divisionName={division.divisionName}
+                  divisionCode={division.divisionCode}
+                  divisionResults={division.teamResults}
+                  maxRows={10}
+                  showDetailsLink={true}
+                />
+              </div>
+            );
+          }
 
-        if (rowPadding > 0) {
-          gridRowElements.push(
-            <GridPaddingElement
-              key={`${gridRowIndex}-end-padding`}
-              span={rowPadding}
-            ></GridPaddingElement>
-          );
-        }
+          if (rowPadding > 0) {
+            gridRowElements.push(
+              <GridPaddingElement
+                key={`${gridRowIndex}-end-padding`}
+                span={rowPadding}
+              ></GridPaddingElement>
+            );
+          }
 
-        return gridRowElements;
-      })}
-    </Grid>
+          return gridRowElements;
+        })}
+      </Grid>
+    </div>
   );
 }

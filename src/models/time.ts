@@ -1,4 +1,4 @@
-import Validatable from "./validatable";
+import Validatable from "../pace-calculator/types/validatable";
 
 export default class Time extends Validatable {
   hours: number;
@@ -22,6 +22,26 @@ export default class Time extends Validatable {
     time.normalize();
     return time;
   };
+
+  static createFromString(time: string) {
+    const timeComponents = time.split(':');
+
+    let totalSeconds = 0;
+    let position = 0;
+
+    while (timeComponents.length > 0) {
+      const component = timeComponents.pop();
+
+      if (component === undefined) {
+        continue;
+      }
+
+      totalSeconds += parseInt(component) * Math.pow(60, position);
+      position++;
+    }
+
+    return this.createFromTotalSeconds(totalSeconds);
+  }
 
   getTotalSeconds = ():number => {
     let seconds = 0;

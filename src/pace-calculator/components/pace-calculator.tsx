@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import {distanceUnitOptions, eventDistanceOptions, paceDistanceOptions } from "../../static/distances";
 import Distance from "../types/distance";
-import Time from "../types/time";
+import Time from "../../models/time";
 import Pace from "../types/pace";
 import Unit from "../types/unit";
 import { calculateDistance, calculatePace, calculateTime, calculateSplits } from "../calculator";

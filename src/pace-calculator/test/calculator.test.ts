@@ -2,7 +2,7 @@ import { kilometer, mile } from "../../static/distances";
 import { calculateDistance, calculatePace, calculateSplits, calculateTime } from "../calculator";
 import Distance from "../types/distance";
 import Pace from "../types/pace";
-import Time from "../types/time";
+import Time from "../../models/time";
 
 test('calculates time', () => {
   let pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));

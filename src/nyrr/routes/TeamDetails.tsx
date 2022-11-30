@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useParams } from "react-router-dom";
+import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
 import EventDetailsTable from "../components/EventDetailsTable";
-import getDivisionName from "../divisionNames";
+import LoadingScreen from "../components/LoadingScreen";
+import { getDivisionName } from "../models/Division";
 import { fetchDetailedResults } from "../models/TeamDetails";
 import { EventDetails } from "../types";
 
@@ -35,15 +37,14 @@ export default function TeamDetails(props: Props) {
 
   if (isLoading || data === undefined) {
     return (
-      <div className="w-full">
-        <h2 className="w-40 mx-auto">Loading...</h2>
-      </div>
+      <LoadingScreen/>
     );
   }
 
   const { teamName, events, divisionsResults } = data;
 
   const columnHelper = createColumnHelper<{
+    divisionCode: string,
     divisionName: string,
     divisionPlace: string,
     totalPoints: string,
@@ -51,8 +52,19 @@ export default function TeamDetails(props: Props) {
   }>();
 
   const columns = [
-    columnHelper.accessor('divisionName', {
+    columnHelper.accessor(
+      row => {
+        return {
+          divisionCode: row.divisionCode,
+          divisionName: row.divisionName
+        }
+      }, {
       header: "Division",
+      cell: info => <LinkWithQuery
+        to={`division/${info.getValue().divisionCode}`}
+      >
+        {info.getValue().divisionName}
+      </LinkWithQuery>,
     }),
     columnHelper.accessor('divisionPlace', {
       header: "Place",
@@ -76,6 +88,7 @@ export default function TeamDetails(props: Props) {
 
   const tableData = divisionsResults.map(divisionResult => {
     return {
+      divisionCode: divisionResult.divisionCode,
       divisionName: getDivisionName(divisionResult.divisionCode),
       divisionPlace: divisionResult.place,
       totalPoints: divisionResult.points,
@@ -84,7 +97,7 @@ export default function TeamDetails(props: Props) {
   });
 
   return (
-    <div className="w-full mx-auto">
+    <div className="max-w-fit mx-auto pt-2">
       <Table
         data={tableData}
         columns={columns}
