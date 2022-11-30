@@ -1,7 +1,7 @@
 import { meter, mile } from '../../static/distances';
 import Distance from '../types/distance';
 import Pace from '../types/pace';
-import Time from '../types/time';
+import Time from '../../models/time';
 
 test('correctly converts distance', () => {
   const pace = new Pace(new Time(0, 6, 0), new Distance(1, mile));

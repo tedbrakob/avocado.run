@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import DivisionResults from "../components/DivisionResults";
+import LoadingScreen from "../components/LoadingScreen";
 import { fetchClubStandings } from "../http/nyrr";
-import getDivisionName from "../divisionNames";
+import { getDivisionName } from "../models/Division";
 
 type Props = {
   year: number,
@@ -24,13 +25,15 @@ export default function DivisionDetails(props: Props) {
   }
 
   if (!data) {
-    return <div>loading</div >
+    return <LoadingScreen/>
   }
 
   const divisionName = getDivisionName(divisionCode);
 
   return (
-    <div style={{ padding: "1rem 0" }}>
+    <div 
+      className="m-auto max-w-fit py-4"
+    >
       <DivisionResults
         divisionName={divisionName}
         divisionCode={divisionCode}

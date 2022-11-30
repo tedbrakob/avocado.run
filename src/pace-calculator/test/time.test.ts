@@ -1,4 +1,4 @@
-import Time from "../types/time"
+import Time from "../../models/time"
 
 test("identifies invalid time", () => {
   let time = new Time(0, 0, 0);

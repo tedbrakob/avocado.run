@@ -1,6 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useQuery } from '@tanstack/react-query';
 import { fetchYears } from '../http/nyrr';
+import LoadingScreen from './LoadingScreen';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -37,9 +38,7 @@ export default function YearSwitcher (props: Props) {
 
   if (isLoading || years === undefined) {
     return (
-      <div className="w-full">
-        <h2 className="w-40 mx-auto">Loading...</h2>
-      </div>
+      <LoadingScreen/>
     );
   }
 

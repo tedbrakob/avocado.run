@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
 import EventDetailsTable from "../components/EventDetailsTable";
-import getDivisionName from "../divisionNames";
+import LoadingScreen from "../components/LoadingScreen";
+import { getDivisionName } from "../models/Division";
 import { fetchDetailedResults } from "../models/TeamDetails";
 import { EventDetails } from "../types";
 
@@ -36,9 +37,7 @@ export default function TeamDetails(props: Props) {
 
   if (isLoading || data === undefined) {
     return (
-      <div className="w-full">
-        <h2 className="w-40 mx-auto">Loading...</h2>
-      </div>
+      <LoadingScreen/>
     );
   }
 
@@ -98,7 +97,7 @@ export default function TeamDetails(props: Props) {
   });
 
   return (
-    <div className="w-full mx-auto">
+    <div className="max-w-fit mx-auto pt-2">
       <Table
         data={tableData}
         columns={columns}

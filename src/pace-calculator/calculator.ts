@@ -1,7 +1,7 @@
 import Distance from "./types/distance";
 import Pace from "./types/pace";
 import Splits from "./types/splits";
-import Time from "./types/time";
+import Time from "../models/time";
 import Unit from "./types/unit";
 
 export const calculateTime = (pace: Pace, distance: Distance):Time => {

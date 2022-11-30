@@ -20,10 +20,20 @@ const getTeamDivisions = async (year:number, teamCode:string):Promise<string[]> 
     }
   }
 
-  return divisionCodes
+  return divisionCodes;
 }
 
-const getDivisionsResults = async (divisionCodes:string[], teamCode:string, year:number) => {
+export const getCorrectOpenDivision = async (divisionCode:string, teamCode:string, year:number):Promise<string> => {
+  const teamDivisions = await getTeamDivisions(year, teamCode);
+  const gender = divisionCode.slice(-1);
+
+  const regex = new RegExp(`([A-C])${gender}+`, 'g');
+  const correctDivision = teamDivisions.filter(code => code.match(regex))[0];
+
+  return correctDivision;
+}
+
+export const getDivisionsResults = async (divisionCodes:string[], teamCode:string, year:number) => {
   const divisionsStandings = await Promise.all(divisionCodes.map(async (divisionCode) => {
     const standings = await fetchClubStandings(divisionCode, year);
     const filteredStandings = standings.filter(standing => standing.teamCode === teamCode);
@@ -56,6 +66,8 @@ const getDivisionsResults = async (divisionCodes:string[], teamCode:string, year
           eventCode: event.eventCode, 
           eventName: event.eventName, 
           startDateTime: event.startDateTime,
+          logoImageId: event.logoImageId,
+          logoImageExtension: event.logoImageExtension,
         }
       });
     }

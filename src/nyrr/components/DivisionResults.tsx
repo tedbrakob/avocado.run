@@ -1,6 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { TeamEventDetails, TeamResults } from "../http/nyrr";
-import getDivisionName from "../divisionNames";
+import { getDivisionName } from "../models/Division";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";
 import { EventDetails } from "../types";
@@ -48,6 +48,8 @@ export default function DivisionResults (props: Props) {
         eventCode: race.eventCode,
         eventName: race.eventName,
         startDateTime: race.startDateTime,
+        logoImageId: race.logoImageId,
+        logoImageExtension: race.logoImageExtension,
       });
     }
   }

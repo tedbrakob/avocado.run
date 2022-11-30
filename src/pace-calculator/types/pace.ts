@@ -1,6 +1,6 @@
 import Validatable from "./validatable";
 import Distance from "./distance";
-import Time from "./time";
+import Time from "../../models/time";
 
 export default class Pace extends Validatable{
   time:Time;

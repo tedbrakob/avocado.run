@@ -20,7 +20,7 @@ export default function RoutesWithYearSwitcher() {
         setYear={handleYearChange}
       />
 
-      <div className="p-2 max-w-fit m-auto">
+      <div className="w-full">
         <Routes>
           <Route index element={
             <DivisionsResults
@@ -32,28 +32,25 @@ export default function RoutesWithYearSwitcher() {
               year={year}
             />
           } />
+          {/* division/race */}
           <Route path="team">
             <Route path=":teamCode">
               <Route index element={
-                <div className="p-2 max-w-fit m-auto">
-                  <TeamDetails
-                    year={year}
-                  />
-                </div>
+                <TeamDetails
+                  year={year}
+                />
               } />
               <Route path="division/:divisionCode" element={
-                <div className="p-2 max-w-fit m-auto">
-                  <TeamDivisionDetails
-                    year={year}
-                  />
-                </div>
+                <TeamDivisionDetails
+                  year={year}
+                />
               } />
+              {/* team/division/race */}
+              {/* team/race */}
             </Route>
             <Route index element={<Navigate to="/nyrr-thing" />}/>
           </Route>
         </Routes>
-
-
         <Outlet></Outlet>
       </div>
     </div>
