@@ -81,7 +81,7 @@ export default function DivisionResults (props: Props) {
             </div>
           ) : (
             <LinkWithQuery 
-              to={`/nyrr-thing/team/${info.getValue().teamCode}`} 
+              to={`/nyrr-thing/teams/${info.getValue().teamCode}/divisions/${props.divisionCode}`} 
               className={className}
             >
                 { value } 
@@ -143,7 +143,7 @@ export default function DivisionResults (props: Props) {
         header={getDivisionName(props.divisionCode)}
         footer={ 
           props.showDetailsLink ? 
-            (<LinkWithQuery to={`division/${props.divisionCode}`}>Show Details</LinkWithQuery>)
+            (<LinkWithQuery to={`${props.divisionCode}`}>Show Details</LinkWithQuery>)
           : (<div/>)
         }
         noWrap={props.noWrap}

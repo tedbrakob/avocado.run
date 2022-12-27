@@ -63,11 +63,17 @@ const teamAwardRunnersSchema = z.object({
   "finishPlace": z.number(),
 });
 
+const teamSchema = z.object({
+  teamCode: z.string(),
+  teamName: z.string(),
+});
+
 export type DivisionResults = z.infer<typeof divisionResultsSchema>;
 export type TeamResults = z.infer<typeof teamResultsSchema>;
 export type TeamEventDetails = z.infer<typeof teamEventDetailsSchema>;
 export type TeamAwards = z.infer<typeof teamAwardsSchema>;
 export type TeamAwardRunners = z.infer<typeof teamAwardRunnersSchema>;
+export type Team = z.infer<typeof teamSchema>; 
 
 export const fetchDivisionsResults = async (year:number) : Promise<DivisionResults[]> => {
   return await (await NyrrApiSingleton.getInstance()).getDivisionsResults(year);
@@ -97,4 +103,10 @@ export const fetchTeamAwardRunners = async (
   teamMinimumAge:number | null = null
 ) : Promise<TeamAwardRunners[]> => {
   return await (await NyrrApiSingleton.getInstance()).getTeamAwardRunners(eventCode, teamCode, teamGender, teamMinimumAge);
+}
+
+export const fetchTeams = async (
+  year:number
+) : Promise<Team[]> => {
+  return await (await NyrrApiSingleton.getInstance()).getTeams(year);
 }

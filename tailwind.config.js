@@ -12,6 +12,9 @@ module.exports = {
         nunito: ['Nunito Sans']
       }
     },
+    minWidth: {
+      '1/3': '33.33%',
+    }
   },
   plugins: [],
 }

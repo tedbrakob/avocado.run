@@ -1,9 +1,10 @@
-import { Navigate, Outlet, Route, Routes, useSearchParams } from "react-router-dom";
-import DivisionsResults from "./DivisionsResults";
+import {Outlet, Route, Routes, useSearchParams } from "react-router-dom";
+import DivisionsIndex from "./DivisionsIndex";
 import YearSwitcher from "../components/YearSwitcher";
 import DivisionDetails from "./DivisionDetails";
 import TeamDetails from "./TeamDetails";
 import TeamDivisionDetails from "./TeamDivisionDetails";
+import TeamsIndex from "./TeamsIndex";
 
 export default function RoutesWithYearSwitcher() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,25 +23,27 @@ export default function RoutesWithYearSwitcher() {
 
       <div className="w-full">
         <Routes>
-          <Route index element={
-            <DivisionsResults
-              year={year}
-            />
-          } />
-          <Route path="division/:divisionCode" element={
-            <DivisionDetails
-              year={year}
-            />
-          } />
-          {/* division/race */}
-          <Route path="team">
+          <Route path="divisions">
+            <Route index element={
+              <DivisionsIndex
+                year={year}
+              />
+            } />
+            <Route path=":divisionCode" element={
+              <DivisionDetails
+                year={year}
+              />
+            }/>
+          </Route>
+
+          <Route path="teams">
             <Route path=":teamCode">
               <Route index element={
                 <TeamDetails
                   year={year}
                 />
               } />
-              <Route path="division/:divisionCode" element={
+              <Route path="divisions/:divisionCode" element={
                 <TeamDivisionDetails
                   year={year}
                 />
@@ -48,7 +51,11 @@ export default function RoutesWithYearSwitcher() {
               {/* team/division/race */}
               {/* team/race */}
             </Route>
-            <Route index element={<Navigate to="/nyrr-thing" />}/>
+            <Route index element={
+              <TeamsIndex
+                year={year}
+              />
+            }/>
           </Route>
         </Routes>
         <Outlet></Outlet>

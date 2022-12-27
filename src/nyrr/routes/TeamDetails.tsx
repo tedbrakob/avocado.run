@@ -61,7 +61,7 @@ export default function TeamDetails(props: Props) {
       }, {
       header: "Division",
       cell: info => <LinkWithQuery
-        to={`division/${info.getValue().divisionCode}`}
+        to={`divisions/${info.getValue().divisionCode}`}
       >
         {info.getValue().divisionName}
       </LinkWithQuery>,
