@@ -25,7 +25,7 @@ type Props = {
   year: number,
 }
 
-export default function DivisionsResults(props: Props) {
+export default function DivisionsIndex(props: Props) {
   const { isLoading, error, data } = useQuery(
     ['nyrr-fetchDivisionsResults', props.year],
     () => fetchDivisionsResults(props.year)
