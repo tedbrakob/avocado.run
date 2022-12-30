@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: ./server
+    image: rfsgea-server
+    container_name: rfsgea-server
+    command: npm start
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rfsgea-network
+      
+  client:
+    build:
+      context: ./client
+    image: rfsgea-client
+    container_name: rfsgea-client
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - rfsgea-network
+
+networks:
+    rfsgea-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local
