@@ -6,9 +6,9 @@ services:
       context: ./server
     image: rfsgea-server
     container_name: rfsgea-server
-    command: npm start
+    command: npm run watch
     volumes:
-      - ./server/:/usr/src/app
+      - ./server:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - "4000:4000"
@@ -23,14 +23,15 @@ services:
       context: ./client
     image: rfsgea-client
     container_name: rfsgea-client
-    command: npm start
+    command: npm run watch
     volumes:
-      - ./client/:/usr/app
-      - /usr/app/node_modules
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - server
     ports:
       - "3000:3000"
+    env_file: ./client/.env
     networks:
       - rfsgea-network
 
