@@ -1,7 +1,7 @@
-FROM node:17-alpine
+FROM node:19-alpine
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-COPY package.json .
+COPY package.json ./
 RUN npm install --silent
-COPY . .
+
 EXPOSE 4000
-CMD ["npm","start"]
