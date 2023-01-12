@@ -4,6 +4,7 @@ services:
   server:
     build:
       context: ./server
+      dockerfile: ./local.Dockerfile 
     image: rfsgea-server
     container_name: rfsgea-server
     command: npm run watch
