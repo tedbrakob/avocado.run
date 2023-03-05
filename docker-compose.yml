@@ -1,23 +1,25 @@
 version: '3.7'
 
 services:
-  server:
-    build:
-      context: ./server
-      dockerfile: ./local.Dockerfile 
-    image: rfsgea-server
-    container_name: rfsgea-server
-    command: npm run watch
-    volumes:
-      - ./server:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "4000:4000"
-    env_file: ./server/.env
-    environment:
-      - NODE_ENV=development
-    networks:
-      - rfsgea-network
+  #### Disabling server because it currently has no active endpoints
+
+  # server:
+  #   build:
+  #     context: ./server
+  #     dockerfile: ./local.Dockerfile 
+  #   image: rfsgea-server
+  #   container_name: rfsgea-server
+  #   command: npm run watch
+  #   volumes:
+  #     - ./server:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - "4000:4000"
+  #   env_file: ./server/.env
+  #   environment:
+  #     - NODE_ENV=development
+  #   networks:
+  #     - rfsgea-network
       
   client:
     build:
@@ -28,8 +30,8 @@ services:
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
-    depends_on:
-      - server
+    # depends_on:
+    #   - server
     ports:
       - "3000:3000"
     env_file: ./client/.env
