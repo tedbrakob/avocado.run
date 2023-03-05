@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import NyrrApiSingleton from './nyrrApiSingleton';
+import NyrrApi from "nyrr-results-api";
 
 const teamEventDetailsSchema = z.object({
   distanceName: z.string(),
@@ -27,7 +27,7 @@ const teamResultsSchema = z.object({
 
 const divisionResultsSchema = z.object({
   divisionCode: z.string(),
-  divisionGender: z.enum(["M", "F", "X"]),
+  divisionGender: z.enum(["M", "W", "X"]),
   divisionName: z.string(),
   divisionOrder: z.number(),
   teamResults: z.array(
@@ -76,15 +76,15 @@ export type TeamAwardRunners = z.infer<typeof teamAwardRunnersSchema>;
 export type Team = z.infer<typeof teamSchema>; 
 
 export const fetchDivisionsResults = async (year:number) : Promise<DivisionResults[]> => {
-  return await (await NyrrApiSingleton.getInstance()).getDivisionsResults(year);
+  return await NyrrApi.getDivisionsResults(year);
 }
 
 export const fetchClubStandings = async (divisionCode:string, year:number) : Promise<TeamResults[]> => {
-  return await (await NyrrApiSingleton.getInstance()).getDivisionResults(divisionCode, year);
+  return await NyrrApi.getDivisionResults(divisionCode, year);
 }
 
 export const fetchYears = async () : Promise<number[]> => {
-  return await (await NyrrApiSingleton.getInstance()).getYears();
+  return await NyrrApi.getYears();
 }
 
 export const fetchTeamAwards = async (
@@ -93,7 +93,7 @@ export const fetchTeamAwards = async (
   gender:string | null = null, 
   minimumAge:number | null = null
 ) : Promise<TeamAwards> => {
-  return (await (await NyrrApiSingleton.getInstance()).getTeamAwards(eventCode, teamCode, gender, minimumAge))[0];
+  return (await NyrrApi.getTeamAwards(eventCode, teamCode, gender, minimumAge))[0];
 }
 
 export const fetchTeamAwardRunners = async (
@@ -102,11 +102,11 @@ export const fetchTeamAwardRunners = async (
   teamGender:string | null = null, 
   teamMinimumAge:number | null = null
 ) : Promise<TeamAwardRunners[]> => {
-  return await (await NyrrApiSingleton.getInstance()).getTeamAwardRunners(eventCode, teamCode, teamGender, teamMinimumAge);
+  return await NyrrApi.getTeamAwardRunners(eventCode, teamCode, teamGender, teamMinimumAge);
 }
 
 export const fetchTeams = async (
   year:number
 ) : Promise<Team[]> => {
-  return await (await NyrrApiSingleton.getInstance()).getTeams(year);
+  return await NyrrApi.getTeams(year);
 }

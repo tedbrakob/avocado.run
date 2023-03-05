@@ -23,10 +23,6 @@ export const getDivisionName = (divisionCode: string): string => {
 
 export const getDivisionAsGenderAndMinimumAge = (divisionCode: string): {gender:string, minimumAge:number} => {
   let gender = divisionCode.slice(-1);
-  if (gender === 'W') {
-    //The endpoints that use the gender, minimum age format use F instead of W
-    gender = 'F';
-  }
 
   const division = divisionCode.slice(0, -1);
 
