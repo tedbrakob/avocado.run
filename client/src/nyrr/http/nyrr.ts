@@ -40,5 +40,5 @@ export const fetchEvents = async (
   searchString:string = "",
   distance: string | null = null,
 ) : Promise<NyrrTypes.Event[]> => {
-  return await NyrrApi.eventsSearch(year, searchString, distance)
+  return await NyrrApi.searchEvents(year, searchString, distance)
 }

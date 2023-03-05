@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fetchEvents } from "../../http/nyrr";
 import { FormEvent, useState } from "react";
-import { LinkWithQuery } from "../../../components/LinkWithQuery";
 import RaceDetailsContainer from "../../components/RaceDetailsContainer";
 
 type Props = {
