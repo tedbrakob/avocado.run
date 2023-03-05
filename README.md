@@ -1,5 +1,5 @@
-# Run Fast Smoke Grass Eat Ass
-Github: [run-fast-smoke-grass-eat-ass](https://github.com/tedbrakob/run-fast-smoke-grass-eat-ass)
+# rfsgea
+Github: [rfsgea](https://github.com/tedbrakob/rfsgea)
 
 ## Run app locally
 
