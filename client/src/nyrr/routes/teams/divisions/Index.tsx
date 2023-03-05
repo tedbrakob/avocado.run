@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useParams } from "react-router-dom";
-import { LinkWithQuery } from "../../components/LinkWithQuery";
-import Table from "../../components/Table";
-import EventDetailsTable from "../components/EventDetailsTable";
-import LoadingScreen from "../components/LoadingScreen";
-import { getDivisionName } from "../models/Division";
-import { fetchDetailedResults } from "../models/TeamDetails";
-import { EventDetails } from "../types";
+import { LinkWithQuery } from "../../../../components/LinkWithQuery";
+import Table from "../../../../components/Table";
+import EventDetailsTable from "../../../components/EventDetailsTable";
+import LoadingScreen from "../../../components/LoadingScreen";
+import { getDivisionName } from "../../../models/Division";
+import { fetchDetailedResults } from "../../../models/TeamDetails";
+import { EventDetails } from "../../../types";
 
 type Props = {
   year: number,
 };
 
-export default function TeamDetails(props: Props) {
+export default function Index(props: Props) {
   const { teamCode } = useParams()
 
   const { error, data, isLoading } = useQuery(

@@ -7,6 +7,7 @@ const navigation = [
   // { name: 'Strava Thing', to: '/strava-thing' },
   // { name: 'Spotify Thing', to: '/spotify-thing' },
   { name: 'NYRR Clubs', to: '/nyrr-thing/teams' },
+  { name: 'NYRR Races', to: '/nyrr-thing/races' },
   { name: 'NYRR Divisions', to: '/nyrr-thing/divisions' },
 ];
 

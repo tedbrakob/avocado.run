@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import LoadingScreen from "../components/LoadingScreen";
-import { fetchTeams } from "../http/nyrr";
+import LoadingScreen from "../../components/LoadingScreen";
+import { fetchTeams } from "../../http/nyrr";
 import { FormEvent, useState } from "react";
-import { LinkWithQuery } from "../../components/LinkWithQuery";
+import { LinkWithQuery } from "../../../components/LinkWithQuery";
 
 type Props = {
   year: number,
 }
 
-export default function TeamsIndex(props: Props) {
+export default function Index(props: Props) {
   const [searchText, setSearchText] = useState('');
 
   const onSearchTextChange = (e: FormEvent<HTMLInputElement>) => {
@@ -36,7 +36,6 @@ export default function TeamsIndex(props: Props) {
   );
 
   return (
-    //create table
     <div className="p-4 m-auto 
       w-full
       sm:w-3/4

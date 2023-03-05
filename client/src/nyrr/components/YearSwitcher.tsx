@@ -9,7 +9,8 @@ function classNames(...classes) {
 
 type Props = {
   year: number,
-  setYear: (year: string) => void
+  setYear: (year: string) => void,
+  allYears?: boolean,
 };
 
 export default function YearSwitcher (props: Props) {
@@ -17,20 +18,45 @@ export default function YearSwitcher (props: Props) {
   let placeholderData = Array.from(
     { length: (2021 - currentYear) / -1 + 1 },
     (_, i) => currentYear + (i * -1)
-  );  
+  );
+  
+  if (props.allYears) {
+    placeholderData = placeholderData.concat([
+      2020,
+    ]);
+  }
+
   placeholderData = placeholderData.concat([
     2019,
     2018,
     2017,
     2016,
-    2015
+    2015,
   ]);
 
+  if (props.allYears) {
+    placeholderData = placeholderData.concat([
+      2012,
+      2011,
+      2010,
+      2009,
+      2008,
+      2007,
+      2006,
+      2005,
+    ]);
+  }
+
+  let queryClosure = fetchYears;
+  if (props.allYears) {
+    queryClosure = async () => placeholderData;
+  }
+
   const { isLoading, error, data: years } = useQuery(
-    ['nyrr-fetchYears'], 
-    fetchYears, 
+    ['nyrr-fetchYears', props.allYears], 
+    queryClosure, 
     { placeholderData },
- );
+  );
 
   if (error) {
     console.log(error);

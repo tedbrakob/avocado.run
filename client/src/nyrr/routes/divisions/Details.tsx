@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import DivisionResults from "../components/DivisionResults";
-import LoadingScreen from "../components/LoadingScreen";
-import { fetchClubStandings } from "../http/nyrr";
-import { getDivisionName } from "../models/Division";
+import DivisionResults from "../../components/DivisionResults";
+import LoadingScreen from "../../components/LoadingScreen";
+import { fetchClubStandings } from "../../http/nyrr";
+import { getDivisionName } from "../../models/Division";
 
 type Props = {
   year: number,
 };
 
-export default function DivisionDetails(props: Props) {
+export default function Details(props: Props) {
   const { divisionCode } = useParams()
   const { error, data } = useQuery(
     ['nyrr-fetchClubStandings', divisionCode, props.year], 

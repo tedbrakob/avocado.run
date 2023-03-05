@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { TeamEventDetails, TeamResults } from "../http/nyrr";
+import { TeamEventDetails, TeamResults } from "nyrr-results-api/build/types";
 import { getDivisionName } from "../models/Division";
 import { LinkWithQuery } from "../../components/LinkWithQuery";
 import Table from "../../components/Table";

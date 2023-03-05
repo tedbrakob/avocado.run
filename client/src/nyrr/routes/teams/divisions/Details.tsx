@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import ErrorScreen from "../components/ErrorScreen";
-import LoadingScreen from "../components/LoadingScreen";
-import TeamEventDetailsContainer from "../components/TeamEventDetailsContainer";
-import { getDivisionName } from "../models/Division";
-import { getCorrectOpenDivision } from "../models/TeamDetails";
-import { fetchDetailedResults } from "../models/TeamDivisionDetails";
+import ErrorScreen from "../../../components/ErrorScreen";
+import LoadingScreen from "../../../components/LoadingScreen";
+import TeamEventDetailsContainer from "../../../components/TeamEventDetailsContainer";
+import { getDivisionName } from "../../../models/Division";
+import { getCorrectOpenDivision } from "../../../models/TeamDetails";
+import { fetchDetailedResults } from "../../../models/TeamDivisionDetails";
 
 type Props = {
   year: number,
 };
 
-export default function TeamDivisionDetails(props:Props) {
+export default function Details(props:Props) {
   const { teamCode, divisionCode } = useParams();
 
   const divisionCodeQuery = useQuery(

@@ -121,7 +121,17 @@ export default function TeamEventDetailsContainer(props:Props) {
         {props.teamEventDetails.eventName}
       </div>
       <div
-        className="text-dark w-full rounded-b-md border border-dark border-t-0 bg-gradient-to-bl from-dark-accent via-transparent"
+        className="
+          text-dark 
+          w-full 
+          rounded-b-md 
+          border 
+          border-dark 
+          border-t-0 
+          bg-gradient-to-bl 
+          from-dark-accent 
+          via-transparent
+        "
       >
         {getImageElement(teamEventDetails)}
 

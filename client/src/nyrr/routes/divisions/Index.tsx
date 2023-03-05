@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import { DivisionResults, fetchDivisionsResults } from "../http/nyrr";
-import DivisionResultsComponent from "../components/DivisionResults";
-import LoadingScreen from "../components/LoadingScreen";
+import { DivisionResults } from "nyrr-results-api/build/types";
+import DivisionResultsComponent from "../../components/DivisionResults";
+import LoadingScreen from "../../components/LoadingScreen";
+import { fetchDivisionsResults } from "../../http/nyrr";
 
 const maxSingleColumnViewWidth = '1120px';
 
@@ -25,7 +26,7 @@ type Props = {
   year: number,
 }
 
-export default function DivisionsIndex(props: Props) {
+export default function Index(props: Props) {
   const { isLoading, error, data } = useQuery(
     ['nyrr-fetchDivisionsResults', props.year],
     () => fetchDivisionsResults(props.year)
