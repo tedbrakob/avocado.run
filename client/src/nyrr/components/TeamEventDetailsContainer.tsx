@@ -7,7 +7,7 @@ type Props = {
 }
 
 function getImageElement(teamEventDetails: TeamEventDetails) {
-  if (teamEventDetails.logoImageId === null || teamEventDetails.logoImageExtension === null) {
+  if (teamEventDetails.logoImageId === null) {
     return null;
   }
 
@@ -22,7 +22,7 @@ function getImageElement(teamEventDetails: TeamEventDetails) {
           h-24
           w-24
         "
-      src={`https://results.nyrr.org/GetImageAds/${teamEventDetails.logoImageId}.png`}
+      src={`https://results.nyrr.org/GetImage/${teamEventDetails.logoImageId}.jpg`}
       alt=""
     />
   );
