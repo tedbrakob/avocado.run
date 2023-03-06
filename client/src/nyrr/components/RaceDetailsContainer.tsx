@@ -31,7 +31,7 @@ export default function RaceDetailsContainer(props:Props) {
   const event = props.event;
 
   return (
-    <li
+    <div
       className="
         mx-2
         bg-white
@@ -51,6 +51,6 @@ export default function RaceDetailsContainer(props:Props) {
         {event.eventName}
         {getImageElement(event)}
       </LinkWithQuery>
-    </li>
+    </div>
   );
 }

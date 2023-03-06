@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fetchEvents } from "../../http/nyrr";
 import { FormEvent, useState } from "react";
-import RaceDetailsContainer from "../../components/RaceDetailsContainer";
+import { LinkWithQuery } from "../../../components/LinkWithQuery";
 
 type Props = {
   year: number,
@@ -52,10 +52,18 @@ export default function Index(props: Props) {
         {
           filteredEvents.map(event =>
             (
-              <RaceDetailsContainer
-                key={event.eventCode}
-                event={event}
-              />
+                <li
+                  className="mx-2 bg-white rounded-md border-b border-dark-accent"
+                  key={event.eventCode}
+                >
+                  <div className="block mt-2 p-4">
+                    <LinkWithQuery
+                      to={`/nyrr-thing/races/${event.eventCode}`}
+                    >
+                      {event.eventName}
+                    </LinkWithQuery>
+                  </div>
+                </li>
             )
           )
         }
