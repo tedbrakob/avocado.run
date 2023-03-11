@@ -13,7 +13,7 @@ import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import PaceCalculator from "./pace-calculator/components/pace-calculator.tsx";
 import StravaThing from "./routes/strava-thing";
-import SpotifyThing from "./routes/spotify-thing";
+import SpotifyThing from "./spotify/routes/SpotifyThing";
 import './index.css'
 import NyrrThing from "./nyrr/routes/NyrrThing";
 
@@ -42,7 +42,7 @@ root.render(
           element={<StravaThing />} 
         />
         <Route 
-          path="spotify-thing" 
+          path="spotify-thing/*" 
           element={<SpotifyThing />}
         />
         <Route 
