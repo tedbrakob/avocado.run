@@ -5,8 +5,8 @@ services:
     build:
       context: ./server
       dockerfile: ./local.Dockerfile 
-    image: rfsgea-server
-    container_name: rfsgea-server
+    image: avocado-server
+    container_name: avocado-server
     command: npm run watch
     volumes:
       - ./server:/usr/src/app
@@ -18,13 +18,13 @@ services:
       - NODE_ENV=development
       - PORT=4000
     networks:
-      - rfsgea-network
+      - avocado-network
     depends_on:
       - cache
 
   cache:
     image: redis:6.2-alpine
-    container_name: rfsgea-cache
+    container_name: avocado-cache
     restart: always
     ports:
       - '6379:6379'
@@ -32,27 +32,25 @@ services:
     volumes: 
       - cache:/data
     networks:
-      - rfsgea-network
+      - avocado-network
       
   client:
     build:
       context: ./client
-    image: rfsgea-client
-    container_name: rfsgea-client
+    image: avocado-client
+    container_name: avocado-client
     command: npm run watch
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
-    # depends_on:
-    #   - server
     ports:
       - "3000:3000"
     env_file: ./client/.env
     networks:
-      - rfsgea-network
+      - avocado-network
 
 networks:
-    rfsgea-network:
+    avocado-network:
         driver: bridge
 
 volumes:
