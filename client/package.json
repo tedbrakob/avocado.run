@@ -1,7 +1,7 @@
 {
-  "name": "run-fast-smoke-grass-eat-ass",
+  "name": "avocado.run",
   "version": "0.1.0",
-  "homepage": "https://runfastsmokegrasseatass.com",
+  "homepage": "https://avocado.run",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.6.6",

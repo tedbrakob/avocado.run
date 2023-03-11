@@ -1,5 +1,5 @@
-# rfsgea
-Github: [rfsgea](https://github.com/tedbrakob/rfsgea)
+# avocado.run
+Github: [avocado.run](https://github.com/tedbrakob/avocado.run)
 
 ## Run app locally
 

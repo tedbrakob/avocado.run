@@ -1,5 +1,5 @@
 {
-  "name": "run-fast-smoke-grass-eat-ass-backend",
+  "name": "avocado.run-backend",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tedbrakob/run-fast-smoke-grass-eat-ass-backend.git"
+    "url": "git+ssh://git@github.com:tedbrakob/avocado.run.git"
   },
   "author": "Ted Brakob",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tedbrakob/run-fast-smoke-grass-eat-ass-backend/issues"
+    "url": "https://github.com/tedbrakob/avocado.run/issues"
   },
-  "homepage": "https://github.com/tedbrakob/run-fast-smoke-grass-eat-ass-backend#readme",
+  "homepage": "https://avocado.run",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
