@@ -39,7 +39,7 @@ services:
       context: ./client
     image: avocado-client
     container_name: avocado-client
-    command: npm run watch
+    command: npm run dev
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
