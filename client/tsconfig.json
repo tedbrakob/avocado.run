@@ -22,12 +22,12 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "paths": {
-        "@/*": ["./src*"],
+        "@src/*": ["./src/*"],
         "@config": ["./src/config"],
         "@components/*": ["./src/components/*"],
         "@spotify/*": ["./src/spotify/*"],
     }
   },
-  "include": ["src", "public/service-worker.js"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv'
 import express from "express";
 import cors from "cors";
 import spotify from "./routes/spotify"
-import cache from './cache/cache';
 
 dotenv.config();
 

@@ -1,8 +1,6 @@
-import useSpotifyLogin from "@spotify/hooks/useSpotifyLogin";
+import loginUrl from "../lib/auth/loginUrl";
 
 export default function Login() {
-  const login = useSpotifyLogin();
-
   return (
     <div className="w-full">
       <div className="max-w-[50%] m-auto p-2">
@@ -12,7 +10,7 @@ export default function Login() {
           </h2>
           <button
             className="bg-dark-accent text-light font-bold p-2 rounded-md"
-            onClick={login}
+            onClick={loginUrl.redirect}
           >Login with Spotify</button>
         </div>
         <p>

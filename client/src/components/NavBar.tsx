@@ -7,7 +7,7 @@ const navigation = [
   // { name: 'Strava Thing', to: '/strava-thing' },
   { name: 'NYRR Clubs', to: '/nyrr-thing/teams' },
   { name: 'NYRR Divisions', to: '/nyrr-thing/divisions' },
-  { name: 'Spotify Thing', to: '/spotify-thing/login' },
+  { name: 'Spotify Thing', to: '/spotify-thing' },
 ];
 
 function classNames(...classes) {

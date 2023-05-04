@@ -1,19 +1,23 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Login from "@spotify/routes/Login";
-import Dashboard from "@spotify/routes/Dashboard";
+import Dashboard from "@src/spotify/routes/dashboard/view";
+import Callback from "@spotify/routes/Callback";
 
 export default function SpotifyThing() {
   return (
     <div>
       <Routes>
         <Route path="/login" element={
-          <Login></Login>
+          <Login />
+        } />
+        <Route path="/callback" element={
+          <Callback />
         } />
         <Route path="/dashboard" element={
-          <Dashboard/>
+          <Dashboard />
         } />
         <Route path="*" element={
-          <div>index</div>
+          <Navigate to='login'/>
         } />
       </Routes>
       <Outlet></Outlet>

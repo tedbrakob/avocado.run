@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react-swc';
 import * as path from 'path';
 import { VitePWA } from "vite-plugin-pwa";
 
+
 // https://vitejs.dev/config/
-export default ({mode}) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+const config = ({mode}) => {
+  const env = {...process.env, ...loadEnv(mode, process.cwd())};
 
   return defineConfig({
     plugins: [
@@ -76,7 +77,7 @@ export default ({mode}) => {
     ],
     resolve: {
       alias: [
-        {find: '@', replacement: path.resolve(__dirname, './src')},
+        {find: '@src', replacement: path.resolve(__dirname, './src/')},
         {find: '@config', replacement: path.resolve(__dirname, './src/config')},
         {find: '@components', replacement: path.resolve(__dirname, './src/components/')},
         {find: '@spotify', replacement: path.resolve(__dirname, './src/spotify/')},
@@ -88,15 +89,9 @@ export default ({mode}) => {
       },
       host: true,
       strictPort: true,
-      port: Number(process.env.VITE_PORT),
-      proxy: {
-        '/api': {
-          target: process.env.VITE_API_URL,
-          changeOrigin: true,
-          secure: false,      
-          ws: true,
-        }
-      }
+      port: Number(env.VITE_PORT),
     }
   });
 }
+
+export default config;

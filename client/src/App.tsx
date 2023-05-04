@@ -3,7 +3,6 @@ import NavBar from "./components/NavBar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { setColorsAsCssVars } from "./static/colors";
 
-
 const queryClient = new QueryClient();
 setColorsAsCssVars();
 
