@@ -1,4 +1,4 @@
-# avocado.run
+# [avocado.run](https://avocado.run)
 Github: [avocado.run](https://github.com/tedbrakob/avocado.run)
 
 ## Run app locally
