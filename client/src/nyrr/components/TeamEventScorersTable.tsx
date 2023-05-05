@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/Table";
 import { TeamEventScorer } from "../types";
+import Time from "@src/models/time";
 
 type Props = {
   scorers: TeamEventScorer[];
@@ -11,7 +12,7 @@ export default function TeamEventScorersTable(props: Props) {
     firstName: string,
     lastName: string,
     finishPlace: string,
-    finishTime: string,
+    finishTime: number,
   }>();
 
   const columns = [
@@ -25,7 +26,7 @@ export default function TeamEventScorersTable(props: Props) {
     }),
     columnHelper.accessor('finishTime', {
       header: info => <div className="text-right">Time</div>,
-      cell: info => <div className="text-right">{info.getValue()}</div>,
+      cell: info => <div className="text-right">{Time.createFromTotalSeconds(info.getValue()/1000).toString()}</div>,
     })
   ];
 
