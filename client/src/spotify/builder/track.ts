@@ -1,4 +1,4 @@
-import { AudioFeatures } from "spotify-api.js";
+import AudioFeatures from "../api/types/audioFeatures";
 
 class Track {
   id: string;
