@@ -12,13 +12,13 @@ export type TeamEventScorer = {
   runnerId: number,
   firstName: string,
   lastName: string,
-  finishTime: string,
+  finishTime: number,
   finishPlace: number,
 };
 
 export type TeamEventDetails = EventDetails & {
   teamOrder: number | undefined,
   summaryPlace: number | undefined,
-  summaryTime: string | undefined
+  summaryTime: number | undefined
   teamScorers: TeamEventScorer[], 
 }

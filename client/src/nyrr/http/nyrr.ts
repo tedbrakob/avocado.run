@@ -44,7 +44,7 @@ const teamAwardsSchema = z.object({
   "teamGender": z.string(),
   "minimumAge": z.number(),
   "summaryPlace": z.number(),
-  "summaryTime": z.string(),
+  "summaryTime": z.number(),
   "runnersCount": z.number(),
 });
 
@@ -59,7 +59,7 @@ const teamAwardRunnersSchema = z.object({
   "stateProvince": z.string(),
   "country": z.string(),
   "iaaf": z.string(),
-  "finishTime": z.string(),
+  "finishTime": z.number(),
   "finishPlace": z.number(),
 });
 

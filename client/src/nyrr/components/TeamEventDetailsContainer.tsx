@@ -73,8 +73,8 @@ function getAverageScorerTime(teamEventDetails: TeamEventDetails) {
   let averageScorerTime: string | undefined = undefined;
 
   if (teamEventDetails.summaryTime !== undefined) {
-    const summaryTime = Time.createFromString(teamEventDetails.summaryTime);
-    const averageTimeInSeconds = summaryTime.getTotalSeconds() / teamEventDetails.teamScorers.length;
+    const summaryTimeInSeconds = teamEventDetails.summaryTime / 1000;
+    const averageTimeInSeconds = summaryTimeInSeconds / teamEventDetails.teamScorers.length;
     averageScorerTime = Time.createFromTotalSeconds(averageTimeInSeconds).toString();
   }
 
