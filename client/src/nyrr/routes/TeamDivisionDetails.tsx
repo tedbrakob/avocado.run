@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import ErrorScreen from "../components/ErrorScreen";
+import ErrorScreen from "../../components/ErrorScreen";
 import LoadingScreen from "../components/LoadingScreen";
 import TeamEventDetailsContainer from "../components/TeamEventDetailsContainer";
 import { getDivisionName } from "../models/Division";

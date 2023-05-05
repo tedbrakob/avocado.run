@@ -1,37 +1,48 @@
 version: '3.7'
 
 services:
-  ### Disabling server because it currently has no active endpoints
+  server:
+    build:
+      context: ./server
+      dockerfile: ./local.Dockerfile 
+    image: avocado-server
+    container_name: avocado-server
+    command: npm run watch
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    networks:
+      - avocado-network
+    depends_on:
+      - cache
 
-  # server:
-  #   build:
-  #     context: ./server
-  #     dockerfile: ./local.Dockerfile 
-  #   image: avocado-server
-  #   container_name: avocado-server
-  #   command: npm run watch
-  #   volumes:
-  #     - ./server:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   ports:
-  #     - "4000:4000"
-  #   env_file: ./server/.env
-  #   environment:
-  #     - NODE_ENV=development
-  #   networks:
-  #     - avocado-network
+  cache:
+    image: redis:6.2-alpine
+    container_name: avocado-cache
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
+    networks:
+      - avocado-network
       
   client:
     build:
       context: ./client
     image: avocado-client
     container_name: avocado-client
-    command: npm run watch
+    command: npm run dev
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
-    # depends_on:
-    #   - server
     ports:
       - "3000:3000"
     env_file: ./client/.env
@@ -46,4 +57,6 @@ volumes:
     data-volume:
     node_modules:
     web-root:
+      driver: local
+    cache:
       driver: local

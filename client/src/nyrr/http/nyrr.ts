@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import NyrrApi from "nyrr-results-api";
+import NyrrApi from 'nyrr-results-api';
 
 const teamEventDetailsSchema = z.object({
   distanceName: z.string(),

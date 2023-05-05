@@ -1,4 +1,3 @@
-
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/Table";
 import { TeamEventScorer } from "../types";

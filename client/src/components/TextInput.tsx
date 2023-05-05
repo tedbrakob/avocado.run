@@ -9,12 +9,14 @@ const Input = styled.input`
 `;
 
 type Props = {
-  size: number;
-  maxLength: number;
-  error: boolean;
+  id?: string;
+  size?: number;
+  maxLength?: number;
+  error?: boolean;
   inputMode?: "text" | "search" | "email" | "tel" | "url" | "none" | "numeric" | "decimal";
-  type: string;
-  pattern: string;
+  className?: string;
+  type?: string;
+  pattern?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -24,9 +26,10 @@ const TextInput = (props:Props) => {
     <Input
       className={`
         border-b-2 border-b-solid border-b-primary rounded-sm m-0.5 p-1 outline-none w-[50px]
+        ${props.className}
         ${props.error ? "bg-error/40" : ""}
       `}
-
+      id={props.id}
       size={props.size}
       maxLength={props.maxLength}
       inputMode={props.inputMode}

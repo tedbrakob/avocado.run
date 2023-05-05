@@ -30,7 +30,7 @@ export default function YearSwitcher (props: Props) {
     ['nyrr-fetchYears'], 
     fetchYears, 
     { placeholderData },
- );
+  );
 
   if (error) {
     console.log(error);
