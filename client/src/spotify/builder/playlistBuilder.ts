@@ -1,17 +1,24 @@
-import SpotifyApiSingleton from "../api/spotifyApiSingleton";
+import SpotifyApiSingleton from "@spotify/api/spotifyApiSingleton";
 import TrackFilter from "./filters/trackFilterInterface";
 import Source from "./sources/sourceInterface";
 import Track from "./track";
+import TargetPlaylist from "./types/targetPlaylist";
+
+type PlaylistBuilderOptions = {
+  overwrite: boolean
+};
 
 class PlaylistBuilder {
   sources: Source[];
   filters: TrackFilter[];
-  name: string;
+  targetPlaylist: TargetPlaylist;
+  overwrite: boolean;
 
-  constructor(sources: Source[], filters: TrackFilter[], name: string) {
+  constructor(sources: Source[], filters: TrackFilter[], targetPlaylist: TargetPlaylist, options?: PlaylistBuilderOptions) {
     this.sources = sources;
     this.filters = filters;
-    this.name = name;
+    this.targetPlaylist = targetPlaylist;
+    this.overwrite = options?.overwrite ?? false;
   }
 
   async build() {
@@ -37,10 +44,20 @@ class PlaylistBuilder {
     }
 
     //create new playlist
-    const playlist = await spotifyApi.playlists.createPlaylist(this.name);
+    let playlistId = this.targetPlaylist.id;
+    if (this.targetPlaylist.creating) {
+      const playlist = await spotifyApi.playlists.createPlaylist({name: this.targetPlaylist.name});
+      playlistId = playlist.id;
+    }
 
+    let snapshotId = '';
     //add filtered tracks to playlist
-    const snapshotId = await spotifyApi.playlists.addItemsToPlaylist(playlist.id, tracks.map(track => track.uri));
+    if (this.overwrite) {
+      snapshotId = await spotifyApi.playlists.replacePlaylistItems(playlistId, tracks.map(track => track.uri));
+    } else {
+      snapshotId = await spotifyApi.playlists.addItemsToPlaylist(playlistId, tracks.map(track => track.uri));
+    }
+
     if (snapshotId.length > 0) {
       alert('Playlist Created!');
     } else {

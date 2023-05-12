@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { twMerge } from "tailwind-merge";
 
 const Input = styled.input`
   ::-webkit-outer-spin-button,
@@ -19,16 +20,21 @@ type Props = {
   pattern?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
 };
 
+
+
 const TextInput = (props:Props) => {
+  const className = twMerge(
+    'border-b-2 border-b-solid border-b-primary rounded-sm m-0.5 p-1 outline-none w-[50px]',
+    props.className,
+    props.error ? "bg-error/40" : ""
+  );
+
   return (
     <Input
-      className={`
-        border-b-2 border-b-solid border-b-primary rounded-sm m-0.5 p-1 outline-none w-[50px]
-        ${props.className}
-        ${props.error ? "bg-error/40" : ""}
-      `}
+      className={className}
       id={props.id}
       size={props.size}
       maxLength={props.maxLength}
@@ -37,6 +43,7 @@ const TextInput = (props:Props) => {
       pattern={props.pattern}
       value={props.value}
       onChange={props.onChange}
+      onKeyDown={props.onKeyDown}
     ></Input>
   );
 };

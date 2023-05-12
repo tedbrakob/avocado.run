@@ -2,18 +2,20 @@ import ErrorScreen from "@components/ErrorScreen";
 import TextInput from "@src/components/TextInput";
 import Button from "@src/components/Button";
 import useViewModel from "./viewModel";
+import DashboardOptionsPanel from "@src/spotify/components/DashboardOptionsPanel";
 
 export default function Dashboard() {
   const {
-    userPlaylistsQuery,
-    newPlaylistName, setNewPlaylistName,
+    optionsPanelProps,
+    userPlaylists,
+    userProfile,
     minTempo, setMinTempo,
     maxTempo, setMaxTempo,
     sourceCheckboxToggled,
     submit,
   } = useViewModel();
 
-  if (!userPlaylistsQuery.data) {
+  if (!userPlaylists || !userProfile) {
     return (
       <ErrorScreen
         message="loading"
@@ -38,29 +40,11 @@ export default function Dashboard() {
             className="w-1/2"
           ></Button>  
         </div>
-        <div
-          className="bg-light p-2 m-1"
-        >
-          <div className="text-l font-bold m-auto max-w-fit">
-            Options
-          </div>
-          <div
-            className="flex"
-          >
-            <label
-              className="flex-none mt-2 mr-2"
-              htmlFor="newPlaylistNameInput"
-            >
-              New Playlist Name
-            </label>
-            <TextInput
-              id="newPlaylistNameInput"
-              className="flex-auto"
-              value={newPlaylistName}
-              onChange={(event) => { setNewPlaylistName(event.target.value) }}
-            />
-          </div>
-        </div>
+        <DashboardOptionsPanel
+          {...optionsPanelProps}
+          userPlaylists={userPlaylists}
+          userId={userProfile.id}
+        />
         <div
           className="bg-light p-2 m-1"
         >
@@ -110,7 +94,7 @@ export default function Dashboard() {
           </div>
           <ul>
             {
-              userPlaylistsQuery.data.map((playlist) => (
+              userPlaylists.map((playlist) => (
                 <li
                   key={playlist.id}
                 >

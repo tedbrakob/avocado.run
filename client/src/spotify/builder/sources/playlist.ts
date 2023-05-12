@@ -1,7 +1,7 @@
 import SpotifyApiSingleton from "@src/spotify/api/spotifyApiSingleton";
 import Track from "../track";
 import Source from "./sourceInterface";
-import SpotifyPlaylist from "@src/spotify/api/types/playlist";
+import {Playlist as SpotifyPlaylist} from "@src/spotify/api/types/playlist";
 
 class Playlist implements Source {
   id: string;

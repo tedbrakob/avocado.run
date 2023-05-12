@@ -1,36 +1,38 @@
-type Playlist = {
-  collaborative: boolean,
-  description: string,
-  external_urls: {
-      spotify: string
-  },
-  href: string,
-  id: string,
-  images: {
-    "height": null,
-    "url": string,
-    "width": null,
-  }[],
-  name: string,
-  owner: {
-      "display_name": string,
-      "external_urls": {
-          "spotify": string,
-      },
-      "href": string,
-      "id": string,
-      "type": string,
-      "uri": string,
-  },
-  primary_color: null,
-  public: boolean,
-  snapshot_id:  string,
-  tracks: {
-      "href":  string,
-      "total": number
-  },
-  type: "playlist",
-  uri: string,
-};
+import { z } from "zod";
 
-export default Playlist;
+export const playlistSchema = z.object({
+  collaborative: z.boolean(),
+  description: z.string(),
+  external_urls: z.object({
+      spotify: z.string()
+  }),
+  href: z.string(),
+  id: z.string(),
+  images: z.array(z.object({
+    height: z.number().nullable(),
+    url: z.string(),
+    width: z.number().nullable(),
+  })),
+  name: z.string(),
+  owner: z.object({
+      display_name: z.string(),
+      external_urls: z.object({
+          spotify: z.string(),
+      }),
+      href: z.string(),
+      id: z.string(),
+      type: z.string(),
+      uri: z.string(),
+  }),
+  primary_color: z.null(),
+  public: z.boolean(),
+  snapshot_id: z.string(),
+  tracks: z.object({
+      href:  z.string(),
+      total: z.number(),
+  }),
+  type:z.literal("playlist"),
+  uri: z.string(),
+});
+
+export type Playlist = z.infer<typeof playlistSchema>;
