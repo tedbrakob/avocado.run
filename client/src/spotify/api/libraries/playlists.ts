@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
-import PaginationOptions from "../types/paginationOptions";
+import PaginationOptions from "@spotify/api/types/paginationOptions";
 import ApiLibrary from "./apiLibrary";
+import { Playlist, playlistSchema } from "@spotify/api/types/playlist";
+import { z } from "zod";
 
 class Playlists extends ApiLibrary {
   //TODO add other options (market, fields)
@@ -14,6 +16,25 @@ class Playlists extends ApiLibrary {
     }
     
     return tracks.map(track => track.track);
+  }
+
+  replacePlaylistItems = async (playlistId: string, uris: string[]) => {
+    const itemsPerRequest = 100;
+    let snapshotId = '';
+
+    const response = await this.client.fetch('PUT', `playlists/${playlistId}/tracks`, {
+      body: {
+        uris: [],
+      }
+    });
+
+    snapshotId = response.data.snapshot_id;
+
+    if (uris.length > itemsPerRequest) {
+      snapshotId = await this.addItemsToPlaylist(playlistId, uris);
+    }
+
+    return snapshotId;
   }
 
   addItemsToPlaylist = async (playlistId: string, uris: string[]) => {
@@ -35,27 +56,32 @@ class Playlists extends ApiLibrary {
     return snapshotId;
   }
 
-  getCurrentUsersPlaylists = async (options?: PaginationOptions) => {
+  getCurrentUsersPlaylists = async (options?: PaginationOptions): Promise<Playlist[]> => {
     const endpoint = 'me/playlists';
     const responses = await this.fetchItems(endpoint, options);
-    const playlists = <any>[];
+    const playlists: Playlist[] = [];
 
     for (const response of responses) {
+      z.array(playlistSchema).parse(response.data.items);
       playlists.push(...response.data.items);
     }
     
     return playlists;
   }
 
-  createPlaylist = async (name: string, description: string = '') => {
-    //get logged in user
-    const user = await this.client.users.getCurrentUsersProfile();
-    const playlist = await this.client.fetch('POST', `users/${user.id}/playlists`,
+  createPlaylist = async (options: {name: string, description?: string, userId?: string}) => {
+    let userId = options.userId;
+    if (options.userId === undefined) {
+      const user = await this.client.users.getCurrentUsersProfile();
+      userId = user.id;
+    }
+
+    const playlist = await this.client.fetch('POST', `users/${userId}/playlists`,
       {
         body: {
-          name,
+          name: options.name,
           public: false,
-          description,
+          description: options.description,
         }
       }
     );
