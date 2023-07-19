@@ -5,11 +5,12 @@ import Playlist from "@spotify/builder/sources/playlist";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Playlist as SpotifyPlaylist } from "@spotify/api/types/playlist";
-import TargetPlaylist from "@src/spotify/builder/types/targetPlaylist";
+import TargetPlaylist from "@src/spotify/builder/sources/targetPlaylist";
 
 export default function viewModel() {
   const [targetPlaylist, setTargetPlaylist] = useState<TargetPlaylist>();
-  const [overwriteExistingPlaylist, setOverwriteExistingPlaylist] = useState(false)
+  const [overwriteExistingPlaylist, setOverwriteExistingPlaylist] = useState(false);
+  const [ignoreDuplicates, setIgnoreDuplicates] = useState(false);
   const [minTempo, setMinTempo] = useState("");
   const [maxTempo, setMaxTempo] = useState("");
   const [sources, setSources] = useState<SpotifyPlaylist[]>([]);
@@ -39,13 +40,22 @@ export default function viewModel() {
       throw Error('Select a target playlist');
     }
 
-    const builder = new PlaylistBuilder(playlists, [tempoFilter], targetPlaylist, {overwrite: overwriteExistingPlaylist});
+    const builder = new PlaylistBuilder(
+      playlists, 
+      [tempoFilter], 
+      targetPlaylist, 
+      {
+        overwrite: overwriteExistingPlaylist,
+        ignoreDuplicates,
+      }
+    );
     builder.build();
   }
 
   const optionsPanelProps = {
     targetPlaylist, setTargetPlaylist,
     overwriteExistingPlaylist, setOverwriteExistingPlaylist,
+    ignoreDuplicates, setIgnoreDuplicates,
   };
 
   return {

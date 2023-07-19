@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import TargetPlaylist from "../builder/types/targetPlaylist";
+import TargetPlaylist from "../builder/sources/targetPlaylist";
 import TextInput from "@src/components/TextInput";
 import { twMerge } from "tailwind-merge";
 
@@ -64,11 +64,11 @@ export default function TargetPlaylistDropdown(props: Props) {
   );
 
   if (searchText.length > 0) {
-    list.unshift({
+    list.unshift(new TargetPlaylist({
       name: searchText,
       id: '',
       creating: true,
-    });
+    }));
   }
   
   const dropdownList = isOpen ? (

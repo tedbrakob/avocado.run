@@ -99,7 +99,7 @@ export default function Dashboard() {
                   key={playlist.id}
                 >
                   <input type="checkbox"
-                    onClick={(e) => sourceCheckboxToggled((e.target as HTMLInputElement).checked, playlist)}
+                    onChange={(e) => sourceCheckboxToggled((e.target).checked, playlist)}
                   ></input>
                   <span className="pl-1">{playlist.name}</span>
                 </li>
