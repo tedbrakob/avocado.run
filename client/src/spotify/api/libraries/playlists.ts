@@ -19,21 +19,13 @@ class Playlists extends ApiLibrary {
   }
 
   replacePlaylistItems = async (playlistId: string, uris: string[]) => {
-    const itemsPerRequest = 100;
-    let snapshotId = '';
-
-    const response = await this.client.fetch('PUT', `playlists/${playlistId}/tracks`, {
+    await this.client.fetch('PUT', `playlists/${playlistId}/tracks`, {
       body: {
         uris: [],
       }
     });
 
-    snapshotId = response.data.snapshot_id;
-
-    if (uris.length > itemsPerRequest) {
-      snapshotId = await this.addItemsToPlaylist(playlistId, uris);
-    }
-
+    const snapshotId = await this.addItemsToPlaylist(playlistId, uris);
     return snapshotId;
   }
 
