@@ -1,8 +1,8 @@
 import ErrorScreen from "@components/ErrorScreen";
-import TextInput from "@src/components/TextInput";
 import Button from "@src/components/Button";
 import useViewModel from "./viewModel";
 import DashboardOptionsPanel from "@src/spotify/components/DashboardOptionsPanel";
+import Tempo from "@src/spotify/components/filters/Tempo";
 
 export default function Dashboard() {
   const {
@@ -52,39 +52,12 @@ export default function Dashboard() {
             Filters
           </div>
 
-          <div
-            className="flex"
-          >
-            <label
-              className="flex-none mt-2 mr-2"
-              htmlFor="newPlaylistNameInput"
-            >
-              Min Tempo (BPM)
-            </label>
-            <TextInput
-              id="newPlaylistNameInput"
-              value={minTempo}
-              type="number"
-              onChange={(event) => { setMinTempo(event.target.value) }}
-            />
-          </div>
-
-          <div
-            className="flex"
-          >
-            <label
-              className="flex-none mt-2 mr-2"
-              htmlFor="newPlaylistNameInput"
-            >
-              Max Tempo (BPM)
-            </label>
-            <TextInput
-              id="newPlaylistNameInput"
-              type="number"
-              value={maxTempo}
-              onChange={(event) => { setMaxTempo(event.target.value) }}
-            />
-          </div>
+          <Tempo
+            minTempo={minTempo}
+            maxTempo={maxTempo}
+            setMinTempo={setMinTempo}
+            setMaxTempo={setMaxTempo}
+          ></Tempo>
         </div>
         <div
           className="bg-light p-2 m-1"
