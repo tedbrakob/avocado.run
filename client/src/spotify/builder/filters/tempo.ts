@@ -5,12 +5,14 @@ class Tempo implements TrackFilter {
   min: number;
   max: number;
 
-  constructor(min?: number, max?: number) {
-    this.min = min ?? 0;
-    this.max = max ?? Infinity;
+  constructor(params: {min?: number, max?: number}) {
+    console.log(params);
+
+    this.min = params.min ?? 0;
+    this.max = params.max ?? Infinity;
   }
 
-  filter(track: Track): boolean {
+  filter = (track: Track): boolean => {
     if (track.audioFeatures === undefined) {
       return false;
     }

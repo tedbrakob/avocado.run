@@ -13,35 +13,25 @@ export default function Tempo(props: Props) {
       <div
         className="flex"
       >
-        <label
-          className="flex-none mt-2 mr-2"
-          htmlFor="newPlaylistNameInput"
-        >
-          Min Tempo (BPM)
-        </label>
+        <div
+          className="mt-2 mr-2 ml-2"
+        >Tempo:</div>
         <TextInput
-          id="newPlaylistNameInput"
           value={props.minTempo}
           type="number"
           onChange={(event) => { props.setMinTempo(event.target.value) }}
         />
-      </div>
-
-      <div
-        className="flex"
-      >
-        <label
-          className="flex-none mt-2 mr-2"
-          htmlFor="newPlaylistNameInput"
-        >
-          Max Tempo (BPM)
-        </label>
+        <div
+          className="mt-2 mr-2 ml-2"
+        >to</div>
         <TextInput
-          id="newPlaylistNameInput"
-          type="number"
           value={props.maxTempo}
+          type="number"
           onChange={(event) => { props.setMaxTempo(event.target.value) }}
         />
+        <div
+          className="mt-2 mr-2 ml-2"
+        >(BPM)</div>
       </div>
     </div>
   );

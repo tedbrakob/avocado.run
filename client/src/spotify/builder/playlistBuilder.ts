@@ -1,9 +1,10 @@
 import SpotifyApiSingleton from "@spotify/api/spotifyApiSingleton";
-import TrackFilter from "./filters/trackFilterInterface";
 import Source from "./sources/sourceInterface";
 import Track from "./track";
 import TargetPlaylist from "./sources/targetPlaylist";
 import removeDuplicateItems from "./removeDuplicateItems";
+import filterFactory from './filters/factory';
+import FilterComponent from '../types/FilterComponent';
 
 type PlaylistBuilderOptions = {
   overwrite: boolean,
@@ -12,12 +13,12 @@ type PlaylistBuilderOptions = {
 
 class PlaylistBuilder {
   sources: Source[];
-  filters: TrackFilter[];
+  filters: FilterComponent[];
   targetPlaylist: TargetPlaylist;
   overwrite: boolean;
   ignoreDuplicates: boolean;
 
-  constructor (sources: Source[], filters: TrackFilter[], targetPlaylist: TargetPlaylist, options?: PlaylistBuilderOptions) {
+  constructor (sources: Source[], filters: FilterComponent[], targetPlaylist: TargetPlaylist, options?: PlaylistBuilderOptions) {
     this.sources = sources;
     this.filters = filters;
     this.targetPlaylist = targetPlaylist;
@@ -34,6 +35,11 @@ class PlaylistBuilder {
 
     let trackUris = filteredTracks.map(track => track.uri);
     trackUris = await this.#removeDuplicateTracks(trackUris);
+
+    if (trackUris.length === 0) {
+      alert('No tracks added');
+      return;
+    }
 
     const spotifyApi = SpotifyApiSingleton.getInstance();
 
@@ -73,7 +79,8 @@ class PlaylistBuilder {
 
   #filterTracks (tracks: Track[]): Track[] {
     for (const filter of this.filters) {
-      tracks = tracks.filter((track) => filter.filter(track));
+      const trackfilter = filterFactory(filter);
+      tracks = tracks.filter(trackfilter.filter);
     }
 
     return tracks;
@@ -92,6 +99,10 @@ class PlaylistBuilder {
   }
 
   async #removeDuplicateTracks (trackUris: string[]): Promise<string[]> {
+    if (!this.ignoreDuplicates) {
+      return trackUris;
+    }
+
     const additionalLists = (
       this.overwrite ? [] : [(await this.targetPlaylist.getTracks()).map(track => track.uri)]
     );

@@ -1,5 +1,4 @@
 import SpotifyApiSingleton from "@spotify/api/spotifyApiSingleton";
-import Tempo from "@spotify/builder/filters/tempo";
 import PlaylistBuilder from "@spotify/builder/playlistBuilder";
 import Playlist from "@spotify/builder/sources/playlist";
 import { useQuery } from "@tanstack/react-query";
@@ -34,15 +33,24 @@ export default function viewModel() {
 
   const submit = () => {
     const playlists = sources.map((source) => new Playlist(source));
-    const tempoFilter = new Tempo(Number(minTempo), Number(maxTempo));
 
     if (targetPlaylist === undefined) {
       throw Error('Select a target playlist');
     }
 
+    let min: number | null = Number(minTempo);
+    let max: number | null = Number(maxTempo);
+
+    if (isNaN(min) || (minTempo.length === 0)) {
+      min = null;
+    }
+    if (isNaN(max) || (maxTempo.length === 0)) {
+      max = null;
+    }
+
     const builder = new PlaylistBuilder(
       playlists, 
-      [tempoFilter], 
+      [{type: "tempo", params: {min, max}}], 
       targetPlaylist, 
       {
         overwrite: overwriteExistingPlaylist,
