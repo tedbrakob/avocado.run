@@ -1,6 +1,6 @@
 import FilterSummary from '@src/spotify/types/FilterSummary';
 import Tempo from '../Tempo';
-import { FilterParams } from '@src/spotify/types/filterParams';
+import { FilterParams } from '@src/spotify/types/FilterParams';
 
 type Props = {
   filters: Map<string, FilterSummary>,
