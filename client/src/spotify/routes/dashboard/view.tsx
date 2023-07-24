@@ -1,16 +1,15 @@
 import ErrorScreen from "@components/ErrorScreen";
-import TextInput from "@src/components/TextInput";
 import Button from "@src/components/Button";
 import useViewModel from "./viewModel";
 import DashboardOptionsPanel from "@src/spotify/components/DashboardOptionsPanel";
+import FiltersPanel from "@src/spotify/components/filters/filtersPanel/view";
 
-export default function Dashboard() {
+export default function Dashboard () {
   const {
     optionsPanelProps,
     userPlaylists,
     userProfile,
-    minTempo, setMinTempo,
-    maxTempo, setMaxTempo,
+    filtersPanelProps,
     sourceCheckboxToggled,
     submit,
   } = useViewModel();
@@ -45,47 +44,9 @@ export default function Dashboard() {
           userPlaylists={userPlaylists}
           userId={userProfile.id}
         />
-        <div
-          className="bg-light p-2 m-1"
-        >
-          <div className="text-l font-bold m-auto max-w-fit">
-            Filters
-          </div>
-
-          <div
-            className="flex"
-          >
-            <label
-              className="flex-none mt-2 mr-2"
-              htmlFor="newPlaylistNameInput"
-            >
-              Min Tempo (BPM)
-            </label>
-            <TextInput
-              id="newPlaylistNameInput"
-              value={minTempo}
-              type="number"
-              onChange={(event) => { setMinTempo(event.target.value) }}
-            />
-          </div>
-
-          <div
-            className="flex"
-          >
-            <label
-              className="flex-none mt-2 mr-2"
-              htmlFor="newPlaylistNameInput"
-            >
-              Max Tempo (BPM)
-            </label>
-            <TextInput
-              id="newPlaylistNameInput"
-              type="number"
-              value={maxTempo}
-              onChange={(event) => { setMaxTempo(event.target.value) }}
-            />
-          </div>
-        </div>
+        <FiltersPanel
+          {...filtersPanelProps}
+        ></FiltersPanel>
         <div
           className="bg-light p-2 m-1"
         >
