@@ -1,4 +1,4 @@
-import { FilterParams } from './filterParams';
+import { FilterParams } from './FilterParams';
 
 type FilterSummary = {
   type: string,
