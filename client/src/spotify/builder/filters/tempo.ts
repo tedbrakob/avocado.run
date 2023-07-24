@@ -2,14 +2,19 @@ import Track from "../track";
 import TrackFilter from "./trackFilterInterface";
 
 class Tempo implements TrackFilter {
-  min: number;
-  max: number;
+  minTempo: number;
+  maxTempo: number;
 
-  constructor(params: {min?: number, max?: number}) {
-    console.log(params);
+  constructor(params: {minTempo: string, maxTempo: string}) {
+    this.minTempo = Number(params.minTempo);
+    this.maxTempo = Number(params.maxTempo);
 
-    this.min = params.min ?? 0;
-    this.max = params.max ?? Infinity;
+    if (isNaN(this.minTempo) || (params.minTempo.length === 0)) {
+      this.minTempo = 0;
+    }
+    if (isNaN(this.maxTempo) || (params.maxTempo.length === 0)) {
+      this.maxTempo = Infinity;
+    }
   }
 
   filter = (track: Track): boolean => {
@@ -17,7 +22,7 @@ class Tempo implements TrackFilter {
       return false;
     }
     
-    return this.min <= track.audioFeatures.tempo && track.audioFeatures.tempo <= this.max;
+    return this.minTempo <= track.audioFeatures.tempo && track.audioFeatures.tempo <= this.maxTempo;
   }
 }
 

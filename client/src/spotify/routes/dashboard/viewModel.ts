@@ -5,13 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Playlist as SpotifyPlaylist } from "@spotify/api/types/playlist";
 import TargetPlaylist from "@src/spotify/builder/sources/targetPlaylist";
+import FilterSummary from '@src/spotify/types/FilterSummary';
 
 export default function viewModel() {
   const [targetPlaylist, setTargetPlaylist] = useState<TargetPlaylist>();
   const [overwriteExistingPlaylist, setOverwriteExistingPlaylist] = useState(false);
   const [ignoreDuplicates, setIgnoreDuplicates] = useState(false);
-  const [minTempo, setMinTempo] = useState("");
-  const [maxTempo, setMaxTempo] = useState("");
+  const [filters, setFilters] = useState<Map<string, FilterSummary>>(new Map([["12345", {type: 'tempo', params: {minTempo: '', maxTempo: ''}}]]));
   const [sources, setSources] = useState<SpotifyPlaylist[]>([]);
 
   const spotifyApi = SpotifyApiSingleton.getInstance();
@@ -38,25 +38,15 @@ export default function viewModel() {
       throw Error('Select a target playlist');
     }
 
-    let min: number | null = Number(minTempo);
-    let max: number | null = Number(maxTempo);
-
-    if (isNaN(min) || (minTempo.length === 0)) {
-      min = null;
-    }
-    if (isNaN(max) || (maxTempo.length === 0)) {
-      max = null;
-    }
-
-    const builder = new PlaylistBuilder(
-      playlists, 
-      [{type: "tempo", params: {min, max}}], 
+    const builder = new PlaylistBuilder({
+      sources: playlists, 
+      filters: Array.from(filters.values()),
       targetPlaylist, 
-      {
+      options: {
         overwrite: overwriteExistingPlaylist,
         ignoreDuplicates,
       }
-    );
+  });
     builder.build();
   }
 
@@ -66,12 +56,15 @@ export default function viewModel() {
     ignoreDuplicates, setIgnoreDuplicates,
   };
 
+  const filtersPanelProps = {
+    filters, setFilters,
+  }
+
   return {
     optionsPanelProps: optionsPanelProps,
     userPlaylists: userPlaylistsQuery.data,
     userProfile: userProfileQuery.data,
-    minTempo, setMinTempo,
-    maxTempo, setMaxTempo,
+    filtersPanelProps,
     sourceCheckboxToggled,
     submit,
   };

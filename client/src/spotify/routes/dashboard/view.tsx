@@ -2,15 +2,14 @@ import ErrorScreen from "@components/ErrorScreen";
 import Button from "@src/components/Button";
 import useViewModel from "./viewModel";
 import DashboardOptionsPanel from "@src/spotify/components/DashboardOptionsPanel";
-import Tempo from "@src/spotify/components/filters/Tempo";
+import FiltersPanel from "@src/spotify/components/filters/filtersPanel/view";
 
-export default function Dashboard() {
+export default function Dashboard () {
   const {
     optionsPanelProps,
     userPlaylists,
     userProfile,
-    minTempo, setMinTempo,
-    maxTempo, setMaxTempo,
+    filtersPanelProps,
     sourceCheckboxToggled,
     submit,
   } = useViewModel();
@@ -45,20 +44,9 @@ export default function Dashboard() {
           userPlaylists={userPlaylists}
           userId={userProfile.id}
         />
-        <div
-          className="bg-light p-2 m-1"
-        >
-          <div className="text-l font-bold m-auto max-w-fit">
-            Filters
-          </div>
-
-          <Tempo
-            minTempo={minTempo}
-            maxTempo={maxTempo}
-            setMinTempo={setMinTempo}
-            setMaxTempo={setMaxTempo}
-          ></Tempo>
-        </div>
+        <FiltersPanel
+          {...filtersPanelProps}
+        ></FiltersPanel>
         <div
           className="bg-light p-2 m-1"
         >

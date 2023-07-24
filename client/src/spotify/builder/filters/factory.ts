@@ -1,4 +1,4 @@
-import Filter from '@src/spotify/types/FilterComponent';
+import FilterSummary from '@src/spotify/types/FilterSummary';
 import Tempo from './tempo';
 import TrackFilter from './trackFilterInterface';
 
@@ -6,7 +6,7 @@ const map = new Map([
   ['tempo', Tempo],
 ]);
 
-export default function factory(filter: Filter):TrackFilter {
+export default function factory(filter: FilterSummary):TrackFilter {
   const filterClass = map.get(filter.type);
 
   if (filterClass === undefined) {

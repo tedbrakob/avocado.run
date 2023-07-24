@@ -1,13 +1,28 @@
 import TextInput from "@src/components/TextInput"
 
 type Props = {
+  params: TempoParams,
+  setParams: (params: TempoParams) => void,
+}
+
+export type TempoParams = {
   minTempo: string,
   maxTempo: string,
-  setMinTempo: React.Dispatch<React.SetStateAction<string>>,
-  setMaxTempo: React.Dispatch<React.SetStateAction<string>>,
 };
 
-export default function Tempo(props: Props) {
+export default function Tempo (props: Props) {
+  const params = props.params;
+
+  function setParam(paramName: string, paramValue: string) {
+    const minTempo = paramName === 'minTempo' ? paramValue : params.minTempo;
+    const maxTempo = paramName === 'maxTempo' ? paramValue : params.maxTempo;
+
+    props.setParams({
+      minTempo,
+      maxTempo,
+    });
+  }
+
   return (
     <div>
       <div
@@ -17,17 +32,17 @@ export default function Tempo(props: Props) {
           className="mt-2 mr-2 ml-2"
         >Tempo:</div>
         <TextInput
-          value={props.minTempo}
+          value={params.minTempo}
           type="number"
-          onChange={(event) => { props.setMinTempo(event.target.value) }}
+          onChange={(event) => { setParam('minTempo', event.target.value) }}
         />
         <div
           className="mt-2 mr-2 ml-2"
         >to</div>
         <TextInput
-          value={props.maxTempo}
+          value={params.maxTempo}
           type="number"
-          onChange={(event) => { props.setMaxTempo(event.target.value) }}
+          onChange={(event) => { setParam('maxTempo', event.target.value) }}
         />
         <div
           className="mt-2 mr-2 ml-2"

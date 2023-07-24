@@ -4,26 +4,33 @@ import Track from "./track";
 import TargetPlaylist from "./sources/targetPlaylist";
 import removeDuplicateItems from "./removeDuplicateItems";
 import filterFactory from './filters/factory';
-import FilterComponent from '../types/FilterComponent';
+import FilterSummary from '../types/FilterSummary';
 
 type PlaylistBuilderOptions = {
   overwrite: boolean,
   ignoreDuplicates: boolean,
 };
 
+type ConstructorParams = {
+  sources: Source[], 
+  filters: FilterSummary[], 
+  targetPlaylist: TargetPlaylist, 
+  options?: PlaylistBuilderOptions,
+};
+
 class PlaylistBuilder {
   sources: Source[];
-  filters: FilterComponent[];
+  filters: FilterSummary[];
   targetPlaylist: TargetPlaylist;
   overwrite: boolean;
   ignoreDuplicates: boolean;
 
-  constructor (sources: Source[], filters: FilterComponent[], targetPlaylist: TargetPlaylist, options?: PlaylistBuilderOptions) {
-    this.sources = sources;
-    this.filters = filters;
-    this.targetPlaylist = targetPlaylist;
-    this.overwrite = options?.overwrite ?? false;
-    this.ignoreDuplicates = options?.ignoreDuplicates ?? false;
+  constructor (params: ConstructorParams) {
+    this.sources = params.sources;
+    this.filters = params.filters;
+    this.targetPlaylist = params.targetPlaylist;
+    this.overwrite = params.options?.overwrite ?? false;
+    this.ignoreDuplicates = params.options?.ignoreDuplicates ?? false;
   }
 
   async build () {
