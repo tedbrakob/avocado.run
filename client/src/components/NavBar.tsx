@@ -5,9 +5,9 @@ import { NavLinkWithQuery } from './NavLinkWithQuery';
 const navigation = [
   { name: 'Cool Running', to: '/pace-calculator' },
   // { name: 'Strava Thing', to: '/strava-thing' },
-  { name: 'NYRR Clubs', to: '/nyrr-thing/teams' },
-  { name: 'NYRR Divisions', to: '/nyrr-thing/divisions' },
-  { name: 'Spotify Thing', to: '/spotify-thing' },
+  // { name: 'NYRR Clubs', to: '/nyrr-thing/teams' },
+  // { name: 'NYRR Divisions', to: '/nyrr-thing/divisions' },
+  // { name: 'Spotify Thing', to: '/spotify-thing' },
 ];
 
 function classNames(...classes) {
